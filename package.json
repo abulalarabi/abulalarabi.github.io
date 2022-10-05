@@ -1,6 +1,9 @@
 {
   "dependencies": {
     "particles-bg": "^2.5.5",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4",
+    "react-scripts": "^5.0.1",
     "react-typist": "^2.0.5"
   }
 }
