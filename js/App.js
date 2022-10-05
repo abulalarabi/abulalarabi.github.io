@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Typist from 'react-typist';
 import './App.css';
-import Configs from './configurations.json';
+import Configs from './data/configurations.json';
 import ParticlesBg from 'particles-bg'
 
 class App extends Component {
