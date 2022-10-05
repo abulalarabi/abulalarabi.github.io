@@ -1,4 +1,4 @@
-import React, { Component } from './vendor/react';
+import React, { Component } from 'react';
 import Typist from 'react-typist';
 import './styles/App.css';
 import Configs from './data/configurations.json';

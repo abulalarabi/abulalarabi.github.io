@@ -1,5 +1,5 @@
-import React from './vendor/react';
-import ReactDOM from './vendor/react-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
 import './styles/index.css';
 import App from './js/App';
 import * as serviceWorker from './js/serviceWorker';
