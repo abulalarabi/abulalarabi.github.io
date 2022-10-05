@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from './vendor/react';
 import Typist from 'react-typist';
-import './App.css';
+import './styles/App.css';
 import Configs from './data/configurations.json';
 import ParticlesBg from 'particles-bg'
 
