@@ -26,11 +26,11 @@
 
 .shell{
   background-color: #282c34;
-  padding: 4px 25px;
+  padding: 4px 15px;
   color: #eee;
   border-radius: 8px;
   font-weight: 80;
-  font-size: calc(12px + 0.5vmin);
+  font-size: calc(12px + 1vmin);
 }
 
 .tagline {
@@ -419,8 +419,8 @@
   display: inline-block;
   font-style: normal;
   font-weight: normal;
-  height: 1em;
-  padding-top: 10px;
+  height: 1.25em;
+  padding-top: 35px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
