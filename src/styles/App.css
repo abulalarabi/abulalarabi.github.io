@@ -21,9 +21,6 @@
   padding: 20px;
   border-radius: 10px;
   
-  border: 1px;
-  border-style: solid;
-  border-color: #1abc9c;
 }
 
 .shell{
@@ -33,6 +30,8 @@
   border-radius: 8px;
   font-weight: 80;
   font-size: calc(12px + 1vmin);
+  border: solid;
+  bord
 }
 
 .tagline {
@@ -421,7 +420,7 @@
   height: 1.2em;
   width: auto;
   position: relative;
-  padding-top: 200px;
+  top: 50px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
