@@ -1,10 +1,10 @@
 self.__precacheManifest = [
   {
-    "revision": "4dd4f5532079536f4ca3",
-    "url": "./static/css/main.cf34fb08.chunk.css"
+    "revision": "50864eaff4c231558893",
+    "url": "./static/css/main.b4d73446.chunk.css"
   },
   {
-    "revision": "4dd4f5532079536f4ca3",
+    "revision": "50864eaff4c231558893",
     "url": "./static/js/main.3474be78.chunk.js"
   },
   {
@@ -20,7 +20,7 @@ self.__precacheManifest = [
     "url": "./static/media/google-scholar.1078e728.svg"
   },
   {
-    "revision": "05ec71f0c3e2fa806b7cac7046336b38",
+    "revision": "d6178ce2b1408353ff249907fb9b6855",
     "url": "./index.html"
   }
 ];
