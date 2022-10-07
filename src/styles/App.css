@@ -420,7 +420,7 @@
   font-style: normal;
   font-weight: normal;
   height: 1em;
-  padding: 5px;
+  padding-top: 10px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
