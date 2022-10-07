@@ -52,7 +52,7 @@ class App extends Component {
           className={backgroundMode}
         >
           <main className="App-main">
-            <ParticlesBg type="cobweb" bg={true} />
+            <ParticlesBg type="lines" bg={true} />
             <div className="container">
               <h1 className="intro">{devIntro}</h1>
               <div className="shell">
