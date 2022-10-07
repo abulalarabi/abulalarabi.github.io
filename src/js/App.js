@@ -52,6 +52,7 @@ class App extends Component {
           className={backgroundMode}
         >
           <main className="App-main">
+            
             <div className="container">
               <h1 className="intro">{devIntro}</h1>
               <div className="shell">
