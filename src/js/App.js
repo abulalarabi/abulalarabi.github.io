@@ -32,7 +32,8 @@ class App extends Component {
       backgroundMode: 'default',
       backgroundIndex: 0,
       bgStyle: {},
-      icons: Configs.icons || []
+      icons: Configs.icons || [],
+      tagLine: Configs.tagLine
     };
   }
 
@@ -42,7 +43,7 @@ class App extends Component {
 
   render() {
     const {
-      appClass, bgStyle, backgroundMode, devIntro, devDesc, icons
+      appClass, bgStyle, backgroundMode, devIntro, devDesc, icons, tagLine
     } = this.state;
 
     return (
@@ -54,7 +55,9 @@ class App extends Component {
             <ParticlesBg type="thick" bg={true} />
             <div className="container">
               <h1 className="intro">{devIntro}</h1>
-              <div className="shell">echo HCI and Robotics Enthusiast</div>
+              <div className="shell">
+                <Typist>{devDesc}</Typist>
+              </div>
               <div className="tagline">
                 <Typist>{devDesc}</Typist>
               </div>

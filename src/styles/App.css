@@ -411,3 +411,7 @@
 .full-bg-image .icons-social a svg path {
   fill: #fff;
 }
+
+.fab fa-scholar{
+	background-image: url("data:image/svg+xml,%3Csvg height='250' width='250' xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath d='M256 411.12L0 202.667 256 0z' fill='%234285f4'/%3E%3Cpath d='M256 411.12l256-208.453L256 0z' fill='%23356ac3'/%3E%3Ccircle cx='256' cy='362.667' fill='%23a0c3ff' r='149.333'/%3E%3Cpath d='M121.037 298.667c23.968-50.453 75.392-85.334 134.963-85.334s110.995 34.881 134.963 85.334H121.037z' fill='%2376a7fa'/%3E%3C/g%3E%3C/svg%3E");
+}
