@@ -1,13 +1,13 @@
 {
   "main.css": "./static/css/main.4ed0dd94.chunk.css",
-  "main.js": "./static/js/main.826fe9cd.chunk.js",
-  "main.js.map": "./static/js/main.826fe9cd.chunk.js.map",
+  "main.js": "./static/js/main.5b465e5a.chunk.js",
+  "main.js.map": "./static/js/main.5b465e5a.chunk.js.map",
   "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
   "runtime~main.js.map": "./static/js/runtime~main.d653cc00.js.map",
   "static/js/2.d15a835d.chunk.js": "./static/js/2.d15a835d.chunk.js",
   "static/js/2.d15a835d.chunk.js.map": "./static/js/2.d15a835d.chunk.js.map",
   "index.html": "./index.html",
-  "precache-manifest.23489be040c91ce954734fcb499d6e61.js": "./precache-manifest.23489be040c91ce954734fcb499d6e61.js",
+  "precache-manifest.ea17517a62ddeb59405a366d5c779a48.js": "./precache-manifest.ea17517a62ddeb59405a366d5c779a48.js",
   "service-worker.js": "./service-worker.js",
   "static/css/main.4ed0dd94.chunk.css.map": "./static/css/main.4ed0dd94.chunk.css.map",
   "static/media/App.css": "./static/media/google-scholar.1078e728.svg"
