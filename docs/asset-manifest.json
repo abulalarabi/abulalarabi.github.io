@@ -1,0 +1,14 @@
+{
+  "main.css": "./static/css/main.1eb77114.chunk.css",
+  "main.js": "./static/js/main.3474be78.chunk.js",
+  "main.js.map": "./static/js/main.3474be78.chunk.js.map",
+  "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
+  "runtime~main.js.map": "./static/js/runtime~main.d653cc00.js.map",
+  "static/js/2.d15a835d.chunk.js": "./static/js/2.d15a835d.chunk.js",
+  "static/js/2.d15a835d.chunk.js.map": "./static/js/2.d15a835d.chunk.js.map",
+  "index.html": "./index.html",
+  "precache-manifest.b7bfe8c47cbdd4fdc4d486eaa4e3e011.js": "./precache-manifest.b7bfe8c47cbdd4fdc4d486eaa4e3e011.js",
+  "service-worker.js": "./service-worker.js",
+  "static/css/main.1eb77114.chunk.css.map": "./static/css/main.1eb77114.chunk.css.map",
+  "static/media/App.css": "./static/media/google-scholar.1078e728.svg"
+}
