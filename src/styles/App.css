@@ -30,7 +30,7 @@
   border-radius: 8px;
   font-weight: 80;
   font-size: calc(12px + 1vmin);
-  border: 1px;
+  border: 0.5px;
   border-style: solid;
   border-color: #1abc9c;
 }
@@ -421,7 +421,7 @@
   height: 1.2em;
   width: auto;
   position: relative;
-  top: 40px;
+  top: 30px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

@@ -56,7 +56,7 @@ class App extends Component {
             <div className="container">
               <h1 className="intro">{devIntro}</h1>
               <div className="shell">
-                <Typist>{tagLine}</Typist>
+                <Typist cursor={blink:true}>{tagLine}</Typist>
               </div>
               <div className="tagline">
                 {devDesc}
