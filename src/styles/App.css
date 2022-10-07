@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: center;
   background-color: rgba(0,0,0, 0.3);
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(3px);
   padding: 20px;
   border-radius: 10px;
   border-color: #1abc9c;
@@ -415,7 +415,6 @@
 
 .fa-scholar {
   content: url('../images/icons/google-scholar.svg');
-  height: 1.2em;
-  width: auto;
-  bottom: 0px;
+  height: auto;
+  width: 1em;
 }
