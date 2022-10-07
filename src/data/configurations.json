@@ -8,7 +8,7 @@
   "tagLine": "root@root:~# echo HCI and Robotics Enthusiast",
   "icons": [
     {
-      "image": "ai ai-google-scholar ai-3x",
+      "image": "fab fa-scholar",
       "url": "https://scholar.google.com/citations?user=zekn92QAAAAJ&hl=en&oi=ao"
     },
     {
