@@ -56,10 +56,10 @@ class App extends Component {
             <div className="container">
               <h1 className="intro">{devIntro}</h1>
               <div className="shell">
-                <Typist>{devDesc}</Typist>
+                <Typist>{tagLine}</Typist>
               </div>
               <div className="tagline">
-                <Typist>{devDesc}</Typist>
+                {devDesc}
               </div>
               
               <div className="icons-social">
