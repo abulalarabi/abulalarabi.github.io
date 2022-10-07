@@ -1,5 +1,5 @@
 {
-  "main.css": "./static/css/main.1f302881.chunk.css",
+  "main.css": "./static/css/main.24227424.chunk.css",
   "main.js": "./static/js/main.3474be78.chunk.js",
   "main.js.map": "./static/js/main.3474be78.chunk.js.map",
   "runtime~main.js": "./static/js/runtime~main.d653cc00.js",
@@ -7,8 +7,8 @@
   "static/js/2.d15a835d.chunk.js": "./static/js/2.d15a835d.chunk.js",
   "static/js/2.d15a835d.chunk.js.map": "./static/js/2.d15a835d.chunk.js.map",
   "index.html": "./index.html",
-  "precache-manifest.fa87227a5531717683b47664f6febba8.js": "./precache-manifest.fa87227a5531717683b47664f6febba8.js",
+  "precache-manifest.97e41c345dd47470f3f45b94f6681899.js": "./precache-manifest.97e41c345dd47470f3f45b94f6681899.js",
   "service-worker.js": "./service-worker.js",
-  "static/css/main.1f302881.chunk.css.map": "./static/css/main.1f302881.chunk.css.map",
+  "static/css/main.24227424.chunk.css.map": "./static/css/main.24227424.chunk.css.map",
   "static/media/App.css": "./static/media/google-scholar.1078e728.svg"
 }

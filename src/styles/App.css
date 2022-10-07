@@ -415,7 +415,5 @@
 
 .fa-scholar {
   content: url('../images/icons/google-scholar.svg');
-  height: auto;
   top: 5px;
-  width: 1em;
 }
