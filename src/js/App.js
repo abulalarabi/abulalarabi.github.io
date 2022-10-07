@@ -71,6 +71,7 @@ class App extends Component {
                     href={`${icon.url}`}
                   >
                     <i className={`fab ${icon.image}`} />
+                    <i className={`faa ${icon.image}`} />
                   </a>
                 ))}
               </div>
