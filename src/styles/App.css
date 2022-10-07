@@ -30,6 +30,7 @@
   color: #eee;
   border-radius: 8px;
   font-weight: 80;
+  font-size: calc(10px + 0.1vmin);
 }
 
 .tagline {
@@ -418,7 +419,8 @@
   display: inline-block;
   font-style: normal;
   font-weight: normal;
-  font-size: 1em;
+  height: 1em;
+  top: 5px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
