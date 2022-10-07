@@ -21,7 +21,8 @@
   padding: 20px;
   border-radius: 10px;
   border-color: #1abc9c;
-  border: 5px;
+  border: 2px;
+  border-style: solid;
 }
 
 .shell{
@@ -416,10 +417,8 @@
 
 .fa-scholar {
   content: url('../images/icons/google-scholar.svg');
-  display: inline-block;
-  font-style: normal;
-  font-weight: normal;
-  height: 1.25em;
+  height: 1.2em;
+  width: auto;
   padding-bottom: -35px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
