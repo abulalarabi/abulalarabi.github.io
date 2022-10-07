@@ -7,20 +7,20 @@
   "backgroundImageUrl": "http://hdwpro.com/wp-content/uploads/2017/03/Art-Background-Image.png",
   "icons": [
     {
+      "image": "images/icons/google-scholar.svg",
+      "url": "https://github.com/abulalarabi/"
+    },
+    {
       "image": "fa-github",
-      "url": "https://github.com/lindelof/particles-bg"
+      "url": "https://github.com/abulalarabi/"
     },
     {
       "image": "fa-twitter",
-      "url": "https://github.com/lindelof/particles-bg"
-    },
-    {
-      "image": "fa-stack-overflow",
-      "url": "https://stackoverflow.com/"
+      "url": "https://twitter.com/abulalarabi"
     },
     {
       "image": "fa-linkedin",
-      "url": "https://www.linkedin.com/"
+      "url": "https://www.linkedin.com/in/abul-al-arabi"
     }
   ]
 }

@@ -25,12 +25,10 @@ class App extends Component {
         'lightblue',
         'lightyellow'
       ],
-      backgroundType: Configs.backgroundType || 'plain',
-      appClass: Configs.plainBackgroundMode || 'daylight',
-      devIntro: Configs.devIntro || 'Lorem Ipsum',
-      devDesc:
-        Configs.devDesc ||
-        'Aute veniam ut deserunt cillum irure pariatur Lorem dolore anim nostrud quis veniam elit culpa.',
+      backgroundType: Configs.backgroundType,
+      appClass: Configs.plainBackgroundMode,
+      devIntro: Configs.devIntro,
+      devDesc:  Configs.devDesc,
       backgroundMode: 'default',
       backgroundIndex: 0,
       bgStyle: {},
@@ -56,7 +54,7 @@ class App extends Component {
             <ParticlesBg type="thick" bg={true} />
             <div className="container">
               <h1 className="intro">{devIntro}</h1>
-              <div className="shell">npm i your-lib --save</div>
+              <div className="shell">HCI and Robotics Enthusiast</div>
               <div className="tagline">
                 <Typist>{devDesc}</Typist>
               </div>
