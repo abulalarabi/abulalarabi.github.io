@@ -22,6 +22,11 @@
     {
       "image": "fab fa-linkedin",
       "url": "https://www.linkedin.com/in/abul-al-arabi"
+    },
+    {
+      "image": "fab fa-researchgate",
+      "url": "https://www.researchgate.net/profile/Abul-Al-Arabi"
     }
+    
   ]
 }
