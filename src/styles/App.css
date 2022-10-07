@@ -30,8 +30,9 @@
   border-radius: 8px;
   font-weight: 80;
   font-size: calc(12px + 1vmin);
-  border: solid;
-  bord
+  border: 1px;
+  border-style: solid;
+  border-color: #1abc9c;
 }
 
 .tagline {
@@ -420,7 +421,7 @@
   height: 1.2em;
   width: auto;
   position: relative;
-  top: 50px;
+  top: 40px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
