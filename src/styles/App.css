@@ -26,7 +26,7 @@
 
 .shell{
   background-color: #282c34;
-  padding: 4px 15px;
+  padding: 5px 10px;
   color: #eee;
   border-radius: 8px;
   font-weight: 80;
@@ -420,7 +420,7 @@
   font-style: normal;
   font-weight: normal;
   height: 1.25em;
-  padding-top: 35px;
+  padding-bottom: -35px;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
