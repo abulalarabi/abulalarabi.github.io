@@ -30,7 +30,7 @@
   color: #eee;
   border-radius: 8px;
   font-weight: 80;
-  font-size: calc(12px + 0.3vmin);
+  font-size: calc(12px + 0.5vmin);
 }
 
 .tagline {
