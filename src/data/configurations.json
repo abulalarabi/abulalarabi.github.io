@@ -8,19 +8,19 @@
   "tagLine": "root@root:~# echo HCI and Robotics Enthusiast",
   "icons": [
     {
-      "image": "fa-scholar",
+      "image": "ai google-scholar",
       "url": "https://scholar.google.com/citations?user=zekn92QAAAAJ&hl=en&oi=ao"
     },
     {
-      "image": "fa-github",
+      "image": "fab fa-github",
       "url": "https://github.com/abulalarabi/"
     },
     {
-      "image": "fa-twitter",
+      "image": "fab fa-twitter",
       "url": "https://twitter.com/abulalarabi"
     },
     {
-      "image": "fa-linkedin",
+      "image": "fab fa-linkedin",
       "url": "https://www.linkedin.com/in/abul-al-arabi"
     }
   ]
