@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Abul Al Arabi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!---add my css-->
+    <link rel="stylesheet" href="style/tabbar.css">
+    <link rel="stylesheet" href="style/bg.css">
+    <link rel="stylesheet" href="style/style.css">
+    <link rel="stylesheet" href="style/card.css">
+
+    <!---add vendors-->
+    <script src="vendor/particles.min.js"></script>
+    <script src="vendor/jquery-3.2.1.js"></script>
+    <script src="vendor/jquery-ui.js"></script>
+    <link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
+    <script src="vendor/typist.js"></script>
+
+</head>
+
+<body>
+    <noscript>Enable JavaScript to run this app.</noscript>
+    <div id="particles-js"></div>
+    <nav class="nav">
+        <a class="nav-item is-active" active-color="green">about</a>
+        <a class="nav-item" active-color="green">research</a>
+        <a class="nav-item" active-color="green">education</a>
+        <a class="nav-item" active-color="green">awards</a>
+        <a class="nav-item" active-color="green">workshops</a>
+        <a class="nav-item" active-color="green">skills</a>
+        <span class="nav-indicator"></span>
+    </nav>
+    
+
+    <div id="root">
+        <div id="about" class="container">
+            <div style="align-items: center; text-align: center;">
+                    <img class="aboutimage" src="./data/images/about/1.jpg" alt="">
+                    <div class = "aboutcontent">
+                        <h1>abul al arabi</h1>
+                        <p class="shell" >root@arabi:~# <span id="introline"></span></p>
+                        
+                        <p id="aboutmetext" class="shell2"></p>
+                        
+                        <p class="shell" >root@arabi:~# <span id="contactinfo"></span></p>
+                    </div>
+                    
+            </div>
+            
+        </div>
+    </div>
+    
+    <div class="fastyle" id="faicons"></div>
+
+    <!---add data files-->
+    <script src="data/json/about.js"></script>
+
+    <!---add the initializers-->
+    <script src="src/tabbar.js"></script>
+    <script src="src/bg.js"></script>
+    <script type="module" src="src/config.js" ></script>
+    <script src="src/typist.js"></script>
+    <script src="src/main.js"></script>
+  
+</body>
+
+</html>
