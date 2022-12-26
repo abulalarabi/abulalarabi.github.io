@@ -5,4 +5,11 @@ function aboutme(){
     placeholder.textContent = abttxt;
 }
 
-aboutme();
+//var tabs = []
+
+(function() {
+    aboutme();
+    configs.focusedDiv = "about";
+ })();
+
+

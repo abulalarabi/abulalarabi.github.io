@@ -17,23 +17,27 @@
     <script src="vendor/jquery-ui.js"></script>
     <link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
     <script src="vendor/typist.js"></script>
+    <script src="vendor/jquery.showmore.min.js"></script>
 
 </head>
 
 <body>
     <noscript>Enable JavaScript to run this app.</noscript>
     <div id="particles-js"></div>
-    <nav class="nav">
-        <a class="nav-item is-active" active-color="green">about</a>
-        <a class="nav-item" active-color="green">research</a>
-        <a class="nav-item" active-color="green">education</a>
-        <a class="nav-item" active-color="green">awards</a>
-        <a class="nav-item" active-color="green">workshops</a>
-        <a class="nav-item" active-color="green">skills</a>
-        <span class="nav-indicator"></span>
-    </nav>
-    
 
+    <nav class="nav" id="navitems">
+        <a class="nav-item is-active" active-color="white">about</a>
+        <a class="nav-item" active-color="white">research</a>
+        <a class="nav-item" active-color="white">education</a>
+        <a class="nav-item" active-color="white">awards</a>
+        <a class="nav-item" active-color="white">workshops</a>
+        <a class="nav-item" active-color="white">skills</a>
+        <span class="nav-indicator"></span>
+        
+    </nav>
+
+    <div class="fastyle" id="faicons"></div>
+    
     <div id="root">
         <div id="about" class="container">
             <div style="align-items: center; text-align: center;">
@@ -48,20 +52,39 @@
                     </div>
                     
             </div>
-            
         </div>
+
+
+        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+            <div id="research" style="align-items: center; text-align: center;"></div>
+        </div>
+
+        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+          <div id="education" style="align-items: center; text-align: center;"></div>
+        </div>
+
+
     </div>
     
-    <div class="fastyle" id="faicons"></div>
+   
 
     <!---add data files-->
+    <script src="data/json/config.js"></script>
     <script src="data/json/about.js"></script>
+    <script src="data/json/research.js"></script>
+    <script src="data/json/education.js"></script>
 
     <!---add the initializers-->
-    <script src="src/tabbar.js"></script>
     <script src="src/bg.js"></script>
-    <script type="module" src="src/config.js" ></script>
     <script src="src/typist.js"></script>
+
+    <!---add the menubar js handlers-->
+    <script src="src/socials.js" ></script>
+    <script src="src/research.js"></script>
+    <script src="src/education.js"></script>
+
+    <!---main ui loader-->
+    <script src="src/tabbar.js"></script>
     <script src="src/main.js"></script>
   
 </body>

@@ -17,6 +17,21 @@ function handleIndicator(el) {
 
 
 items.forEach((item, index) => {
-  item.addEventListener('click', (e) => { handleIndicator(e.target)});
+  item.addEventListener('click', (e) => { 
+    handleIndicator(e.target);
+    var targetDiv = e.target.textContent;
+    if (targetDiv != configs.focusedDiv)
+    {
+      if(targetDiv=="research") showResearch();
+      if(targetDiv=="education") showEducation();
+
+      $('#'+configs.focusedDiv).fadeOut(300,function(){
+        $('#'+targetDiv).fadeIn(400,function(){
+          configs.focusedDiv = targetDiv;
+        });
+      });
+      
+    }
+  });
   item.classList.contains('is-active') && handleIndicator(item);
 });

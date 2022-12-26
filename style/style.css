@@ -9,14 +9,30 @@ body {
   background-color: #000;
 }
 
+.fastyle{
+  top: 80px;
+  display: inline-flex;
+  position: absolute;
+  font-size: calc(1vw + 5px);
+  padding: 10px 0.3vw;
+  color: white;
+  left: 50%;
+  transform: translateX(-50%);
+  overflow: hidden;
+  max-width: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 0 10px;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  border-radius: 10px ;
+}
+
 .container{
+  top: 190px;
   position: absolute;
   color: white;
-  top: 50%;
   left: 50%;
-  translate: -50% -50%;
+  translate: -50%;
   width: 70%;
-  height: 75%;
   background-color: rgba(0, 0, 0, 0.01);
   backdrop-filter: blur(3px);
   box-shadow: 0px 0px 40px 1px rgba(255, 255, 255, 0.2);
@@ -46,7 +62,7 @@ body {
   translate: -50%;
   background-color: #282c34;
   width: 65%;
-  padding: 5px 25px;
+  padding: 5px;
   color: rgb(238, 238, 238);
   border-radius: 5px;
   border-style: solid;
@@ -77,24 +93,9 @@ body {
   translate: 0px -60px;
 }
 
-.fastyle{
-  font-size: calc(1vw + 5px);
-  padding: 10px 0.3vw;
-  color: white;
-  left: 50%;
-  translate: -50%;
-  display: inline-flex;
-  position: absolute;
-  overflow: hidden;
-  max-width: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  padding: 0 10px;
-  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-  border-radius: 10px ;
-  bottom: 3%;
-}
 
-@media (max-aspect-ratio: 8/10)
+
+@media (max-aspect-ratio: 9/10)
 {
   .shell{
     font-size: small;
@@ -107,35 +108,24 @@ body {
   }
   .aboutcontent{
     translate: 0px -55px;
-  }
-  .container{
-    width: 90%;
-    height: 75%;
-  }
-}
-
-@media (min-aspect-ratio: 30/10)
-{
-  .shell{
-    font-size: small;
-    padding: 5px;
-    width: 95%;
-  }
-  .shell2{
-    font-size: small;
-    width: 95%;
-  }
-  .aboutcontent{
-    translate: 0px -55px;
-  }
-  .container{
-    width: 90%;
-    translate: -50% 10%;
-    height: auto;
   }
   .fastyle{
-    bottom: auto;
-    top: 25%;
+    top: 60px;
   }
+  .container{
+    top: 140px;
+    width: 95%;
+  }
+
 }
+
+::-webkit-scrollbar { width: 10px; height: 3px;}
+::-webkit-scrollbar-button {  background-color: #666; border-radius: 2px;}
+::-webkit-scrollbar-track {  background-color: #646464;}
+::-webkit-scrollbar-track-piece { background-color: rgba(0, 0, 0, 0.5);}
+::-webkit-scrollbar-thumb { height: 50px; background-color: rgb(131, 130, 130); border-radius: 3px;}
+::-webkit-scrollbar-corner { background-color: #646464;}
+::-webkit-resizer { background-color: #666;}
+
+
 

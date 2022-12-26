@@ -21,7 +21,7 @@
 .nav-item {
   font-size: calc(1vw + 8px);
   color: #83818c;
-  padding: 10px 0.3vw;
+  padding: 10px 0.5vw;
   text-decoration: none;
   transition: 0.3s;
   margin: 0 0.5vw;
