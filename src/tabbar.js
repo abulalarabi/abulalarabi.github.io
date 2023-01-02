@@ -27,10 +27,9 @@ items.forEach((item, index) => {
 
       $('#'+configs.focusedDiv).fadeOut(300,function(){
         $('#'+targetDiv).fadeIn(400,function(){
-          configs.focusedDiv = targetDiv;
         });
       });
-      
+      configs.focusedDiv = targetDiv;
     }
   });
   item.classList.contains('is-active') && handleIndicator(item);

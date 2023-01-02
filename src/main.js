@@ -5,11 +5,18 @@ function aboutme(){
     placeholder.textContent = abttxt;
 }
 
-//var tabs = []
+var hideTabs = ['awards', 'workshops','skills','projects'];
 
 (function() {
+    hideTabs.forEach(element => {
+        //console.log(element);
+        $('#'+element).hide();
+    });
+
     aboutme();
     configs.focusedDiv = "about";
+    
+    
  })();
 
 
