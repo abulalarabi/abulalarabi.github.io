@@ -19,9 +19,9 @@ typewriter
 
 typewriter
 .pauseFor(1500)
-.typeString('cat ./core.txt<br>')
+.typeString('cat ./research.txt<br>')
 .pauseFor(500)
-.typeString('<strong>HCI and Robotics Enthusiast</strong>')
+.typeString('<strong>HCI, Robotics, ML</strong>')
 .start();
 
 
@@ -33,7 +33,7 @@ var typewriter2 = new Typewriter(contactinfo, {
 });
 
 typewriter2
-.pauseFor(6000)
+.pauseFor(6500)
 .typeString('cat ./email.txt<br>')
 .pauseFor(500)
 .typeString('<strong>abulalarabi@tamu.edu<br>arabiabulal@gmail.com</strong>')
