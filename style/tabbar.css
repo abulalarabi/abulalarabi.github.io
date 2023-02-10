@@ -19,7 +19,7 @@
 }
 
 .nav-item {
-  font-size: calc(1vw + 8px);
+  font-size: calc(1vw + 6px);
   color: #83818c;
   padding: 10px 0.5vw;
   text-decoration: none;

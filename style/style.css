@@ -90,7 +90,7 @@ body {
 }
 
 .aboutcontent{
-  translate: 0px -60px;
+  translate: 0px -50px;
 }
 
 
@@ -119,11 +119,10 @@ body {
 
 }
 
-::-webkit-scrollbar { width: 10px; height: 3px;}
-::-webkit-scrollbar-button {  background-color: #666; border-radius: 2px;}
-::-webkit-scrollbar-track {  background-color: #646464;}
+::-webkit-scrollbar { width: 10px; height: 15px;}
+::-webkit-scrollbar-track {  background-color: #6464646c;}
 ::-webkit-scrollbar-track-piece { background-color: rgba(0, 0, 0, 0.5);}
-::-webkit-scrollbar-thumb { height: 50px; background-color: rgb(131, 130, 130); border-radius: 3px;}
+::-webkit-scrollbar-thumb { height: 50px; background-color: rgba(131, 130, 130, 0.432); border-radius: 5px;}
 ::-webkit-scrollbar-corner { background-color: #646464;}
 ::-webkit-resizer { background-color: #666;}
 

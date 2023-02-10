@@ -10,6 +10,9 @@
     <link rel="stylesheet" href="style/bg.css">
     <link rel="stylesheet" href="style/style.css">
     <link rel="stylesheet" href="style/card.css">
+    <link rel="stylesheet" href="style/lightgallery-bundle.min.css">
+    <link rel="stylesheet" href="style/lg-thumbnail.min.css">
+    <link rel="stylesheet" href="style/lg-zoom.min.css">
 
     <!---add vendors-->
     <script src="vendor/particles.min.js"></script>
@@ -18,6 +21,9 @@
     <link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
     <script src="vendor/typist.js"></script>
     <script src="vendor/jquery.showmore.min.js"></script>
+    <script src="vendor/lightgallery.min.js"></script>
+    <script src="vendor/lg-thumbnail.min.js"></script>
+    <script src="vendor/lg-zoom.min.js"></script>
 
 </head>
 
@@ -29,12 +35,12 @@
         <a class="nav-item is-active" active-color="white">about</a>
         <a class="nav-item" active-color="white">research</a>
         <a class="nav-item" active-color="white">education</a>
-        <a class="nav-item" active-color="white">awards</a>
-        <a class="nav-item" active-color="white">projects</a>
         <a class="nav-item" active-color="white">skills</a>
-        <a class="nav-item" active-color="white">workshops</a>
+        <a class="nav-item" active-color="white">projects</a>
+        <a class="nav-item" active-color="white">awards</a>
+        <a class="nav-item" active-color="white">outreach</a>
+        <a class="nav-item" active-color="white">gallery</a>
         <span class="nav-indicator"></span>
-        
     </nav>
 
     <div class="fastyle" id="faicons"></div>
@@ -56,36 +62,79 @@
         </div>
 
 
-        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
             <div id="research" style="align-items: center; text-align: center;"></div>
 
         </div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
             <div id="education" style="align-items: center; text-align: center;"></div>
         </div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
             <div id="projects" style="align-items: center; text-align: center;">
                 <h4>Under construction</h4>
             </div>
         </div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
             <div id="awards" style="align-items: center; text-align: center;">
                 <h4>Under construction</h4>
             </div>
         </div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
-            <div id="workshops" style="align-items: center; text-align: center;">
+        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
+            <div id="outreach" style="align-items: center; text-align: center;">
                 <h4>Under construction</h4>
             </div>
         </div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 80%; overflow-y: auto; overflow-x: hidden;">
+        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
             <div id="skills" style="align-items: center; text-align: center;">
                 <h4>Under construction</h4>
+            </div>
+        </div>
+
+        <div class="container" style="translate:-50% -20px;max-height: 90%;">
+            <div id="gallery" style="align-items: center; text-align: center;">
+                
+                <div class="galleryMain">
+                    <h3>Competitions</h3>
+                    <div style="display:inline-flex;">
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/zUvq41HQ14k" title="IARC 14 champion team Buet exponential" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>    
+                        </div>
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/EghQ33RO8bY" title="IUB Techfest LFR Champion" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/SMQ48nU6qf8" title="IRC Bangladesh 2015 Champion  BUET Exponentials" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    
+                </div>
+
+                <div class="galleryMain">
+                    <h3>Media Coverage</h3>
+                    <div style="display: inline-flex;">
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/f1i3w0HiNbo" title="IUB's 'Team Attendant' with its splendid success" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/y2odJR_uJEw" title="Boishaki TV interview Part1" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div> 
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/sv2R6PtWONo" title="Channel i Shows | Amader Shontanera" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/9D1O4Jqr_NY" title="Shokaler Bangladesh, Al Arabi & Dr. Ashraful Amin" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                        <div class="galleryCard">
+                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/UQwJPS6PiGI" title="IUB Team Attendant is LIVE on Independent Television, Al Arabi, Dr. Ashraful Amin & Akil Hamid" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    
+                </div>
             </div>
         </div>
 
@@ -109,6 +158,7 @@
     <script src="src/socials.js" ></script>
     <script src="src/research.js"></script>
     <script src="src/education.js"></script>
+    <script src="src/gallery.js"></script>
 
     <!---main ui loader-->
     <script src="src/tabbar.js"></script>

@@ -232,3 +232,17 @@
   overflow-y: auto;
   max-height: 200px;
 }
+
+
+.galleryMain{
+  width: 95%;
+  border-radius: 10px;
+  border-bottom: 1px solid white;
+  text-align: center;
+  overflow-x: auto;
+}
+
+.galleryCard{
+  float:left;
+  margin: 15px;
+}

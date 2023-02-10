@@ -24,6 +24,7 @@ items.forEach((item, index) => {
     {
       if(targetDiv=="research") showResearch();
       if(targetDiv=="education") showEducation();
+      if(targetDiv=="gallery") showGallery();
 
       $('#'+configs.focusedDiv).fadeOut(300,function(){
         $('#'+targetDiv).fadeIn(400,function(){

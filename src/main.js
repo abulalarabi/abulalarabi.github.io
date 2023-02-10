@@ -5,7 +5,7 @@ function aboutme(){
     placeholder.textContent = abttxt;
 }
 
-var hideTabs = ['awards', 'workshops','skills','projects'];
+var hideTabs = ['research','education','skills','projects','awards','outreach','gallery'];
 
 (function() {
     hideTabs.forEach(element => {
