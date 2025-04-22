@@ -21,7 +21,7 @@ typewriter
 .pauseFor(1500)
 .typeString('cat ./research.txt<br>')
 .pauseFor(500)
-.typeString('<strong>HCI, Robotics, ML</strong>')
+.typeString('<strong>Robotics, LLM based Planning, Human-Robot Interaction, ML</strong>')
 .start();
 
 
@@ -36,6 +36,6 @@ typewriter2
 .pauseFor(6500)
 .typeString('cat ./email.txt<br>')
 .pauseFor(500)
-.typeString('<strong>abulalarabi@tamu.edu<br>arabiabulal@gmail.com</strong>')
+.typeString('<strong>abulalarabi@tamu.edu<br>arabiabulal@gmail.com<br>Website just got migrated, hence under development...</strong>')
 .start();
 
