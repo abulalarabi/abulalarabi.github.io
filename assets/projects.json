@@ -1,12 +1,18 @@
 [
   {
     "project-name": "FABRIC: 22 DOF Bodily-Expressive Robots",
-    "descriptions": "Sign language is a vital visual-manual communication method for individuals with hearing impairments, yet current robotic systems remain expensive and technically inaccessible for embodied interaction. We present FABRIC, a low-cost, end-to-end toolkit that enables users to 3D print expressive robots and program bodily language through learning-from-demonstration. FABRIC supports upper-torso motion replication using video input and offers an intuitive visual programming interface, lowering barriers to designing embodied, communicative robots for diverse applications.",
+    "descriptions": "FABRIC is a 22DOF humanoid robot platform designed to be a low-cost, end-to-end toolkit that enables users to 3D print expressive robots and program bodily language through learning-from-demonstration. FABRIC supports upper-torso motion replication using video input and offers an intuitive visual programming interface, lowering barriers to designing embodied, communicative robots for diverse applications.",
     "images": "assets/project-images/fabric"
   },
   {
     "project-name": "Mars Rover",
-    "descriptions": "The Mars Rover project aims to develop a fully autonomous robotic system capable of navigating the Martian terrain, conducting scientific experiments, and transmitting data back to Earth. Leveraging advanced AI algorithms and robust engineering, the rover will be equipped with a suite of instruments to analyze soil samples, search for signs of past life, and capture high-resolution images of the Martian landscape.",
+    "descriptions": "The Mars Rover project, developed across three iterations, focuses on creating autonomous robots that can navigate rugged Martian terrain, perform scientific experiments, and transmit results back to mission control. Each rover features a 6-DOF robotic arm rated for a 14-lb payload, along with GPS, remote-sensing instruments, long-range communications, autonomous terrain traversal, and panoramic imaging systems.",
     "videos":["https://youtu.be/_3PXfNXsOGQ","https://youtu.be/D89SuaIiUQ8","https://youtu.be/s5ipzc_PiKQ"]
+  },
+  {
+    "project-name": "Adding Mobile Robotics to Everyday Objects",
+    "descriptions": "Mobiot is an end-user toolkit to help non-experts capture the design and motion requirements of legacy objects by demonstration. It then automatically generates 3D printable attachments, programs to operate assembled modules, a list of off-the-shelf electronics, and assembly tutorials. The authoring feature further assists users to fine-tune as well as to reuse existing motion libraries and 3D printed mechanisms to adapt to other real-world objects with different motions. ",
+    "videos":["https://youtu.be/uX7m3bPknnI","https://youtu.be/sq5gRLmcaU0"],
+    "images": "assets/project-images/mobiot"
   }
 ]

@@ -2,8 +2,8 @@
 
 /* Theme tokens (override if needed) */
 :root {
-  --proj-bg: #0b0d10;
-  --proj-card: #111418;
+  --proj-bg: #00183b;
+  --proj-card: #141414;
   --proj-card-2: #0e1114;
   --proj-text: #e9eef4;
   --proj-text-dim: #c3cbd5;
