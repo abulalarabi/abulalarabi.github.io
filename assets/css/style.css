@@ -1,20 +1,3 @@
-/*-----------------------------------*\
-  #style.css
-\*-----------------------------------*/
-
-
-/**
- * copyright 2022 @codewithsadee
- */
-
-
-
-
-
-/*-----------------------------------*\
-  #CUSTOM PROPERTY
-\*-----------------------------------*/
-
 :root {
 
   /**
@@ -340,7 +323,7 @@ main {
 
 .sidebar {
   margin-bottom: 10px;
-  max-height: 112px;
+  max-height: 140px; /* slightly higher than original to avoid clipping */
   overflow: hidden;
   transition: var(--transition-2);
 }
@@ -355,9 +338,19 @@ main {
   gap: 15px;
 }
 
+/* Avatar: base size for small screens */
 .avatar-box {
   background: var(--bg-gradient-onyx);
-  border-radius: 20px;
+  border-radius: 5px;
+  width: 190px;
+  height: 90px;
+  overflow: hidden;
+}
+
+.avatar-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .info-content .name {
@@ -1099,92 +1092,6 @@ main {
 
 
 
-/*-----------------------------------*\
-  #BLOG
-\*-----------------------------------*/
-
-.blog-posts { margin-bottom: 10px; }
-
-.blog-posts-list {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 20px;
-}
-
-.blog-post-item > a {
-  position: relative;
-  background: var(--border-gradient-onyx);
-  height: 100%;
-  box-shadow: var(--shadow-4);
-  border-radius: 16px;
-  z-index: 1;
-}
-
-.blog-post-item > a::before {
-  content: "";
-  position: absolute;
-  inset: 1px;
-  border-radius: inherit;
-  background: var(--eerie-black-1);
-  z-index: -1;
-}
-
-.blog-banner-box {
-  width: 100%;
-  height: 200px;
-  border-radius: 12px;
-  overflow: hidden;
-}
-
-.blog-banner-box img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: var(--transition-1);
-}
-
-.blog-post-item > a:hover .blog-banner-box img { transform: scale(1.1); }
-
-.blog-content { padding: 15px; }
-
-.blog-meta {
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  gap: 7px;
-  margin-bottom: 10px;
-}
-
-.blog-meta :is(.blog-category, time) {
-  color: var(--light-gray-70);
-  font-size: var(--fs-6);
-  font-weight: var(--fw-300);
-}
-
-.blog-meta .dot {
-  background: var(--light-gray-70);
-  width: 4px;
-  height: 4px;
-  border-radius: 4px;
-}
-
-.blog-item-title {
-  margin-bottom: 10px;
-  line-height: 1.3;
-  transition: var(--transition-1);
-}
-
-.blog-post-item > a:hover .blog-item-title { color: var(--orange-yellow-crayola); }
-
-.blog-text {
-  color: var(--light-gray);
-  font-size: var(--fs-6);
-  font-weight: var(--fw-300);
-  line-height: 1.6;
-}
-
-
-
 
 
 /*-----------------------------------*\
@@ -1406,9 +1313,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { gap: 25px; }
 
-  .avatar-box { border-radius: 30px; }
-
-  .avatar-box img { width: 120px; }
+  .avatar-box { border-radius: 20px; width: 120px; height: 120px; }
 
   .info-content .name { margin-bottom: 15px; }
 
@@ -1904,7 +1809,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { flex-direction: column; }
 
-  .avatar-box img { width: 150px; }
+  .avatar-box { width: 150px; height: 150px; }
 
   .info-content .name {
     white-space: nowrap;
@@ -1952,6 +1857,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 
 
+/* Recents timeline */
 .recents-timeline {
   list-style: none;
   padding-left: 0;
@@ -1988,6 +1894,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 
+/* Research tags */
 .research-tags {
   display: flex;
   flex-wrap: wrap;
@@ -2006,6 +1913,7 @@ textarea.form-input::-webkit-resizer { display: none; }
 
 
 
+/* Publications carousel */
 .publication-scroll {
   display: flex;
   gap: 20px;
@@ -2158,11 +2066,45 @@ textarea.form-input::-webkit-resizer { display: none; }
 }
 
 
+/* ==== Particles.js background (mobile-safe) ==== */
 #particles-js {
-  position: absolute;
-  left: 0px;
-  top: 0px;
+  position: fixed;           /* pin to viewport */
+  inset: 0;
   width: 100%;
-  height: 120%;
+  height: 100vh;             /* fallback */
+  height: 100dvh;            /* modern mobile viewport units */
+  z-index: -1;               /* behind everything */
+  pointer-events: none;      /* no tap blocking */
   background: #000000;
+}
+#particles-js canvas {
+  width: 100% !important;
+  height: 100% !important;
+  display: block;
+}
+
+/* Ensure content is above background */
+main, .sidebar, .main-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* Small-screen comfort tweaks */
+@media (max-width: 579.98px) {
+  main { 
+    margin-top: 16px;
+    margin-bottom: 90px; /* above fixed navbar */
+  }
+  .info-content .name { 
+    font-size: 18px;
+  }
+  .research-tags span {
+    font-size: 11px;
+    padding: 3px 8px;
+  }
+}
+
+/* Keep article panes that declare max-height in check on tiny screens */
+article[style*="max-height"] {
+  max-height: min(90vh, 100dvh);
 }
