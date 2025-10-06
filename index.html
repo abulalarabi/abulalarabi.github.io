@@ -2,168 +2,293 @@
 <html lang="en">
 
 <head>
-    <title>Abul Al Arabi</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src="vendor/particles.min.js"></script>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Abul Al Arabi - Personal Portfolio</title>
 
-    <!---add my css-->
-    <link rel="stylesheet" href="style/tabbar.css">
-    <link rel="stylesheet" href="style/bg.css">
-    <link rel="stylesheet" href="style/style.css">
-    <link rel="stylesheet" href="style/card.css">
-    <link rel="stylesheet" href="style/lightgallery-bundle.min.css">
-    <link rel="stylesheet" href="style/lg-thumbnail.min.css">
-    <link rel="stylesheet" href="style/lg-zoom.min.css">
+  <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
 
-    <!---add vendors-->
-    <script src="vendor/particles.min.js"></script>
-    <script src="vendor/jquery-3.2.1.js"></script>
-    <script src="vendor/jquery-ui.js"></script>
-    <link href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" rel="stylesheet">
-    <script src="vendor/typist.js"></script>
-    <script src="vendor/jquery.showmore.min.js"></script>
-    <script src="vendor/lightgallery.min.js"></script>
-    <script src="vendor/lg-thumbnail.min.js"></script>
-    <script src="vendor/lg-zoom.min.js"></script>
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <link rel="stylesheet" href="./assets/css/publications.css">
+  <link rel="stylesheet" href="./assets/css/projects.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css"/>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.3/css/lightgallery-bundle.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.3/lightgallery.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.3/plugins/thumbnail/lg-thumbnail.min.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/lightgallery@2.8.3/plugins/zoom/lg-zoom.min.js" defer></script>
 
 </head>
 
 <body>
-    <noscript>Enable JavaScript to run this app.</noscript>
+  <noscript>Enable JavaScript to run this app.</noscript>
     <div id="particles-js"></div>
 
-    <nav class="nav" id="navitems">
-        <a class="nav-item is-active" active-color="white">about</a>
-        <a class="nav-item" active-color="white">research</a>
-        <a class="nav-item" active-color="white">education</a>
-        <a class="nav-item" active-color="white">skills</a>
-        <a class="nav-item" active-color="white">projects</a>
-        <a class="nav-item" active-color="white">awards</a>
-        <a class="nav-item" active-color="white">outreach</a>
-        <a class="nav-item" active-color="white">gallery</a>
-        <span class="nav-indicator"></span>
-    </nav>
 
-    <div class="fastyle" id="faicons"></div>
-    
-    <div id="root">
-        <div id="about" class="container">
-            <div style="align-items: center; text-align: center;">
-                    <img class="aboutimage" src="./data/images/about/1.jpg" alt="">
-                    <div class = "aboutcontent">
-                        <h1>abul al arabi</h1>
-                        <p class="shell" >root@arabi:~# <span id="introline"></span></p>
-                        
-                        <p id="aboutmetext" class="shell2"></p>
-                        
-                        <p class="shell" >root@arabi:~# <span id="contactinfo"></span></p>
-                    </div>
-                    
-            </div>
+  <main>
+
+    <!--
+      - #SIDEBAR
+    -->
+
+    <aside class="sidebar" data-sidebar>
+
+      <div class="sidebar-info">
+
+        <figure class="avatar-box">
+          <img src="./assets/images/me.jpg" alt="Abul Al Arabi">
+        </figure>
+
+        <div class="info-content">
+          <h1 class="name" title="Abul Al Arabi">Abul Al Arabi</h1>
+
+          <div class="research-tags">
+            <span>Robotics</span>
+            <span>Machine Learning</span>
+            <span>Human-Computer Interaction</span>
+            <span>Human-Robot Interaction</span>
+            <span>Digital Fabrication</span>
+          </div>
+          
         </div>
 
+        <button class="info_more-btn" data-sidebar-btn>
+          <span>Show Contacts</span>
 
-        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
-            <div id="research" style="align-items: center; text-align: center;"></div>
+          <ion-icon name="chevron-down"></ion-icon>
+        </button>
 
-        </div>
+      </div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
-            <div id="education" style="align-items: center; text-align: center;"></div>
-        </div>
+      <div class="separator"></div>
 
-        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
-            <div id="projects" style="align-items: center; text-align: center;">
-                <h4>Under construction</h4>
-            </div>
-        </div>
+      <div class="sidebar-info_more">
 
-        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
-            <div id="awards" style="align-items: center; text-align: center;">
-                <h4>Under construction</h4>
-            </div>
-        </div>
-
-        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
-            <div id="outreach" style="align-items: center; text-align: center;">
-                <h4>Under construction</h4>
-            </div>
-        </div>
-
-        <div class="container" style="translate:-50% -20px;max-height: 90%; overflow-y: auto; overflow-x: hidden;">
-            <div id="skills" style="align-items: center; text-align: center;">
-                <h4>Under construction</h4>
-            </div>
-        </div>
-
-        <div class="container" style="translate:-50% -20px;max-height: 90%;">
-            <div id="gallery" style="align-items: center; text-align: center;">
-                
-                <div class="galleryMain">
-                    <h3>Competitions</h3>
-                    <div style="display:inline-flex;">
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/zUvq41HQ14k" title="IARC 14 champion team Buet exponential" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>    
-                        </div>
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/EghQ33RO8bY" title="IUB Techfest LFR Champion" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/SMQ48nU6qf8" title="IRC Bangladesh 2015 Champion  BUET Exponentials" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    
-                </div>
-
-                <div class="galleryMain">
-                    <h3>Media Coverage</h3>
-                    <div style="display: inline-flex;">
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/f1i3w0HiNbo" title="IUB's 'Team Attendant' with its splendid success" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/y2odJR_uJEw" title="Boishaki TV interview Part1" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div> 
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/sv2R6PtWONo" title="Channel i Shows | Amader Shontanera" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/9D1O4Jqr_NY" title="Shokaler Bangladesh, Al Arabi & Dr. Ashraful Amin" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                        <div class="galleryCard">
-                            <iframe width="auto" height="300" src="https://www.youtube.com/embed/UQwJPS6PiGI" title="IUB Team Attendant is LIVE on Independent Television, Al Arabi, Dr. Ashraful Amin & Akil Hamid" frameborder="1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                        </div>
-                    </div>
-                    
-                </div>
-            </div>
-        </div>
-
+        <ul class="social-list">
+          <li class="social-item">
+            <a href="https://github.com/abulalarabi" class="social-link" target="_blank" aria-label="GitHub">
+              <ion-icon name="logo-github"></ion-icon>
+            </a>
+          </li>
+          <li class="social-item">
+            <a href="https://www.linkedin.com/in/abul-al-arabi/" class="social-link" target="_blank" aria-label="LinkedIn">
+              <ion-icon name="logo-linkedin"></ion-icon>
+            </a>
+          </li>
+          <li class="social-item">
+            <a href="https://scholar.google.com/citations?user=zekn92QAAAAJ&hl=en&oi=ao" class="social-link" target="_blank" aria-label="Google Scholar">
+              <i class="ai ai-google-scholar"></i>
+            </a>
+          </li>
+        </ul>
         
 
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="sidebar-info_more">
+
+        <ul class="contacts-list">
+
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="mail-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Email</p>
+              <a href="mailto:arabiabulal@gmail.com" class="contact-link">
+                <code>arabiabulal[@]gmail.com</code>
+              </a>
+            </div>
+          </li>
+          
+          <li class="contact-item">
+            <div class="icon-box">
+              <ion-icon name="location-outline"></ion-icon>
+            </div>
+            <div class="contact-info">
+              <p class="contact-title">Location</p>
+              <p class="contact-link">College Station, Texas, USA</p>
+            </div>
+          </li>
+          
+
+        </ul>
+      </div>
+
+    </aside>
+
+
+
+
+
+    <!--
+      - #main-content
+    -->
+
+    <div class="main-content">
+
+      <!--
+        - #NAVBAR
+      -->
+
+      <nav class="navbar">
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <button class="navbar-link active" data-nav-link>About</button>
+          </li>
+          
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Projects</button>
+          </li>
+        
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Talks</button>
+          </li>
+
+          <li class="navbar-item">
+            <button class="navbar-link" data-nav-link>Publications</button>
+          </li>
+
+          <li class="navbar-item ">
+            <button class="navbar-link" data-nav-link>Resume</button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+
+
+
+
+      <!--
+        - #ABOUT
+      -->
+
+      <article class="about active" data-page="about">
+        <header>
+          <h2 class="h2 article-title">About me</h2>
+        </header>
+        <section class="about-text">
+          <p>
+            Hello, I'm Abul Al Arabi, a Ph.D. student at the HCIED Lab, Department of Computer Science and Engineering, Texas A&M University. My research focuses on Human-Computer Interaction, Robotics, and Machine Learning. I hold a B.Sc. in Electrical and Electronic Engineering from Bangladesh University of Engineering and Technology (BUET). Prior to my doctoral studies, I worked as a Research Assistant at Independent University Bangladesh, a Lecturer at Northern University Bangladesh, and served as a consultant and R&D engineer in various organizations.
+          </p>
+        </section>
+        <section class="service">
+          <h3 class="h3 service-title">Recents</h3>
+          <ul class="recents-timeline">
+            <li><span class="date">08/25</span>Paper Accepted in IEEE IROS 2025</li>
+            <li><span class="date">02/25</span>Passed Ph.D. Prelim Exam</li>
+            <li><span class="date">11/24</span>3rd, Graduate student research presentations, TxGIS Day'24</li>
+            <li><span class="date">09/24</span>Serving as SC Assistant for CHI 2025</li>
+            <li><span class="date">09/23</span>Paper presented at UBICOMP'23</li>
+            <li><span class="date">10/22</span>Talk on mobile robotics, IAS Annual Meeting 2022</li>
+            <li><span class="date">06/22</span>Instructor for robotics workshop, Super Computing Academy Summer Camps, Texas A&M University</li>
+            <li><span class="date">05/22</span>Paper presented at CHI'22</li>
+          </ul>
+        </section>
+
+        <section class="publications">
+          <div class="publication-scroll" id="publication-container"></div>
+        </section>
+      </article>
+
+      <!-- projects -->
+      <article class="portfolio" data-page="projects" style="max-height: 90vh; overflow-y: auto;">
+        <header>
+          <h2 class="h2 article-title">Projects</h2>
+        </header>
+        <section id="projects-section" ></section>
+        <script src="assets/js/projects.js"></script>
+      </article>
+
+
+
+      <!-- talks -->
+      <article class="portfolio" data-page="talks">
+        <header>
+          <h2 class="h2 article-title">Talks</h2>
+        </header>
+        <p> being updated</p>
+      </article>
+
+      <!-- publications -->
+      <article class="portfolio" data-page="publications" style="max-height: 90vh; overflow-y: auto;">
+        <header>
+          <h2 class="h2 article-title">Publications</h2>
+        </header>
+       <section id = "publication-section" ></section>
+      </article>
+
+      <!-- - #RESUME -->
+      <article class="resume" data-page="resume" style="max-height: 90vh; overflow-y: auto;">
+        <section id = "resume-section" >
+        </section>
+        <script>
+        fetch('resume.html')
+          .then(response => response.text())
+          .then(html => {
+            document.getElementById('resume-section').innerHTML = html;
+          })
+          .catch(err => console.error('Error loading resume:', err));
+      </script>
+      </article>
+
+      
+
     </div>
-    
-   
 
-    <!---add data files-->
-    <script src="data/json/config.js"></script>
-    <script src="data/json/about.js"></script>
-    <script src="data/json/research.js"></script>
-    <script src="data/json/education.js"></script>
+  </main>
 
-    <!---add the initializers-->
-    <script src="src/bg.js"></script>
-    <script src="src/typist.js"></script>
 
-    <!---add the menubar js handlers-->
-    <script src="src/socials.js" ></script>
-    <script src="src/research.js"></script>
-    <script src="src/education.js"></script>
-    <script src="src/gallery.js"></script>
+<!-- Modal -->
+<div id="publication-modal" class="modal">
+  <div class="modal-content">
+    <span class="modal-close">&times;</span>
+    <!-- Inside your modal-content -->
+    <img id="modal-img" />
 
-    <!---main ui loader-->
-    <script src="src/tabbar.js"></script>
-    <script src="src/main.js"></script>
+    <h4 id="modal-title"></h4>
+
+    <div class="modal-buttons">
+      <a id="modal-pdf" target="_blank">PDF</a>
+      <a id="modal-video" target="_blank">Video</a>
+    </div>
+
+    <!-- Embed video below thumbnail -->
+    <div id="modal-embed" class="modal-embed"></div>
+
+    <p id="modal-summary"></p>
+
+  </div>
+</div>
+
+
+
+  <!--
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!--
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <script src="assets/js/publication.js"></script>
   
+  <script src="assets/js/bg.js"></script>
+
 </body>
 
 </html>
