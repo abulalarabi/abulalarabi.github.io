@@ -1294,8 +1294,8 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   main {
-    margin-top: 60px;
-    margin-bottom: 100px;
+    margin-top: 10px;
+    margin-bottom: 10px;
   }
 
 
@@ -1648,7 +1648,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   .sidebar, article {
-    width: 950px;
+    width: 1024px;
     box-shadow: var(--shadow-5);
   }
 
@@ -1658,7 +1658,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    * MAIN 
    */
 
-  main { margin-bottom: 60px; }
+  main { margin-bottom: 10px; }
 
   .main-content {
     position: relative;
@@ -1777,7 +1777,7 @@ textarea.form-input::-webkit-resizer { display: none; }
    */
 
   main {
-    max-width: 1200px;
+    max-width: 1400px;
     margin-inline: auto;
     display: flex;
     justify-content: center;
