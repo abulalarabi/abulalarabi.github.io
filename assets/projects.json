@@ -1,18 +1,29 @@
 [
   {
-    "project-name": "FABRIC: 22 DOF Bodily-Expressive Robots",
-    "descriptions": "FABRIC is a 22DOF humanoid robot platform designed to be a low-cost, end-to-end toolkit that enables users to 3D print expressive robots and program bodily language through learning-from-demonstration. FABRIC supports upper-torso motion replication using video input and offers an intuitive visual programming interface, lowering barriers to designing embodied, communicative robots for diverse applications.",
+    "project-name": "22 DOF Humanoid Robot and Learning from Demonstration",
+    "descriptions": "FABRIC is a 22DOF humanoid robot platform designed to be a low-cost, end-to-end toolkit that enables users to 3D print expressive robots and program bodily language through learning-from-demonstration. FABRIC supports upper-torso motion replication using pose estimation from video input and offers an intuitive visual programming interface, lowering barriers to designing embodied, communicative robots for diverse applications.",
+    "videos":["https://youtu.be/ndf2YhFQPJ4?si=Ebsyt0jp_5c62jGd"],
     "images": "assets/project-images/fabric"
   },
   {
-    "project-name": "Mars Rover",
+    "project-name": "Mars Rover Development",
     "descriptions": "The Mars Rover project, developed across three iterations, focuses on creating autonomous robots that can navigate rugged Martian terrain, perform scientific experiments, and transmit results back to mission control. Each rover features a 6-DOF robotic arm rated for a 14-lb payload, along with GPS, remote-sensing instruments, long-range communications, autonomous terrain traversal, and panoramic imaging systems.",
     "videos":["https://youtu.be/_3PXfNXsOGQ","https://youtu.be/D89SuaIiUQ8","https://youtu.be/s5ipzc_PiKQ"]
   },
   {
-    "project-name": "Adding Mobile Robotics to Everyday Objects",
+    "project-name": "Mobile Robotics for Everyday Objects and Demonstration based Path Planning",
     "descriptions": "Mobiot is an end-user toolkit to help non-experts capture the design and motion requirements of legacy objects by demonstration. It then automatically generates 3D printable attachments, programs to operate assembled modules, a list of off-the-shelf electronics, and assembly tutorials. The authoring feature further assists users to fine-tune as well as to reuse existing motion libraries and 3D printed mechanisms to adapt to other real-world objects with different motions. ",
     "videos":["https://youtu.be/uX7m3bPknnI","https://youtu.be/sq5gRLmcaU0"],
     "images": "assets/project-images/mobiot"
+  },
+  {
+    "project-name": "TOKAI: a Waste Bottle Collection Robot using Deep Learning",
+    "descriptions": "We fabricate a waste bottle collection robot with 4 degrees of freedom, named Tokai, implemented deep learning-based object detection to collect waste bottles. We investigated the feasibility of using deep learning for object detection in a real-world environment. We trained the YOLO model with a custom dataset of waste bottles and deployed it on the robot. The robot is capable of autonomously navigating and collecting waste bottles in an indoor or outdoorenvironment.",
+    "images": "assets/project-images/tokai"
+  },
+  {
+    "project-name": "Autonomous Traversal using GPS-based Path Planning",
+    "descriptions": "This autonomous traversal system utilizes GPS data to navigate and plan paths in outdoor environments. The system integrates real-time GPS tracking, PID control, and path planning algorithms for safe navigation across various terrains. It is suitable for applications such as delivery robots, agricultural machinery, and exploration vehicles. We tested the system at Mars Desert Research Station (MDRS) in Utah, simulating Martian terrain.",
+    "images": "assets/project-images/gps-path-planning"
   }
 ]

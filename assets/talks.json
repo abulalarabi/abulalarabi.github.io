@@ -1,0 +1,22 @@
+[
+  {
+    "project-name": "IEEE TISP Talk on Robotic Manipulation, IIEE AUST SB",
+    "descriptions": "",
+    "images": "assets/talk-images/aust17"
+  },
+  {
+    "project-name": "Introduction to IoT in Robotics, IEEE RUET SB",
+    "descriptions": "",
+    "images": "assets/talk-images/ruet"
+  },
+  {
+    "project-name": "Talk on 4th Industrial Revolution and Automation, IEEE SPAC, NSU",
+    "descriptions": "",
+    "images": "assets/talk-images/spac"
+  },
+  {
+    "project-name": "Talk on Industrial Automation, IIUC",
+    "descriptions": "",
+    "images": "assets/talk-images/iiuc"
+  }
+]

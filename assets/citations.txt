@@ -144,5 +144,7 @@
 
 @article{alfabric,
   title={FABRIC: FAbricating Bodily-Expressive Robots for Inclusive and Low-Cost Design},
-  author={Al Arabi, Abul and Kim, Jeeeun}
+  author={Al Arabi, Abul and Kim, Jeeeun},
+  booktitle={Accepted in IEEE IROS 2025},
+  year={2025}
 }
