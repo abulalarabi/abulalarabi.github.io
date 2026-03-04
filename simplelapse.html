@@ -1,0 +1,897 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Timelapse Capture (Browser)</title>
+  <style>
+    :root{
+      --bg:#0b1220;
+      --panel:rgba(255,255,255,.06);
+      --panel2:rgba(255,255,255,.09);
+      --text:#eaf0ff;
+      --muted:rgba(234,240,255,.72);
+      --border:rgba(234,240,255,.14);
+      --accent:#7c5cff;
+      --accent2:#27d3b7;
+      --warn:#ffb020;
+      --danger:#ff4d4d;
+      --ok:#30d158;
+      --shadow: 0 12px 40px rgba(0,0,0,.45);
+      --radius:16px;
+      --radius2:12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(124,92,255,.22), transparent 60%),
+        radial-gradient(900px 700px at 90% 20%, rgba(39,211,183,.18), transparent 55%),
+        radial-gradient(900px 700px at 40% 90%, rgba(255,176,32,.10), transparent 55%),
+        var(--bg);
+      min-height:100vh;
+    }
+    header{
+      padding:24px 20px 10px;
+      max-width:1200px;
+      margin:0 auto;
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .title{
+      display:flex; flex-direction:column; gap:6px;
+    }
+    h1{
+      margin:0;
+      font-size:20px;
+      letter-spacing:.2px;
+      font-weight:700;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:13px;
+      line-height:1.3;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border:1px solid var(--border);
+      background:linear-gradient(180deg, rgba(255,255,255,.09), rgba(255,255,255,.05));
+      border-radius:999px;
+      box-shadow:var(--shadow);
+      font-size:12px;
+      color:var(--muted);
+      white-space:nowrap;
+    }
+    .pill .dot{
+      width:8px;height:8px;border-radius:999px;background:var(--danger);
+      box-shadow:0 0 0 4px rgba(255,77,77,.15);
+    }
+    .pill.capturing .dot{ background:var(--ok); box-shadow:0 0 0 4px rgba(48,209,88,.15); }
+    .pill .mono{ font-family:var(--mono); color:var(--text); opacity:.9; }
+
+    main{
+      max-width:1200px;
+      margin:0 auto;
+      padding:10px 20px 28px;
+      display:grid;
+      grid-template-columns: 420px 1fr;
+      gap:16px;
+    }
+    @media (max-width: 980px){
+      main{ grid-template-columns: 1fr; }
+    }
+
+    .card{
+      background:linear-gradient(180deg, rgba(255,255,255,.08), rgba(255,255,255,.04));
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card h2{
+      margin:0;
+      padding:14px 16px;
+      font-size:14px;
+      font-weight:700;
+      border-bottom:1px solid var(--border);
+      background:rgba(255,255,255,.03);
+    }
+    .content{ padding:14px 16px 16px; }
+
+    .grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .grid .full{ grid-column: 1 / -1; }
+    label{
+      display:block;
+      font-size:12px;
+      color:var(--muted);
+      margin:0 0 6px;
+    }
+    input, select, button{
+      width:100%;
+      border-radius:12px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.25);
+      color:var(--text);
+      padding:10px 12px;
+      outline:none;
+      transition: .15s ease;
+      font-size:13px;
+    }
+    input::placeholder{ color: rgba(234,240,255,.35); }
+    input:focus, select:focus{
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 4px rgba(124,92,255,.16);
+    }
+    button{
+      cursor:pointer;
+      background:linear-gradient(180deg, rgba(124,92,255,.95), rgba(124,92,255,.75));
+      border-color: rgba(124,92,255,.65);
+      font-weight:700;
+    }
+    button:hover{ filter:brightness(1.04); }
+    button:disabled{
+      cursor:not-allowed;
+      opacity:.5;
+      filter:none;
+    }
+    .btnRow{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .btnSecondary{
+      background:linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.06));
+      border-color: var(--border);
+      font-weight:700;
+    }
+    .btnDanger{
+      background:linear-gradient(180deg, rgba(255,77,77,.95), rgba(255,77,77,.70));
+      border-color: rgba(255,77,77,.65);
+    }
+
+    .hint{
+      margin-top:10px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.35;
+    }
+    .hint code{
+      font-family:var(--mono);
+      font-size:11px;
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.25);
+      color:rgba(234,240,255,.9);
+    }
+
+    .warning{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(255,176,32,.45);
+      background:rgba(255,176,32,.10);
+      color:rgba(255,230,190,.95);
+      font-size:12px;
+      display:none;
+    }
+    .warning.show{ display:block; }
+
+    .okbox{
+      margin-top:10px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid rgba(48,209,88,.45);
+      background:rgba(48,209,88,.10);
+      color:rgba(208,255,223,.95);
+      font-size:12px;
+      display:none;
+    }
+    .okbox.show{ display:block; }
+
+    .previewWrap{
+      position:relative;
+      aspect-ratio: 16 / 9;
+      background: rgba(0,0,0,.45);
+      border-radius: var(--radius);
+      border:1px solid var(--border);
+      overflow:hidden;
+    }
+    video{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      background:#000;
+    }
+    .overlay{
+      position:absolute; inset:0;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      padding:12px;
+      pointer-events:none;
+    }
+    .badge{
+      pointer-events:none;
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
+      font-size:12px;
+      color:var(--muted);
+    }
+    .badge .dot{
+      width:9px;height:9px;border-radius:999px;background:var(--danger);
+      box-shadow:0 0 0 4px rgba(255,77,77,.12);
+    }
+    .badge.capturing .dot{ background:var(--ok); box-shadow:0 0 0 4px rgba(48,209,88,.12); }
+    .badge .mono{ font-family:var(--mono); color:var(--text); opacity:.9; }
+    .stats{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+    }
+    .stat{
+      padding:10px 12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(255,255,255,.05);
+    }
+    .stat .k{ color:var(--muted); font-size:12px; }
+    .stat .v{ margin-top:6px; font-size:14px; font-weight:800; }
+    .mono{ font-family:var(--mono); }
+    .log{
+      margin-top:12px;
+      border-radius:14px;
+      border:1px solid var(--border);
+      background:rgba(0,0,0,.25);
+      padding:10px 12px;
+      height:160px;
+      overflow:auto;
+      font-family:var(--mono);
+      font-size:11px;
+      color:rgba(234,240,255,.82);
+      line-height:1.35;
+      white-space:pre-wrap;
+    }
+    .tiny{
+      font-size:11px;
+      color: rgba(234,240,255,.62);
+      line-height:1.35;
+    }
+    .row{
+      display:flex; gap:10px; align-items:center;
+    }
+    .row input[type="checkbox"]{ width:auto; transform: translateY(1px); }
+    .row label{ margin:0; }
+  </style>
+</head>
+<body>
+<header>
+  <div class="title">
+    <h1>SimpleLapse: Timelapse Capture</h1>
+    <div class="sub">
+      Saves JPEG frames on an interval to a chosen folder (uses the File System Access API).
+    </div>
+  </div>
+  <div id="statusPill" class="pill">
+    <span class="dot"></span>
+    <span id="statusText">Idle</span>
+    <span class="mono" id="statusMeta"></span>
+  </div>
+</header>
+
+<main>
+  <section class="card">
+    <h2>Capture Settings</h2>
+    <div class="content">
+      <div class="grid">
+        <div class="full">
+          <label>Output directory (choose a folder)</label>
+          <div class="btnRow">
+            <button id="pickDirBtn" class="btnSecondary" type="button">Choose folder…</button>
+            <button id="openPermInfoBtn" class="btnSecondary" type="button">Help</button>
+          </div>
+          <div class="hint" id="dirHint">No folder selected.</div>
+        </div>
+
+        <div class="full">
+          <label>Project name (subfolder inside chosen directory)</label>
+          <input id="projectName" type="text" placeholder="e.g. greenhouse_cam_1" />
+          <div class="tiny">If empty, uses <span class="mono">run_YYYYMMDD_HHMMSS</span>.</div>
+          <div id="existsWarning" class="warning"></div>
+          <div class="row" style="margin-top:8px;">
+            <input id="overwriteConfirm" type="checkbox" />
+            <label for="overwriteConfirm" class="tiny">I understand and want to save into an existing project folder (if it exists).</label>
+          </div>
+        </div>
+
+        <div class="full">
+          <label>Camera</label>
+          <select id="cameraSelect">
+            <option value="">Loading cameras…</option>
+          </select>
+          <div class="tiny">If the list is empty, click “Start Preview” once to grant camera permission, then reload cameras.</div>
+        </div>
+
+        <div>
+          <label>Resolution</label>
+          <select id="resolutionSelect">
+            <option value="1920x1080">1920×1080</option>
+            <option value="1280x720">1280×720</option>
+            <option value="640x480">640×480</option>
+            <option value="3840x2160">3840×2160 (4K)</option>
+            <option value="custom">Custom…</option>
+          </select>
+        </div>
+        <div id="customResWrap" style="display:none;">
+          <label>Custom (W×H)</label>
+          <div class="row">
+            <input id="customW" type="number" min="1" step="1" value="1920" />
+            <input id="customH" type="number" min="1" step="1" value="1080" />
+          </div>
+        </div>
+
+        <div>
+          <label>Interval (seconds)</label>
+          <input id="intervalSec" type="number" min="0.1" step="0.1" value="2.0" />
+        </div>
+        <div>
+          <label>JPEG quality (0–1)</label>
+          <input id="jpegQuality" type="number" min="0" max="1" step="0.01" value="1" />
+        </div>
+
+        <div class="full">
+          <label>Duration (0 = infinite)</label>
+          <div class="row">
+            <input id="durH" type="number" min="0" step="1" value="0" title="Hours" />
+            <input id="durM" type="number" min="0" step="1" value="0" title="Minutes" />
+            <input id="durS" type="number" min="0" step="1" value="0" title="Seconds" />
+          </div>
+          <div class="tiny">Example: 0h 10m 0s captures for 10 minutes. 0/0/0 captures until you stop.</div>
+        </div>
+
+        <div class="full">
+          <div class="btnRow">
+            <button id="startPreviewBtn" type="button" class="btnSecondary">Start Preview</button>
+            <button id="reloadCamsBtn" type="button" class="btnSecondary">Reload Cameras</button>
+          </div>
+        </div>
+
+        <div class="full">
+          <div class="btnRow">
+            <button id="startBtn" type="button">Start Capture</button>
+            <button id="stopBtn" type="button" class="btnDanger" disabled>Stop</button>
+          </div>
+        </div>
+
+        <div class="full">
+          <div class="hint">
+            Notes:
+            <ul style="margin:8px 0 0 18px; color:var(--muted);">
+              <li>Works best in Chrome/Edge (File System Access API). Typically requires <code>https://</code> or <code>http://localhost</code>.</li>
+              <li>Browsers may not honor every requested resolution; actual capture size is shown on the right.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="card">
+    <h2>Preview & Status</h2>
+    <div class="content">
+      <div class="previewWrap">
+        <video id="video" autoplay playsinline muted></video>
+        <div class="overlay">
+          <div id="camBadge" class="badge">
+            <span class="dot"></span>
+            <span id="camBadgeText">Not capturing</span>
+          </div>
+          <div class="badge">
+            <span>Actual</span>
+            <span class="mono" id="actualRes">—</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stats">
+        <div class="stat">
+          <div class="k">Saved</div>
+          <div class="v mono" id="savedCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="k">Failures</div>
+          <div class="v mono" id="failCount">0</div>
+        </div>
+        <div class="stat">
+          <div class="k">Next capture</div>
+          <div class="v mono" id="nextCapture">—</div>
+        </div>
+      </div>
+
+      <div id="okBox" class="okbox"></div>
+      <div class="log" id="log"></div>
+    </div>
+  </section>
+</main>
+
+<script>
+/**
+ * Timelapse capture using:
+ * - getUserMedia + <video> for preview
+ * - <canvas> to grab frames + toBlob('image/jpeg')
+ * - File System Access API to write files into a chosen directory
+ *
+ * Limitations:
+ * - Cannot write to arbitrary paths; user must pick a folder
+ * - Best support in Chromium-based browsers
+ */
+
+const $ = (id) => document.getElementById(id);
+
+const ui = {
+  pickDirBtn: $("pickDirBtn"),
+  openPermInfoBtn: $("openPermInfoBtn"),
+  dirHint: $("dirHint"),
+  projectName: $("projectName"),
+  existsWarning: $("existsWarning"),
+  overwriteConfirm: $("overwriteConfirm"),
+
+  cameraSelect: $("cameraSelect"),
+  resolutionSelect: $("resolutionSelect"),
+  customResWrap: $("customResWrap"),
+  customW: $("customW"),
+  customH: $("customH"),
+  intervalSec: $("intervalSec"),
+  jpegQuality: $("jpegQuality"),
+  durH: $("durH"),
+  durM: $("durM"),
+  durS: $("durS"),
+
+  startPreviewBtn: $("startPreviewBtn"),
+  reloadCamsBtn: $("reloadCamsBtn"),
+  startBtn: $("startBtn"),
+  stopBtn: $("stopBtn"),
+
+  video: $("video"),
+  actualRes: $("actualRes"),
+
+  savedCount: $("savedCount"),
+  failCount: $("failCount"),
+  nextCapture: $("nextCapture"),
+  log: $("log"),
+  okBox: $("okBox"),
+
+  statusPill: $("statusPill"),
+  statusText: $("statusText"),
+  statusMeta: $("statusMeta"),
+
+  camBadge: $("camBadge"),
+  camBadgeText: $("camBadgeText"),
+};
+
+let state = {
+  dirHandle: null,          // chosen base directory
+  projectDirHandle: null,   // chosen/created project subdirectory
+  stream: null,
+  capturing: false,
+  timerId: null,
+  stopAtMs: null,
+  saved: 0,
+  failures: 0,
+  nextCaptureAt: null,
+  runStamp: null,
+};
+
+function log(msg){
+  const ts = new Date().toISOString().replace('T',' ').replace('Z','');
+  ui.log.textContent += `[${ts}] ${msg}\n`;
+  ui.log.scrollTop = ui.log.scrollHeight;
+}
+
+function pad2(n){ return String(n).padStart(2,'0'); }
+function pad6(n){ return String(n).padStart(6,'0'); }
+
+function makeRunFolderName(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const mo = pad2(d.getMonth()+1);
+  const da = pad2(d.getDate());
+  const hh = pad2(d.getHours());
+  const mm = pad2(d.getMinutes());
+  const ss = pad2(d.getSeconds());
+  return `run_${y}${mo}${da}_${hh}${mm}${ss}`;
+}
+
+function setStatus(capturing, meta=""){
+  ui.statusText.textContent = capturing ? "Capturing" : "Idle";
+  ui.statusMeta.textContent = meta ? `• ${meta}` : "";
+  ui.statusPill.classList.toggle("capturing", capturing);
+
+  ui.camBadgeText.textContent = capturing ? "Capturing" : "Not capturing";
+  ui.camBadge.classList.toggle("capturing", capturing);
+}
+
+function showOk(msg){
+  ui.okBox.textContent = msg;
+  ui.okBox.classList.add("show");
+  setTimeout(()=>ui.okBox.classList.remove("show"), 4500);
+}
+
+function showExistsWarning(show, text=""){
+  ui.existsWarning.textContent = text;
+  ui.existsWarning.classList.toggle("show", !!show);
+}
+
+function getRequestedResolution(){
+  const sel = ui.resolutionSelect.value;
+  if (sel === "custom"){
+    const w = Math.max(1, parseInt(ui.customW.value || "1920", 10));
+    const h = Math.max(1, parseInt(ui.customH.value || "1080", 10));
+    return { width: w, height: h };
+  }
+  const [w,h] = sel.split("x").map(v=>parseInt(v,10));
+  return { width: w, height: h };
+}
+
+function getDurationMs(){
+  const h = Math.max(0, parseInt(ui.durH.value || "0", 10));
+  const m = Math.max(0, parseInt(ui.durM.value || "0", 10));
+  const s = Math.max(0, parseInt(ui.durS.value || "0", 10));
+  const total = h*3600 + m*60 + s;
+  return total <= 0 ? 0 : total*1000;
+}
+
+function clamp(n, lo, hi){ return Math.min(hi, Math.max(lo, n)); }
+
+async function ensurePermissions(){
+  if (!("showDirectoryPicker" in window)) {
+    alert("Your browser does not support the File System Access API. Use Chrome or Edge.");
+    throw new Error("File System Access API not supported");
+  }
+  if (!navigator.mediaDevices?.getUserMedia) {
+    alert("Camera API (getUserMedia) not available.");
+    throw new Error("getUserMedia not supported");
+  }
+}
+
+async function pickDirectory(){
+  await ensurePermissions();
+  const handle = await window.showDirectoryPicker({ mode: "readwrite" });
+  state.dirHandle = handle;
+  ui.dirHint.textContent = `Selected: ${handle.name}`;
+  log(`Output directory selected: ${handle.name}`);
+  await checkProjectExists(); // update warning if a project name is already typed
+}
+
+async function enumerateCameras(){
+  // Device labels are often empty until user grants camera permission at least once.
+  const devices = await navigator.mediaDevices.enumerateDevices();
+  const cams = devices.filter(d => d.kind === "videoinput");
+
+  ui.cameraSelect.innerHTML = "";
+  if (cams.length === 0){
+    const opt = document.createElement("option");
+    opt.value = "";
+    opt.textContent = "No cameras found";
+    ui.cameraSelect.appendChild(opt);
+    return;
+  }
+
+  cams.forEach((cam, i) => {
+    const opt = document.createElement("option");
+    opt.value = cam.deviceId;
+    opt.textContent = cam.label || `Camera ${i+1}`;
+    ui.cameraSelect.appendChild(opt);
+  });
+}
+
+async function startPreview(){
+  await ensurePermissions();
+
+  // Stop previous
+  stopStream();
+
+  const deviceId = ui.cameraSelect.value || undefined;
+  const { width, height } = getRequestedResolution();
+
+  const constraints = {
+    video: {
+      deviceId: deviceId ? { exact: deviceId } : undefined,
+      width: { ideal: width },
+      height: { ideal: height }
+    },
+    audio: false
+  };
+
+  log(`Starting preview… requested ${width}x${height}${deviceId ? "" : " (default camera)"}`);
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia(constraints);
+    state.stream = stream;
+    ui.video.srcObject = stream;
+
+    await ui.video.play().catch(()=>{});
+    updateActualResolutionSoon();
+    showOk("Preview started.");
+  } catch (e){
+    console.error(e);
+    alert("Could not start camera. Check permissions and camera availability.");
+    log(`ERROR starting preview: ${e.message || e}`);
+  }
+}
+
+function stopStream(){
+  if (state.stream){
+    state.stream.getTracks().forEach(t => t.stop());
+    state.stream = null;
+  }
+  ui.video.srcObject = null;
+  ui.actualRes.textContent = "—";
+}
+
+function updateActualResolutionSoon(){
+  // VideoWidth/Height populate after metadata is ready
+  setTimeout(()=>{
+    const w = ui.video.videoWidth;
+    const h = ui.video.videoHeight;
+    if (w && h){
+      ui.actualRes.textContent = `${w}×${h}`;
+      log(`Actual camera resolution: ${w}x${h}`);
+    } else {
+      ui.actualRes.textContent = "—";
+    }
+  }, 350);
+}
+
+async function checkProjectExists(){
+  showExistsWarning(false);
+  ui.overwriteConfirm.checked = false;
+
+  if (!state.dirHandle) return;
+
+  const nameRaw = ui.projectName.value.trim();
+  const folderName = nameRaw || makeRunFolderName();
+
+  try{
+    // If exists, getDirectoryHandle without create will succeed.
+    await state.dirHandle.getDirectoryHandle(folderName, { create: false });
+    showExistsWarning(true, `Warning: project folder “${folderName}” already exists in the selected directory. Check the confirmation box to allow saving into it.`);
+  } catch {
+    // Not found => OK
+    showExistsWarning(false);
+  }
+}
+
+async function getOrCreateProjectDirectory(){
+  if (!state.dirHandle) {
+    alert("Choose an output directory first.");
+    throw new Error("No output directory selected");
+  }
+
+  const nameRaw = ui.projectName.value.trim();
+  const folderName = nameRaw || makeRunFolderName();
+  state.runStamp = folderName;
+
+  // Check existence
+  let exists = false;
+  try{
+    await state.dirHandle.getDirectoryHandle(folderName, { create: false });
+    exists = true;
+  } catch { exists = false; }
+
+  if (exists && !ui.overwriteConfirm.checked){
+    showExistsWarning(true, `Warning: project folder “${folderName}” already exists. Check the confirmation box to proceed.`);
+    throw new Error("Project folder exists; confirmation not provided");
+  }
+
+  const projectDir = await state.dirHandle.getDirectoryHandle(folderName, { create: true });
+  state.projectDirHandle = projectDir;
+  return { folderName, exists };
+}
+
+function setButtonsForCapture(on){
+  ui.startBtn.disabled = on;
+  ui.stopBtn.disabled = !on;
+}
+
+function updateStats(){
+  ui.savedCount.textContent = String(state.saved);
+  ui.failCount.textContent = String(state.failures);
+  ui.nextCapture.textContent = state.nextCaptureAt
+    ? new Date(state.nextCaptureAt).toLocaleTimeString()
+    : "—";
+}
+
+function makeFilename(index){
+  // frame_000001_YYYYMMDD_HHMMSS_mmm.jpg
+  const d = new Date();
+  const y = d.getFullYear();
+  const mo = pad2(d.getMonth()+1);
+  const da = pad2(d.getDate());
+  const hh = pad2(d.getHours());
+  const mm = pad2(d.getMinutes());
+  const ss = pad2(d.getSeconds());
+  const ms = String(d.getMilliseconds()).padStart(3,"0");
+  return `frame_${pad6(index)}_${y}${mo}${da}_${hh}${mm}${ss}_${ms}.jpg`;
+}
+
+async function captureOneFrame(){
+  const video = ui.video;
+  const w = video.videoWidth;
+  const h = video.videoHeight;
+  if (!w || !h) throw new Error("Video not ready");
+
+  const canvas = document.createElement("canvas");
+  canvas.width = w;
+  canvas.height = h;
+  const ctx = canvas.getContext("2d", { alpha: false });
+  ctx.drawImage(video, 0, 0, w, h);
+
+  const quality = clamp(parseFloat(ui.jpegQuality.value || "0.95"), 0, 1);
+
+  const blob = await new Promise((resolve, reject) => {
+    canvas.toBlob((b)=> b ? resolve(b) : reject(new Error("toBlob failed")), "image/jpeg", quality);
+  });
+
+  const filename = makeFilename(state.saved);
+
+  const fileHandle = await state.projectDirHandle.getFileHandle(filename, { create: true });
+  const writable = await fileHandle.createWritable();
+  await writable.write(blob);
+  await writable.close();
+
+  state.saved += 1;
+}
+
+async function startCapture(){
+  if (state.capturing) return;
+
+  // Ensure preview is running; if not, start it.
+  if (!state.stream){
+    await startPreview();
+    if (!state.stream) throw new Error("No camera stream");
+  }
+
+  const interval = parseFloat(ui.intervalSec.value || "2.0");
+  if (!(interval > 0)){
+    alert("Interval must be > 0 seconds.");
+    throw new Error("Invalid interval");
+  }
+
+  const { folderName, exists } = await getOrCreateProjectDirectory();
+  ui.dirHint.textContent = `Selected: ${state.dirHandle.name} / ${folderName}${exists ? " (existing)" : ""}`;
+  log(`Saving to project folder: ${folderName}`);
+
+  const durationMs = getDurationMs();
+  state.stopAtMs = durationMs ? (Date.now() + durationMs) : 0;
+
+  state.saved = 0;
+  state.failures = 0;
+  state.capturing = true;
+
+  setButtonsForCapture(true);
+  setStatus(true, `project: ${folderName}`);
+  updateActualResolutionSoon();
+
+  // Schedule loop
+  const intervalMs = interval * 1000;
+  state.nextCaptureAt = Date.now(); // capture immediately on start
+  updateStats();
+
+  log(`Capture started. Interval=${interval}s, duration=${durationMs ? (durationMs/1000)+"s" : "infinite"}.`);
+
+  state.timerId = setInterval(async () => {
+    if (!state.capturing) return;
+
+    const now = Date.now();
+
+    // Stop if duration reached
+    if (state.stopAtMs && now >= state.stopAtMs){
+      log("Duration reached; stopping capture.");
+      stopCapture();
+      return;
+    }
+
+    if (now < state.nextCaptureAt){
+      updateStats();
+      return;
+    }
+
+    try{
+      await captureOneFrame();
+      // lightweight progress log
+      ui.savedCount.textContent = String(state.saved);
+    } catch (e){
+      state.failures += 1;
+      ui.failCount.textContent = String(state.failures);
+      log(`WARN: capture/save failed: ${e.message || e}`);
+    }
+
+    state.nextCaptureAt = now + intervalMs;
+    updateStats();
+  }, 120); // check frequently, capture on schedule
+}
+
+function stopCapture(){
+  if (!state.capturing) return;
+  state.capturing = false;
+
+  if (state.timerId){
+    clearInterval(state.timerId);
+    state.timerId = null;
+  }
+
+  setButtonsForCapture(false);
+  setStatus(false);
+  state.nextCaptureAt = null;
+  updateStats();
+
+  log(`Capture stopped. Total saved=${state.saved}, failures=${state.failures}.`);
+  showOk("Stopped.");
+}
+
+// UI wiring
+ui.resolutionSelect.addEventListener("change", () => {
+  ui.customResWrap.style.display = (ui.resolutionSelect.value === "custom") ? "block" : "none";
+});
+
+ui.pickDirBtn.addEventListener("click", () => pickDirectory().catch(()=>{}));
+ui.openPermInfoBtn.addEventListener("click", () => {
+  alert(
+`How saving works:
+• Browsers can’t write to arbitrary paths. You must pick a folder.
+• This app then creates a subfolder (your Project Name) and saves images there.
+• Works best in Chrome/Edge on https:// or http://localhost.`
+  );
+});
+
+ui.startPreviewBtn.addEventListener("click", () => startPreview().catch(()=>{}));
+ui.reloadCamsBtn.addEventListener("click", () => enumerateCameras().catch(()=>{}));
+ui.startBtn.addEventListener("click", () => startCapture().catch((e)=>log(`Start blocked: ${e.message || e}`)));
+ui.stopBtn.addEventListener("click", () => stopCapture());
+
+ui.projectName.addEventListener("input", () => checkProjectExists().catch(()=>{}));
+
+// Hotkey: 'q' to stop
+window.addEventListener("keydown", (e) => {
+  if (e.key.toLowerCase() === "q"){
+    stopCapture();
+  }
+});
+
+// Init
+(async function init(){
+  setStatus(false);
+  updateStats();
+
+  // Attempt to enumerate cameras; labels may be blank until permissions granted.
+  try { await enumerateCameras(); }
+  catch (e){ log(`WARN: enumerateDevices failed: ${e.message || e}`); }
+
+  // If devices change (plug/unplug), refresh list
+  navigator.mediaDevices?.addEventListener?.("devicechange", () => {
+    enumerateCameras().catch(()=>{});
+  });
+
+  log("Ready. Choose a folder, start preview, then start capture.");
+})();
+</script>
+</body>
+</html>
