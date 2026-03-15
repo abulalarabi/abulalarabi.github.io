@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OscilloPlot</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.4.1/papaparse.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/nouislider@15.8.1/dist/nouislider.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/nouislider@15.8.1/dist/nouislider.min.css" />
+  <style>
+    :root {
+      --bg1: #0b1020;
+      --bg2: #11182b;
+      --card: rgba(255,255,255,0.06);
+      --border: rgba(255,255,255,0.10);
+      --text: #e6eef8;
+      --muted: #9fb0cc;
+      --accent: #7c9cff;
+    }
+
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-size: 14px;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(124,156,255,0.18), transparent 30%),
+        radial-gradient(circle at top right, rgba(0,220,180,0.12), transparent 28%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      min-height: 100vh;
+    }
+
+    .glass {
+      background: var(--card);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+    }
+
+    .input, .select {
+      width: 100%;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.05);
+      color: var(--text);
+      padding: 0.5rem 0.75rem;
+      font-size: 13px;
+      outline: none;
+      transition: 0.2s ease;
+    }
+
+    .input:focus, .select:focus {
+      border-color: rgba(124,156,255,0.65);
+      box-shadow: 0 0 0 3px rgba(124,156,255,0.12);
+    }
+
+    .btn {
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 10px;
+      padding: 0.5rem 1.1rem;
+      font-size: 13px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #7c9cff, #56d5ff);
+      color: #08101f;
+    }
+    .btn-primary:hover { transform: translateY(-1px); }
+    .btn-secondary {
+      background: rgba(255,255,255,0.06);
+      color: var(--text);
+    }
+    .btn-secondary:hover { background: rgba(255,255,255,0.09); }
+
+    .mini-scroll::-webkit-scrollbar,
+    .panel-scroll::-webkit-scrollbar { width: 6px; height: 6px; }
+    .mini-scroll::-webkit-scrollbar-thumb,
+    .panel-scroll::-webkit-scrollbar-thumb {
+      background: rgba(255,255,255,0.15);
+      border-radius: 999px;
+    }
+
+    .color-dot {
+      width: 11px; height: 11px;
+      border-radius: 999px;
+      display: inline-block;
+      border: 1px solid rgba(255,255,255,0.2);
+      flex-shrink: 0;
+    }
+
+    /* ── Plot container: clips overflow, fills width ── */
+    #plot-wrapper {
+      width: 100%;
+      overflow: hidden;
+    }
+    #plot {
+      width: 100%;
+    }
+
+    label.section-label {
+      display: block;
+      font-size: 12px;
+      color: var(--muted);
+      margin-bottom: 5px;
+    }
+
+    .table-wrap table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 600px;
+      font-size: 12px;
+    }
+    .table-wrap th, .table-wrap td {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0.4rem 0.6rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .table-wrap th {
+      position: sticky; top: 0;
+      background: rgba(17,24,43,0.95);
+      backdrop-filter: blur(10px);
+      z-index: 2;
+    }
+
+    .noUi-target {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: none;
+      border-radius: 999px;
+      height: 8px;
+    }
+    .noUi-connect { background: linear-gradient(135deg, #7c9cff, #56d5ff); }
+    .noUi-handle {
+      width: 16px !important; height: 16px !important;
+      right: -8px !important; top: -5px !important;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.25);
+      background: #dbeafe;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      cursor: pointer;
+    }
+    .noUi-handle::before, .noUi-handle::after { display: none; }
+
+    h2.section-title {
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.01em;
+      margin: 0 0 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="max-w-screen-2xl mx-auto px-4 py-5 lg:px-8">
+
+    <!-- Header -->
+    <div class="mb-5 flex flex-col gap-2 lg:flex-row lg:items-center lg:justify-between">
+      <div>
+        <h1 class="text-3xl font-bold tracking-tight">OscilloPlot</h1>
+        <p class="mt-1 text-sm" style="color:var(--muted)">Load oscilloscope CSV files, preview data, assign axes, style traces, and export plots.</p>
+      </div>
+      <div class="text-sm glass rounded-xl px-4 py-2" style="color:var(--muted)">
+        <span id="statusText">No file loaded</span>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 gap-5 xl:grid-cols-12">
+
+      <!-- LEFT PANEL -->
+      <section class="xl:col-span-3 space-y-5">
+
+        <!-- 1. Load CSV -->
+        <div class="glass rounded-2xl p-5">
+          <h2 class="section-title">1 · Load CSV</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="section-label">CSV file</label>
+              <input id="csvFile" type="file" accept=".csv,text/csv" class="input file:mr-3 file:rounded-lg file:border-0 file:bg-white/10 file:px-3 file:py-1.5 file:text-xs file:font-medium file:text-white hover:file:bg-white/15" />
+            </div>
+            <div class="grid grid-cols-2 gap-3">
+              <div>
+                <label class="section-label">Skip initial lines</label>
+                <input id="skipLines" type="number" min="0" value="0" class="input" />
+              </div>
+              <div>
+                <label class="section-label">Delimiter</label>
+                <select id="delimiter" class="select">
+                  <option value=",">Comma (,)</option>
+                  <option value="\t">Tab</option>
+                  <option value=";">Semicolon (;)</option>
+                  <option value=" ">Space</option>
+                  <option value="auto">Auto detect</option>
+                </select>
+              </div>
+            </div>
+            <div class="flex gap-2">
+              <button id="parseBtn" class="btn btn-primary">Load & Parse</button>
+              <button id="resetBtn" class="btn btn-secondary">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. Dataset Preview -->
+        <div class="glass rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-3">
+            <h2 class="section-title" style="margin:0">2 · Dataset Preview</h2>
+            <span id="datasetStats" class="text-xs" style="color:var(--muted)">No data</span>
+          </div>
+          <div class="rounded-xl border border-white/10 bg-slate-950/30 p-2">
+            <div class="table-wrap panel-scroll max-h-52 overflow-auto" id="tablePreview"></div>
+          </div>
+        </div>
+
+        <!-- 3. Axis & Figure Settings -->
+        <div class="glass rounded-2xl p-5">
+          <h2 class="section-title">3 · Axis &amp; Figure Settings</h2>
+          <div class="space-y-4">
+            <div>
+              <label class="section-label">X axis column</label>
+              <select id="xSelect" class="select"></select>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-slate-950/30 p-3">
+              <label class="flex items-center gap-2 text-sm mb-3" style="color:var(--muted)">
+                <input id="xMapEnable" type="checkbox" class="h-3.5 w-3.5" />
+                Enable X unit mapping
+              </label>
+              <div class="grid grid-cols-2 gap-3" id="xMapControls" style="opacity:0.35;pointer-events:none">
+                <div>
+                  <label class="section-label">X from</label>
+                  <select id="xUnitFrom" class="select">
+                    <option value="s">s</option><option value="ms">ms</option><option value="us">us</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="section-label">X to</label>
+                  <select id="xUnitTo" class="select">
+                    <option value="s">s</option><option value="ms" selected>ms</option><option value="us">us</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div>
+              <label class="section-label">Y axis columns</label>
+              <div id="yCheckboxes" class="panel-scroll max-h-44 overflow-auto rounded-xl border border-white/10 bg-slate-950/30 p-2" style="color:var(--text)"></div>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-slate-950/30 p-3">
+              <label class="flex items-center gap-2 text-sm mb-3" style="color:var(--muted)">
+                <input id="yMapEnable" type="checkbox" class="h-3.5 w-3.5" />
+                Enable Y unit mapping
+              </label>
+              <div class="grid grid-cols-2 gap-3" id="yMapControls" style="opacity:0.35;pointer-events:none">
+                <div>
+                  <label class="section-label">Y from</label>
+                  <select id="yUnitFrom" class="select">
+                    <option value="V">V</option><option value="mV" selected>mV</option><option value="uV">uV</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="section-label">Y to</label>
+                  <select id="yUnitTo" class="select">
+                    <option value="V">V</option><option value="mV">mV</option><option value="uV">uV</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <label class="flex items-center gap-2 text-sm" style="color:var(--muted)">
+              <input id="liveUpdate" type="checkbox" checked class="h-3.5 w-3.5" />
+              Live update
+            </label>
+            <button id="plotBtn" class="btn btn-primary w-full">Plot / Refresh Figure</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT PANEL -->
+      <section class="xl:col-span-9 space-y-5">
+
+        <!-- 4. Trace & Label Controls -->
+        <div class="glass rounded-2xl p-5">
+          <h2 class="section-title">4 · Trace &amp; Label Controls</h2>
+          <div class="grid grid-cols-3 gap-4 mb-4">
+            <div>
+              <label class="section-label">Figure title</label>
+              <div class="flex gap-1.5">
+                <input id="figureTitle" type="text" class="input" placeholder="Figure title" />
+                <input id="titleColor" type="color" value="#e6eef8" class="input" style="width:38px;padding:2px;height:34px;flex-shrink:0" title="Title color" />
+              </div>
+            </div>
+            <div>
+              <label class="section-label">X axis label</label>
+              <div class="flex gap-1.5">
+                <input id="xLabel" type="text" class="input" placeholder="X axis label" />
+                <input id="xLabelColor" type="color" value="#e6eef8" class="input" style="width:38px;padding:2px;height:34px;flex-shrink:0" title="X label color" />
+              </div>
+            </div>
+            <div>
+              <label class="section-label">Y axis label</label>
+              <div class="flex gap-1.5">
+                <input id="yLabel" type="text" class="input" placeholder="Y axis label" />
+                <input id="yLabelColor" type="color" value="#e6eef8" class="input" style="width:38px;padding:2px;height:34px;flex-shrink:0" title="Y label color" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Range & Y range row -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+            <div class="rounded-xl border border-white/10 bg-slate-950/30 p-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm" style="color:var(--muted)">Data range</span>
+                <span id="rangeLabel" class="text-xs" style="color:var(--muted)">Full range</span>
+              </div>
+              <label class="flex items-center gap-2 text-sm mb-3" style="color:var(--muted)">
+                <input id="removeOffset" type="checkbox" class="h-3.5 w-3.5" />
+                X starts from 0
+              </label>
+              <div id="rangeSlider" class="mt-2"></div>
+            </div>
+            <div class="rounded-xl border border-white/10 bg-slate-950/30 p-3">
+              <div class="flex items-center justify-between mb-2">
+                <span class="text-sm" style="color:var(--muted)">Y range</span>
+                <label class="flex items-center gap-2 text-sm" style="color:var(--muted)">
+                  <input id="yRangeAuto" type="checkbox" checked class="h-3.5 w-3.5" />
+                  Auto
+                </label>
+              </div>
+              <div class="flex gap-2">
+                <input id="yMin" type="number" step="any" class="input" placeholder="Y min" disabled />
+                <input id="yMax" type="number" step="any" class="input" placeholder="Y max" disabled />
+              </div>
+            </div>
+          </div>
+
+          <!-- Trace controls -->
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-sm" style="color:var(--muted)">Trace controls</span>
+              <span class="text-xs" style="color:var(--muted)">Generated from Y columns</span>
+            </div>
+            <div id="traceControls" class="space-y-3"></div>
+          </div>
+
+          <!-- Legend group -->
+          <div class="rounded-xl border border-white/10 bg-slate-950/30 p-3 mb-4">
+            <div class="flex items-center justify-between mb-3">
+              <span class="text-sm font-semibold" style="color:var(--text)">Legend</span>
+              <label class="flex items-center gap-2 text-sm" style="color:var(--muted)">
+                <input id="showLegend" type="checkbox" checked class="h-3.5 w-3.5" /> Show
+              </label>
+            </div>
+            <div class="grid gap-3" style="grid-template-columns:1fr 1fr 1fr auto">
+              <div>
+                <label class="section-label">Position</label>
+                <select id="legendPosition" class="select">
+                  <option value="top-right">Top right</option>
+                  <option value="top-left">Top left</option>
+                  <option value="top-center">Top center</option>
+                  <option value="bottom-right">Bottom right</option>
+                  <option value="bottom-left">Bottom left</option>
+                  <option value="bottom-center">Bottom center</option>
+                </select>
+              </div>
+              <div>
+                <label class="section-label">Background</label>
+                <input id="legendBgColor" type="color" value="#11182b" class="input" style="width:100%;padding:2px;height:34px" title="Legend background color" />
+              </div>
+              <div>
+                <label class="section-label">Opacity <span id="legendOpacityVal" style="color:var(--accent)">0.85</span></label>
+                <input id="legendOpacity" type="range" min="0" max="1" step="0.05" value="0.85" style="width:100%;margin-top:6px" />
+              </div>
+              <div>
+                <label class="section-label">Border</label>
+                <input id="legendBorderColor" type="color" value="#2a3a55" class="input" style="width:48px;padding:2px;height:34px" title="Legend border color" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5. Plot -->
+        <div class="glass rounded-2xl p-5">
+          <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+            <h2 class="section-title" style="margin:0">5 · Plot</h2>
+            <div class="flex flex-wrap items-end gap-3">
+              <div class="flex items-end gap-3">
+                <div>
+                  <label class="section-label" title="Only affects export resolution, not display">Export width (px)</label>
+                  <input id="plotWidth" type="number" min="320" value="900" class="input" style="width:110px" />
+                </div>
+                <div>
+                  <label class="section-label">Height (px)</label>
+                  <input id="plotHeight" type="number" min="200" value="420" class="input" style="width:100px" />
+                </div>
+                <div>
+                  <label class="section-label">Paper bg</label>
+                  <input id="paperBgColor" type="color" value="#0d1117" class="input" style="width:48px;padding:2px;height:34px" title="Paper (outer) background color" />
+                </div>
+                <div>
+                  <label class="section-label">Plot bg</label>
+                  <input id="plotBgColor" type="color" value="#0d1117" class="input" style="width:48px;padding:2px;height:34px" title="Plot (inner) background color" />
+                </div>
+                <div>
+                  <label class="section-label">Grid color</label>
+                  <input id="gridColor" type="color" value="#2a3a55" class="input" style="width:48px;padding:2px;height:34px" title="Grid line color" />
+                </div>
+                <div style="display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding-bottom:2px">
+                  <div class="flex items-center gap-3">
+                    <label class="flex items-center gap-1.5 text-sm" style="color:var(--muted);white-space:nowrap">
+                      <input id="xGridOn" type="checkbox" checked class="h-3.5 w-3.5" /> X grid
+                    </label>
+                    <label class="flex items-center gap-1.5 text-sm" style="color:var(--muted);white-space:nowrap">
+                      <input id="yGridOn" type="checkbox" checked class="h-3.5 w-3.5" /> Y grid
+                    </label>
+                  </div>
+                </div>
+              </div>
+              <div class="flex items-center gap-2">
+                <select id="downloadFormat" class="select" style="width:85px">
+                  <option value="png">PNG</option>
+                  <option value="jpeg">JPG</option>
+                  <option value="svg">SVG</option>
+                </select>
+                <button id="downloadBtn" class="btn btn-secondary">Download</button>
+              </div>
+            </div>
+          </div>
+
+          
+          <!-- Plot wrapper clips any overflow; aspect-ratio updated live by JS -->
+          <div class="rounded-2xl border border-white/10 bg-slate-950/30 p-2" style="overflow:hidden">
+            <div id="plot-wrapper" style="width:100%;aspect-ratio:900/420">
+              <div id="plot" style="width:100%;height:100%"></div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+    </div>
+  </div>
+
+  <footer class="mt-8 text-center text-sm" style="color:var(--muted)">© Abul Al Arabi</footer>
+
+  <script>
+    const state = {
+      file: null, rawText: "", parsedRows: [], columns: [],
+      traceSettings: {}, rangeStart: 0, rangeEnd: 0
+    };
+
+    const els = {
+      csvFile: document.getElementById('csvFile'),
+      skipLines: document.getElementById('skipLines'),
+      delimiter: document.getElementById('delimiter'),
+      parseBtn: document.getElementById('parseBtn'),
+      resetBtn: document.getElementById('resetBtn'),
+      tablePreview: document.getElementById('tablePreview'),
+      datasetStats: document.getElementById('datasetStats'),
+      xSelect: document.getElementById('xSelect'),
+      xUnitFrom: document.getElementById('xUnitFrom'),
+      xUnitTo: document.getElementById('xUnitTo'),
+      yUnitFrom: document.getElementById('yUnitFrom'),
+      yUnitTo: document.getElementById('yUnitTo'),
+      yCheckboxes: document.getElementById('yCheckboxes'),
+      traceControls: document.getElementById('traceControls'),
+      plot: document.getElementById('plot'),
+      plotBtn: document.getElementById('plotBtn'),
+      plotWidth: document.getElementById('plotWidth'),
+      plotHeight: document.getElementById('plotHeight'),
+      downloadFormat: document.getElementById('downloadFormat'),
+      downloadBtn: document.getElementById('downloadBtn'),
+      rangeSlider: document.getElementById('rangeSlider'),
+      figureTitle: document.getElementById('figureTitle'),
+      xLabel: document.getElementById('xLabel'),
+      yLabel: document.getElementById('yLabel'),
+      showLegend: document.getElementById('showLegend'),
+      legendPosition: document.getElementById('legendPosition'),
+      legendBgColor: document.getElementById('legendBgColor'),
+      legendOpacity: document.getElementById('legendOpacity'),
+      legendBorderColor: document.getElementById('legendBorderColor'),
+      yRangeAuto: document.getElementById('yRangeAuto'),
+      yMin: document.getElementById('yMin'),
+      yMax: document.getElementById('yMax'),
+      liveUpdate: document.getElementById('liveUpdate'),
+      rangeLabel: document.getElementById('rangeLabel'),
+      removeOffset: document.getElementById('removeOffset'),
+      statusText: document.getElementById('statusText'),
+      paperBgColor: document.getElementById('paperBgColor'),
+      plotBgColor: document.getElementById('plotBgColor'),
+      gridColor: document.getElementById('gridColor'),
+      xGridOn: document.getElementById('xGridOn'),
+      yGridOn: document.getElementById('yGridOn'),
+      xMapEnable: document.getElementById('xMapEnable'),
+      yMapEnable: document.getElementById('yMapEnable'),
+      titleColor: document.getElementById('titleColor'),
+      xLabelColor: document.getElementById('xLabelColor'),
+      yLabelColor: document.getElementById('yLabelColor')
+    };
+
+    const palette = ['#7c9cff','#56d5ff','#35e0a1','#ffb84d','#ff7aa2','#c084fc','#f87171','#22d3ee'];
+
+    function setStatus(t) { els.statusText.textContent = t; }
+    function sanitizeColumnName(n, i) { const t = String(n ?? '').trim(); return t || `Column_${i+1}`; }
+    function coerceNumber(v) {
+      if (v == null) return v;
+      const t = String(v).trim();
+      if (t === '') return null;
+      const n = Number(t);
+      return Number.isFinite(n) ? n : v;
+    }
+    function readFileAsText(f) {
+      return new Promise((res, rej) => {
+        const r = new FileReader();
+        r.onload = () => res(r.result);
+        r.onerror = rej;
+        r.readAsText(f);
+      });
+    }
+    function getSelectedYColumns() {
+      return Array.from(document.querySelectorAll('.y-col-checkbox:checked')).map(el => el.value);
+    }
+
+    function renderTablePreview() {
+      const rows = state.parsedRows.slice(0, 10);
+      if (!state.columns.length || !rows.length) {
+        els.tablePreview.innerHTML = '<div class="text-xs" style="color:var(--muted);padding:4px">No parsed rows.</div>';
+        return;
+      }
+      const thead = `<thead><tr>${state.columns.map(c => `<th>${c}</th>`).join('')}</tr></thead>`;
+      const tbody = `<tbody>${rows.map(row => `<tr>${state.columns.map(c => `<td>${row[c] ?? ''}</td>`).join('')}</tr>`).join('')}</tbody>`;
+      els.tablePreview.innerHTML = `<table>${thead}${tbody}</table>`;
+    }
+
+    function updateDatasetStats() {
+      els.datasetStats.textContent = state.columns.length
+        ? `${state.parsedRows.length} rows · ${state.columns.length} cols`
+        : 'No data';
+    }
+
+    function populateColumnSelectors() {
+      els.xSelect.innerHTML = '';
+      els.yCheckboxes.innerHTML = '';
+      els.traceControls.innerHTML = '';
+      if (!state.columns.length) {
+        els.xSelect.innerHTML = '<option value="">No columns</option>';
+        els.yCheckboxes.innerHTML = '<div style="color:var(--muted);padding:4px;font-size:11px">Load a file first.</div>';
+        return;
+      }
+      state.columns.forEach((col, idx) => {
+        const opt = document.createElement('option');
+        opt.value = col; opt.textContent = col;
+        if (idx === 0) opt.selected = true;
+        els.xSelect.appendChild(opt);
+      });
+      renderYCheckboxes();
+    }
+
+    function renderYCheckboxes() {
+      const xCol = els.xSelect.value;
+      const yCandidates = state.columns.filter(c => c !== xCol);
+      if (!yCandidates.length) {
+        els.yCheckboxes.innerHTML = '<div style="color:var(--muted);padding:4px;font-size:11px">No columns for Y axis.</div>';
+        els.traceControls.innerHTML = '';
+        return;
+      }
+      els.yCheckboxes.innerHTML = yCandidates.map((col, idx) => `
+        <label class="flex items-center gap-2 rounded-lg px-2 py-1 hover:bg-white/5" style="font-size:12px">
+          <input type="checkbox" class="y-col-checkbox h-3.5 w-3.5" value="${col}" ${idx === 0 ? 'checked' : ''}>
+          <span>${col}</span>
+        </label>`).join('');
+      document.querySelectorAll('.y-col-checkbox').forEach(cb =>
+        cb.addEventListener('change', () => { buildTraceControls(); triggerLivePlot(); }));
+      buildTraceControls();
+    }
+
+    function ensureTraceSettings(name, idx) {
+      if (!state.traceSettings[name]) {
+        state.traceSettings[name] = { label: name, color: palette[idx % palette.length], width: 2, dash: 'solid', showInLegend: true };
+      }
+      return state.traceSettings[name];
+    }
+
+    function buildTraceControls() {
+      const selected = getSelectedYColumns();
+      if (!selected.length) {
+        els.traceControls.innerHTML = '<div class="rounded-xl border border-white/10 bg-slate-950/30 p-3 text-sm" style="color:var(--muted)">Select Y columns to customize traces.</div>';
+        return;
+      }
+      els.traceControls.innerHTML = selected.map((col, idx) => {
+        const cfg = ensureTraceSettings(col, idx);
+        return `
+          <div class="rounded-xl border border-white/10 bg-slate-950/30 p-3">
+            <div class="flex items-center justify-between mb-2">
+              <div class="flex items-center gap-2">
+                <span class="color-dot" style="background:${cfg.color}"></span>
+                <span style="font-size:13px;font-weight:600">${col}</span>
+              </div>
+              <label class="flex items-center gap-1.5 text-sm" style="color:var(--muted)">
+                <input type="checkbox" data-trace="${col}" data-field="showInLegend" class="trace-input h-3.5 w-3.5" ${cfg.showInLegend ? 'checked' : ''} />
+                In legend
+              </label>
+            </div>
+            <div class="grid gap-3" style="grid-template-columns:2fr 1fr 1fr 1fr">
+              <div>
+                <label class="section-label">Label</label>
+                <input data-trace="${col}" data-field="label" class="trace-input input" type="text" value="${escapeHtml(cfg.label)}" />
+              </div>
+              <div>
+                <label class="section-label">Color</label>
+                <input data-trace="${col}" data-field="color" class="trace-input input" type="color" value="${cfg.color}" style="padding:2px;height:34px" />
+              </div>
+              <div>
+                <label class="section-label">Width</label>
+                <input data-trace="${col}" data-field="width" class="trace-input input" type="number" min="1" max="10" step="0.5" value="${cfg.width}" />
+              </div>
+              <div>
+                <label class="section-label">Dash</label>
+                <select data-trace="${col}" data-field="dash" class="trace-input select">
+                  <option value="solid" ${cfg.dash==='solid'?'selected':''}>Solid</option>
+                  <option value="dot" ${cfg.dash==='dot'?'selected':''}>Dot</option>
+                  <option value="dash" ${cfg.dash==='dash'?'selected':''}>Dash</option>
+                  <option value="dashdot" ${cfg.dash==='dashdot'?'selected':''}>Dash-dot</option>
+                </select>
+              </div>
+            </div>
+          </div>`;
+      }).join('');
+      document.querySelectorAll('.trace-input').forEach(input => {
+        input.addEventListener('input', handleTraceSettingInput);
+        input.addEventListener('change', handleTraceSettingInput);
+      });
+    }
+
+    function escapeHtml(v) {
+      return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#039;');
+    }
+
+    function handleTraceSettingInput(e) {
+      const trace = e.target.dataset.trace, field = e.target.dataset.field;
+      if (!trace || !field) return;
+      if (field === 'width') ensureTraceSettings(trace, 0)[field] = Number(e.target.value) || 2;
+      else if (field === 'showInLegend') ensureTraceSettings(trace, 0)[field] = e.target.checked;
+      else ensureTraceSettings(trace, 0)[field] = e.target.value;
+      triggerLivePlot();
+    }
+
+    async function parseCSV() {
+      if (!state.file) { alert('Please choose a CSV file first.'); return; }
+      setStatus('Reading file...');
+      state.rawText = await readFileAsText(state.file);
+      const skip = Math.max(0, Number(els.skipLines.value) || 0);
+      const lines = state.rawText.split(/\r?\n/).slice(skip);
+      const trimmedText = lines.join('\n').trim();
+      if (!trimmedText) { alert('No content found after skipping lines.'); return; }
+      const delimiterValue = els.delimiter.value === 'auto' ? '' : els.delimiter.value;
+      const result = Papa.parse(trimmedText, { header: true, delimiter: delimiterValue, dynamicTyping: false, skipEmptyLines: true });
+      if (result.errors?.length) console.warn(result.errors);
+      const cols = (result.meta.fields || []).map(sanitizeColumnName);
+      const rows = (result.data || []).map(row => {
+        const obj = {};
+        cols.forEach((col, idx) => { obj[col] = coerceNumber(row[result.meta.fields[idx]]); });
+        return obj;
+      });
+      state.columns = cols; state.parsedRows = rows; state.traceSettings = {};
+      updateRangeControls(); updateDatasetStats(); renderTablePreview(); populateColumnSelectors();
+      setStatus(`Loaded: ${state.file.name}`);
+      triggerLivePlot();
+    }
+
+    function getUnitScale(u) { return { s:1, ms:1e-3, us:1e-6, V:1, mV:1e-3, uV:1e-6 }[u] ?? 1; }
+    function convertValue(v, from, to) {
+      if (typeof v !== 'number' || !Number.isFinite(v)) return v;
+      return v * (getUnitScale(from) / getUnitScale(to));
+    }
+
+    function updateRangeControls() {
+      const maxIndex = Math.max(0, state.parsedRows.length - 1);
+      state.rangeStart = 0; state.rangeEnd = maxIndex;
+      if (els.rangeSlider.noUiSlider) els.rangeSlider.noUiSlider.destroy();
+      noUiSlider.create(els.rangeSlider, {
+        start: [0, maxIndex], connect: true, step: 1,
+        range: { min: 0, max: maxIndex || 1 }, behaviour: 'drag'
+      });
+      els.rangeSlider.noUiSlider.on('update', values => {
+        state.rangeStart = Math.round(Number(values[0]) || 0);
+        state.rangeEnd = Math.round(Number(values[1]) || 0);
+        updateRangeLabel();
+      });
+      els.rangeSlider.noUiSlider.on('change', () => triggerLivePlot());
+      updateRangeLabel();
+    }
+
+    function updateRangeLabel() {
+      const s = Math.min(state.rangeStart, state.rangeEnd), e = Math.max(state.rangeStart, state.rangeEnd);
+      els.rangeLabel.textContent = `${s}–${e} (${Math.max(0, e-s+1)} pts)`;
+    }
+
+    function getFilteredRows() {
+      const s = Math.min(state.rangeStart, state.rangeEnd), e = Math.max(state.rangeStart, state.rangeEnd);
+      return state.parsedRows.slice(s, e + 1);
+    }
+
+    function buildPlotData() {
+      const xCol = els.xSelect.value, yCols = getSelectedYColumns(), rows = getFilteredRows();
+      if (!xCol || !yCols.length || !rows.length) return [];
+      const xMapOn = els.xMapEnable.checked;
+      const yMapOn = els.yMapEnable.checked;
+      const xFrom = els.xUnitFrom.value, xTo = els.xUnitTo.value;
+      const yFrom = els.yUnitFrom.value, yTo = els.yUnitTo.value;
+      let xVals = rows.map(r => xMapOn ? convertValue(r[xCol], xFrom, xTo) : r[xCol]);
+      if (els.removeOffset.checked) {
+        const first = xVals.find(v => typeof v === 'number' && Number.isFinite(v));
+        if (typeof first === 'number') xVals = xVals.map(v => (typeof v === 'number' && Number.isFinite(v) ? v - first : v));
+      }
+      return yCols.map((yCol, idx) => {
+        const cfg = ensureTraceSettings(yCol, idx);
+        return {
+          x: xVals, y: rows.map(r => yMapOn ? convertValue(r[yCol], yFrom, yTo) : r[yCol]),
+          type: 'scatter', mode: 'lines', name: cfg.label || yCol,
+          showlegend: cfg.showInLegend !== false,
+          line: { color: cfg.color, width: Number(cfg.width) || 2, dash: cfg.dash || 'solid' },
+          hovertemplate: `<b>${cfg.label || yCol}</b><br>${xCol}: %{x}<br>${yCol}: %{y}<extra></extra>`
+        };
+      });
+    }
+
+    function plotFigure() {
+      const data = buildPlotData();
+      if (!data.length) {
+        Plotly.purge(els.plot);
+        els.plot.innerHTML = '';
+        return;
+      }
+      const yAxisConfig = {
+        title: { text: els.yLabel.value || `Y (${els.yUnitTo.value})`, font: { color: els.yLabelColor.value } },
+        showgrid: els.yGridOn.checked,
+        gridcolor: els.gridColor.value,
+        zerolinecolor: els.gridColor.value
+      };
+      if (!els.yRangeAuto.checked) {
+        const yMin = Number(els.yMin.value), yMax = Number(els.yMax.value);
+        if (Number.isFinite(yMin) && Number.isFinite(yMax) && yMin < yMax) {
+          yAxisConfig.range = [yMin, yMax]; yAxisConfig.autorange = false;
+        }
+      }
+      // width/height driven by #plot-wrapper aspect-ratio; autosize fills it
+      const layout = {
+        title: { text: els.figureTitle.value || 'OscilloPlot Figure', font: { size: 18, color: els.titleColor.value } },
+        paper_bgcolor: els.paperBgColor.value,
+        plot_bgcolor: els.plotBgColor.value,
+        autosize: true,
+        margin: { l: 60, r: 20, t: 50, b: 55 },
+        font: { color: '#e6eef8', size: 12 },
+        xaxis: {
+          title: { text: els.xLabel.value || `${els.xSelect.value || 'X'} (${els.xUnitTo.value})`, font: { color: els.xLabelColor.value } },
+          showgrid: els.xGridOn.checked,
+          gridcolor: els.gridColor.value,
+          zerolinecolor: els.gridColor.value
+        },
+        yaxis: yAxisConfig,
+        showlegend: els.showLegend.checked,
+        legend: (() => {
+          const pos = { 'top-right':    { x:1,    y:1,    xanchor:'right',  yanchor:'top'    },
+                        'top-left':     { x:0,    y:1,    xanchor:'left',   yanchor:'top'    },
+                        'top-center':   { x:0.5,  y:1,    xanchor:'center', yanchor:'top'    },
+                        'bottom-right': { x:1,    y:0,    xanchor:'right',  yanchor:'bottom' },
+                        'bottom-left':  { x:0,    y:0,    xanchor:'left',   yanchor:'bottom' },
+                        'bottom-center':{ x:0.5,  y:0,    xanchor:'center', yanchor:'bottom' } };
+          const hex = els.legendBgColor.value;
+          const opacity = parseFloat(els.legendOpacity.value);
+          const r = parseInt(hex.slice(1,3),16), g = parseInt(hex.slice(3,5),16), b = parseInt(hex.slice(5,7),16);
+          return { ...pos[els.legendPosition.value] || pos['top-right'],
+                   bgcolor: `rgba(${r},${g},${b},${opacity})`,
+                   bordercolor: els.legendBorderColor.value,
+                   borderwidth: 1,
+                   font: { size: 12, color: '#e6eef8' } };
+        })()
+      };
+      const config = {
+        responsive: true, displaylogo: false,
+        toImageButtonOptions: {
+          filename: 'oscilloplot_figure', format: 'png',
+          width: Number(els.plotWidth.value) || 900,
+          height: Number(els.plotHeight.value) || 420, scale: 2
+        }
+      };
+      Plotly.newPlot(els.plot, data, layout, config);
+    }
+
+    function triggerLivePlot() { if (els.liveUpdate.checked) plotFigure(); }
+
+    async function handleDownload(format) {
+      const data = buildPlotData();
+      if (!data.length) { alert('Please generate a plot before downloading.'); return; }
+      await Plotly.downloadImage(els.plot, {
+        format, width: Number(els.plotWidth.value) || 900,
+        height: Number(els.plotHeight.value) || 420,
+        filename: `oscilloplot_export.${format === 'jpeg' ? 'jpg' : format}`
+      });
+    }
+
+    function resetAll() {
+      state.file = null; state.rawText = ''; state.parsedRows = []; state.columns = []; state.traceSettings = {};
+      els.csvFile.value = ''; els.skipLines.value = 0;
+      els.xUnitFrom.value = 's'; els.xUnitTo.value = 'ms';
+      els.yUnitFrom.value = 'mV'; els.yUnitTo.value = 'V';
+      state.rangeStart = 0; state.rangeEnd = 0;
+      els.rangeLabel.textContent = 'Full range';
+      if (els.rangeSlider.noUiSlider) els.rangeSlider.noUiSlider.destroy();
+      els.figureTitle.value = ''; els.xLabel.value = ''; els.yLabel.value = '';
+      els.showLegend.checked = true;
+      els.legendPosition.value = 'top-right';
+      els.legendBgColor.value = '#11182b';
+      els.legendOpacity.value = '0.85';
+      document.getElementById('legendOpacityVal').textContent = '0.85';
+      els.legendBorderColor.value = '#2a3a55';
+      els.yRangeAuto.checked = true; els.yMin.value = ''; els.yMax.value = '';
+      els.yMin.disabled = true; els.yMax.disabled = true;
+      els.removeOffset.checked = false;
+      els.plotWidth.value = 900; els.plotHeight.value = 420;
+      els.paperBgColor.value = '#0d1117'; els.plotBgColor.value = '#0d1117';
+      els.gridColor.value = '#2a3a55'; els.xGridOn.checked = true; els.yGridOn.checked = true;
+      els.titleColor.value = '#e6eef8'; els.xLabelColor.value = '#e6eef8'; els.yLabelColor.value = '#e6eef8';
+      els.xMapEnable.checked = false; els.yMapEnable.checked = false;
+      document.getElementById('xMapControls').style.opacity = '0.35';
+      document.getElementById('xMapControls').style.pointerEvents = 'none';
+      document.getElementById('yMapControls').style.opacity = '0.35';
+      document.getElementById('yMapControls').style.pointerEvents = 'none';
+      updateAspectRatio();
+      els.tablePreview.innerHTML = ''; els.datasetStats.textContent = 'No data';
+      els.xSelect.innerHTML = '<option value="">No columns</option>';
+      els.yCheckboxes.innerHTML = '<div style="color:var(--muted);padding:4px;font-size:11px">Load a file first.</div>';
+      els.traceControls.innerHTML = '';
+      Plotly.purge(els.plot);
+      els.plot.innerHTML = '';
+      setStatus('No file loaded');
+    }
+
+    els.csvFile.addEventListener('change', e => {
+      state.file = e.target.files?.[0] || null;
+      setStatus(state.file ? `Selected: ${state.file.name}` : 'No file loaded');
+    });
+    els.parseBtn.addEventListener('click', parseCSV);
+    els.resetBtn.addEventListener('click', resetAll);
+    els.plotBtn.addEventListener('click', plotFigure);
+    els.xSelect.addEventListener('change', () => { renderYCheckboxes(); triggerLivePlot(); });
+    els.yRangeAuto.addEventListener('change', () => {
+      const isAuto = els.yRangeAuto.checked;
+      els.yMin.disabled = isAuto; els.yMax.disabled = isAuto;
+      triggerLivePlot();
+    });
+
+    els.xMapEnable.addEventListener('change', () => {
+      const on = els.xMapEnable.checked;
+      document.getElementById('xMapControls').style.opacity = on ? '1' : '0.35';
+      document.getElementById('xMapControls').style.pointerEvents = on ? 'auto' : 'none';
+      triggerLivePlot();
+    });
+    els.yMapEnable.addEventListener('change', () => {
+      const on = els.yMapEnable.checked;
+      document.getElementById('yMapControls').style.opacity = on ? '1' : '0.35';
+      document.getElementById('yMapControls').style.pointerEvents = on ? 'auto' : 'none';
+      triggerLivePlot();
+    });
+    [els.skipLines, els.figureTitle, els.xLabel, els.yLabel, els.showLegend, els.legendPosition,
+     els.legendBgColor, els.legendOpacity, els.legendBorderColor,
+     els.xUnitFrom, els.xUnitTo, els.yUnitFrom, els.yUnitTo,
+     els.yMin, els.yMax, els.removeOffset, els.paperBgColor, els.plotBgColor,
+     els.gridColor, els.xGridOn, els.yGridOn, els.xMapEnable, els.yMapEnable,
+     els.titleColor, els.xLabelColor, els.yLabelColor].forEach(el => {
+      el.addEventListener('input', triggerLivePlot);
+      el.addEventListener('change', triggerLivePlot);
+    });
+
+    els.legendOpacity.addEventListener('input', () => {
+      document.getElementById('legendOpacityVal').textContent = parseFloat(els.legendOpacity.value).toFixed(2);
+    });
+
+    function updateAspectRatio() {
+      const w = Math.max(1, Number(els.plotWidth.value) || 900);
+      const h = Math.max(1, Number(els.plotHeight.value) || 420);
+      const wrapper = document.getElementById('plot-wrapper');
+      wrapper.style.aspectRatio = `${w}/${h}`;
+      if (els.plot.data && els.plot.data.length) {
+        // relayout height first, then resize so Plotly re-measures container width too
+        Plotly.relayout(els.plot, { height: h, autosize: true }).then(() => {
+          Plotly.Plots.resize(els.plot);
+        });
+      }
+    }
+
+    els.plotWidth.addEventListener('input', updateAspectRatio);
+    els.plotWidth.addEventListener('change', updateAspectRatio);
+    els.plotHeight.addEventListener('input', updateAspectRatio);
+    els.plotHeight.addEventListener('change', updateAspectRatio);
+    els.downloadBtn.addEventListener('click', () => handleDownload(els.downloadFormat.value));
+
+    resetAll();
+  </script>
+</body>
+</html>
