@@ -1,0 +1,7 @@
+Hello! I’m Arabi, a Ph.D. student in Computer Science and Engineering at Texas A&M University. I work at the intersection of human-AI interaction, robotics, and digital fabrication, exploring how systems like large language models and 3D printing can make technology more intuitive and useful in everyday life.
+
+My interest in intelligent systems started early through robotics competitions and has grown into a research focus on building human-centered, adaptive technologies that collaborate with people in meaningful ways.
+
+With a background in Electrical and Electronic Engineering from BUET and experience across research, teaching, and R&D, I combine hardware and software to design practical, real-world solutions.
+
+I’m especially interested in turning research ideas into usable tools and systems that have real impact beyond the lab.

@@ -49,11 +49,11 @@
           <h1 class="name" title="Abul Al Arabi">Abul Al Arabi</h1>
 
           <div class="research-tags">
+            <span>Human-AI Interaction</span>
             <span>Robotics</span>
-            <span>Machine Learning</span>
-            <span>Human-Computer Interaction</span>
-            <span>Human-Robot Interaction</span>
+            <span>Agentic AI</span>
             <span>Digital Fabrication</span>
+            <span>Open-World Sensing</span>
           </div>
           
         </div>
@@ -158,7 +158,7 @@
           </li>
 
           <li class="navbar-item ">
-            <button class="navbar-link" data-nav-link>Resume</button>
+            <button class="navbar-link" data-nav-link>CV</button>
           </li>
 
           <li class="navbar-item">
@@ -166,7 +166,7 @@
           </li>
 
           <li class="navbar-item">
-            <button class="navbar-link" data-nav-link>Awards/Media</button>
+            <button class="navbar-link is-disabled" data-nav-link data-disabled="true" aria-disabled="true" title="Awards/Media is being updated">Awards/Media</button>
           </li>
 
         </ul>
@@ -181,90 +181,75 @@
         - #ABOUT
       -->
 
-      <article class="about active" data-page="about" style="max-height: 95vh; overflow-y: auto;">
+      <article class="about active page-panel" data-page="about">
         <header>
           <h2 class="h2 article-title">About me</h2>
         </header>
-        <section class="about-text">
-          <p>
-            Hello! I'm  Arabi, a Ph.D. student in Computer Science and Engineering at Texas A&M University, specializing in Human-Computer Interaction (HCI), Robotics, Machine Learning, and Large Language Models research in the HCIED Lab. My work focuses on creating intelligent, human-centered systems that make technology more adaptive, intuitive, and impactful.</p>
-            <p>
-            My passion for intelligent systems began at an early age, driving me to compete and win in national and international robotics competitions. That lifelong curiosity continues to fuel my research, where I explore how intelligent systems can collaborate with people and transform real-world experiences.</p>
-             <p>
-            With a B.Sc. in Electrical and Electronic Engineering from Bangladesh University of Engineering and Technology (BUET), I bring a strong foundation in both hardware and software systems. My professional journey spans roles as a Research Assistant, University Lecturer, and R&D Engineer, where I've led projects integrating AI, robotics, and data-driven design to solve real-world problems. </p>
-            <p>
-            Beyond academia, I'm passionate about translating research into impactful products and scalable technologies. I thrive in interdisciplinary environments, enjoy leading collaborative projects, and am always eager to tackle challenges at the intersection of innovation, usability, and intelligent systems.
-          </p>
-        </section>
-        <section class="service">
-          <h3 class="h3 service-title">Recents</h3>
-          <ul class="recents-timeline">
-            <li><span class="date">08/25</span>Paper Accepted in IEEE IROS 2025</li>
-            <li><span class="date">02/25</span>Passed Ph.D. Prelim Exam</li>
-            <li><span class="date">11/24</span>3rd, Graduate student research presentations, TxGIS Day'24</li>
-            <li><span class="date">09/24</span>Serving as SC Assistant for CHI 2025</li>
-            <li><span class="date">09/23</span>Paper presented at UBICOMP'23</li>
-            <li><span class="date">10/22</span>Talk on mobile robotics, IAS Annual Meeting 2022</li>
-            <li><span class="date">06/22</span>Instructor for robotics workshop, Super Computing Academy Summer Camps, Texas A&M University</li>
-            <li><span class="date">05/22</span>Paper presented at CHI'22</li>
-          </ul>
+        <section class="about-hero">
+          <div class="about-card about-text" id="about-text-content"></div>
+
+          <aside class="about-sidepanel">
+            <section class="about-card service">
+              <h3 class="h3 service-title">Recents</h3>
+              <ul class="recents-timeline" id="recents-timeline"></ul>
+            </section>
+          </aside>
         </section>
 
         <section class="publications">
           <div class="publication-scroll" id="publication-container"></div>
         </section>
+
+        <p class="about-footnote">
+          Open source:
+          <a href="./simplelapse.html" class="footnote-link" target="_blank" rel="noopener noreferrer">SimpleLapse</a>
+          <span>&middot;</span>
+          <a href="./oscilloplot.html" class="footnote-link" target="_blank" rel="noopener noreferrer">OscilloPlot</a>
+        </p>
       </article>
 
       <!-- projects -->
-      <article class="portfolio" data-page="projects" style="max-height: 95vh; overflow-y: auto;">
+      <article class="portfolio page-panel" data-page="projects">
         <header>
           <h2 class="h2 article-title">Projects</h2>
         </header>
         <section id="projects-section" ></section>
-        <script src="assets/js/projects.js"></script>
       </article>
 
 
       <!-- publications -->
-      <article class="portfolio" data-page="publications" style="max-height: 95vh; overflow-y: auto;">
+      <article class="portfolio page-panel" data-page="publications">
         <header>
           <h2 class="h2 article-title">Publications</h2>
         </header>
        <section id = "publication-section" ></section>
       </article>
 
-      <!-- - #RESUME -->
-      <article class="resume" data-page="resume" style="max-height: 95vh; overflow-y: auto;">
-        <section id = "resume-section" >
-        </section>
-        <script>
-        fetch('resume.html')
-          .then(response => response.text())
-          .then(html => {
-            document.getElementById('resume-section').innerHTML = html;
-          })
-          .catch(err => console.error('Error loading resume:', err));
-      </script>
+      <!-- - #CV -->
+      <article class="resume page-panel" data-page="cv">
+        <header>
+          <h2 class="h2 article-title">CV</h2>
+        </header>
+        <section id="cv-section"></section>
       </article>
 
 
       <!-- talks -->
-      <article class="portfolio" data-page="talks" style="max-height: 95vh; overflow-y: auto;">
+      <article class="portfolio page-panel" data-page="talks">
         <header>
           <h2 class="h2 article-title">Talks</h2>
         </header>
         <section id = "talk-section" ></section>
-         <script src="assets/js/talks.js"></script>
-        <p> being updated</p>
       </article>
 
       <!-- media -->
-      <article class="portfolio" data-page="awards/media">
+      <article class="portfolio page-panel" data-page="awards/media">
         <header>
-          <h2 class="h2 article-title">Media</h2>
+          <h2 class="h2 article-title">Awards/Media</h2>
         </header>
-        <section id = "media-section" ></section>
-        <p> being updated</p>
+        <section class="about-card service">
+          <p class="timeline-text">This section is being updated and will be available soon.</p>
+        </section>
       </article>
 
       
@@ -277,22 +262,25 @@
 <!-- Modal -->
 <div id="publication-modal" class="modal">
   <div class="modal-content">
-    <span class="modal-close">&times;</span>
-    <!-- Inside your modal-content -->
-    <img id="modal-img" />
+    <button class="modal-close" type="button" aria-label="Close publication details">&times;</button>
+    <div class="modal-layout">
+      <div class="modal-media">
+        <img id="modal-img" alt="" />
+      </div>
 
-    <h4 id="modal-title"></h4>
+      <div class="modal-details">
+        <p class="modal-eyebrow">Selected publication</p>
+        <h4 id="modal-title"></h4>
 
-    <div class="modal-buttons">
-      <a id="modal-pdf" target="_blank">PDF</a>
-      <a id="modal-video" target="_blank">Video</a>
+        <div class="modal-buttons">
+          <a id="modal-pdf" target="_blank" rel="noopener noreferrer">Read PDF</a>
+          <a id="modal-video" target="_blank" rel="noopener noreferrer">Watch Video</a>
+        </div>
+
+        <div id="modal-embed" class="modal-embed"></div>
+        <p id="modal-summary"></p>
+      </div>
     </div>
-
-    <!-- Embed video below thumbnail -->
-    <div id="modal-embed" class="modal-embed"></div>
-
-    <p id="modal-summary"></p>
-
   </div>
 </div>
 
@@ -301,16 +289,18 @@
   <!--
     - custom js link
   -->
+  <script src="./assets/js/content-cards.js"></script>
   <script src="./assets/js/script.js"></script>
+  <script src="./assets/js/projects.js"></script>
+  <script src="./assets/js/talks.js"></script>
 
   <!--
     - ionicon link
   -->
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-  <script src="assets/js/publication.js"></script>
-  
-  <script src="assets/js/bg.js"></script>
+  <script src="./assets/js/publication.js"></script>
+  <script src="./assets/js/bg.js"></script>
 
 </body>
 

@@ -142,9 +142,29 @@
   organization={IEEE}
 }
 
-@article{alfabric,
+@inproceedings{al2025fabric,
   title={FABRIC: FAbricating Bodily-Expressive Robots for Inclusive and Low-Cost Design},
   author={Al Arabi, Abul and Kim, Jeeeun},
-  booktitle={Accepted in IEEE IROS 2025},
-  year={2025}
+  booktitle={2025 IEEE/RSJ International Conference on Intelligent Robots and Systems (IROS)},
+  pages={1139--1146},
+  year={2025},
+  organization={IEEE}
+}
+
+@inproceedings{arabi2026eurexa,
+  title={EUREXA: End-User Reconfiguration of Environment with eXplainable Augmentation for Generative Fabrication},
+  author={Arabi, Abul Al and Cai, Charles Yushi and Lu, Ryann and Kong, Shu and Kim, Jeeeun},
+  booktitle={Proceedings of the 2026 CHI Conference on Human Factors in Computing Systems},
+  pages={1--17},
+  year={2026}
+}
+
+@article{chae2026end,
+  title={End-to-end architectural framework for proximity-based preemptive haptic feedback in safe excavation},
+  author={Chae, Yeon and Al Arabi, Abul and Kim, Jeeeun and Ham, Youngjib},
+  journal={Automation in Construction},
+  volume={187},
+  pages={106961},
+  year={2026},
+  publisher={Elsevier}
 }
