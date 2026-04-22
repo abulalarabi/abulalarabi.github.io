@@ -10,8 +10,10 @@
   --proj-border-strong: rgba(255,214,102,0.22);
   --proj-focus: 0 0 0 3px rgba(56,189,248,0.25), 0 0 0 1px rgba(56,189,248,0.7);
   --proj-accent: #ffd666;
-  --proj-scrollbar: rgba(255,255,255,0.18);
-  --proj-scrollbar-track: rgba(255,255,255,0.06);
+  --proj-scrollbar: linear-gradient(180deg, rgba(255,214,102,0.42), rgba(255,214,102,0.18));
+  --proj-scrollbar-hover: linear-gradient(180deg, rgba(255,214,102,0.58), rgba(255,214,102,0.28));
+  --proj-scrollbar-track: rgba(255,255,255,0.04);
+  --proj-scrollbar-border: rgba(255,255,255,0.08);
 }
 
 /* Layout: one project per row */
@@ -166,7 +168,11 @@
 .proj-gallery-strip::-webkit-scrollbar { height: 10px; }
 .proj-gallery-strip::-webkit-scrollbar-thumb {
   background: var(--proj-scrollbar);
+  border: 1px solid var(--proj-scrollbar-border);
   border-radius: 999px;
+}
+.proj-gallery-strip::-webkit-scrollbar-thumb:hover {
+  background: var(--proj-scrollbar-hover);
 }
 .proj-gallery-strip::-webkit-scrollbar-track {
   background: var(--proj-scrollbar-track);
