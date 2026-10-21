@@ -113,6 +113,11 @@ function parseCvText(text) {
       return;
     }
 
+    if (line.startsWith('HIDDEN:') && currentSection) {
+      currentSection.hidden = getValue(line) === 'true';
+      return;
+    }
+
     if (line.startsWith('ITEM:') && currentSection) {
       currentItem = {
         title: getValue(line),
@@ -148,30 +153,19 @@ function renderCvSection(cv) {
 
   return `
     <div class="cv-shell">
-      <section class="cv-hero">
-        <div class="cv-hero-main">
-          <p class="cv-kicker">Curriculum Vitae</p>
-          <h3 class="cv-name">${escapeHtml(profile.name || 'Abul Al Arabi')}</h3>
-          <p class="cv-role">${escapeHtml(profile.role || '')}</p>
-          <p class="cv-affiliation">${escapeHtml(profile.affiliation || '')}</p>
-          <p class="cv-summary">${escapeHtml(cv.summary || '')}</p>
-        </div>
-        <div class="cv-hero-side">
-          <div class="cv-contact-card">
-            <p class="cv-contact-label">Location</p>
-            <p>${escapeHtml(profile.location || '')}</p>
-          </div>
-          <div class="cv-contact-card">
-            <p class="cv-contact-label">Email</p>
-            <p>${escapeHtml(profile.email || '')}</p>
-          </div>
-        </div>
-      </section>
-      <div class="cv-grid">
+      <header class="cv-profile">
+        <h3 class="cv-name">${escapeHtml(profile.name || 'Abul Al Arabi')}</h3>
+        <p class="cv-role">${escapeHtml(profile.role || '')}</p>
+        <p class="cv-affiliation">${escapeHtml(profile.affiliation || '')}</p>
+        <p class="cv-contact">${escapeHtml(profile.location || '')} · ${escapeHtml(profile.email || '')}</p>
+        <p class="cv-summary">${escapeHtml(cv.summary || '')}</p>
+      </header>
+      <div class="cv-sections">
         ${cv.sections
+          .filter((section) => !section.hidden)
           .map(
             (section) => `
-              <section class="cv-section-card">
+              <section class="cv-section">
                 <div class="cv-section-head">
                   <h3 class="h3 cv-section-title">${escapeHtml(section.title)}</h3>
                 </div>

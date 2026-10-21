@@ -18,7 +18,7 @@
   },
   {
     "project-name": "TOKAI: a Waste Bottle Collection Robot using Deep Learning",
-    "descriptions": "We fabricate a waste bottle collection robot with 4 degrees of freedom, named Tokai, implemented deep learning-based object detection to collect waste bottles. We investigated the feasibility of using deep learning for object detection in a real-world environment. We trained the YOLO model with a custom dataset of waste bottles and deployed it on the robot. The robot is capable of autonomously navigating and collecting waste bottles in an indoor or outdoorenvironment.",
+    "descriptions": "We fabricate a waste bottle collection robot with 4 degrees of freedom, named Tokai, implemented deep learning-based object detection to collect waste bottles. We investigated the feasibility of using deep learning for object detection in a real-world environment. We trained the YOLO model with a custom dataset of waste bottles and deployed it on the robot. The robot is capable of autonomously navigating and collecting waste bottles in an indoor or outdoor environment.",
     "images": "assets/project-images/tokai"
   },
   {

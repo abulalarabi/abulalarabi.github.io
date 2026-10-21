@@ -1,32 +1,92 @@
 PROFILE
 name: Abul Al Arabi
-role: Ph.D. Student, Computer Science and Engineering
+role: Ph.D. Student in Computer Science
 affiliation: Texas A&M University, College Station, Texas
-location: College Station, TX 77840
+location: College Station, TX
 email: arabiabulal[@]gmail.com
 
 SUMMARY
-Human-centered researcher working at the intersection of Human-AI Interaction, Robotics, Agentic AI, Digital Fabrication, and Open-World Sensing. I build practical systems that combine hardware, AI, and fabrication to make intelligent technology more adaptive, accessible, and useful in everyday life.
+Research expertise: Physical AI, Robotics, Human–AI Interaction, Multimodal Reasoning, and Open-World Sensing.
 
 SECTION: Education
 
-ITEM: Texas A&M University
-META: Aug 2021 - May 2026 (expected)
-DETAIL: Doctor of Philosophy in Computer Science.
-DETAIL: Focus: Human-Computer Interaction, Robotics, Artificial Intelligence, Digital Fabrication.
-DETAIL: Supervisor: Dr. Jeeeun Kim.
-DETAIL: Committee: Dr. Guni Sharon, Dr. Ruihong Huang, and Dr. Kiju Lee.
+ITEM: Ph.D. in Computer Science · Texas A&M University
+META: Fall 2021 – Current
+DETAIL: College Station, TX · CGPA: 4.00/4.00.
+DETAIL: Supervisor: Dr. Jeeeun Kim. Committee: Dr. Guni Sharon, Dr. Ruihong Huang, and Dr. Kiju Lee.
 
-ITEM: Bangladesh University of Engineering and Technology (BUET)
-META: Feb 2011 - Mar 2016
-DETAIL: B.Sc. in Electrical and Electronic Engineering.
+ITEM: M.Sc. in Electrical and Electronic Engineering · BUET
+META: Apr 2025
+DETAIL: Bangladesh · Concentration: Computer Vision · CGPA: 4.00/4.00.
 
-SECTION: Research Interests
+ITEM: B.Sc. in Electrical and Electronic Engineering · BUET
+META: Feb 2011 – Mar 2016
+DETAIL: Bangladesh University of Engineering and Technology, Bangladesh.
 
-ITEM: Areas
-DETAIL: Agentic AI, Human-AI Interaction, Robotics, Digital Fabrication, Open-World Sensing, Mobile Robotics, Human-Robot Interaction, 3D Printing, Batteryless Systems, Interaction Energy Harvesting, and Haptic Feedback for Construction in Space.
+SECTION: Work Experience
+
+ITEM: AI/ML Engineer Intern · Akoncagua AI
+META: Aug 2026 – Current
+DETAIL: Training vision–language models (VLMs) through continued pretraining (CPT) and supervised fine-tuning (SFT), training Vision Transformers (ViT), and evaluating model performance.
+
+ITEM: Graduate Research Assistant · Texas A&M University
+META: Sep 2021 – Present
+DETAIL: College Station, TX. Researching robotics, applied and physical AI, multimodal reasoning, and deep learning, with a focus on human–AI and human–robot interaction.
+
+ITEM: Instructor · Northern University Bangladesh
+META: Jan 2019 – May 2021
+DETAIL: Dhaka, Bangladesh. Led robotics and machine learning teams and taught control systems, machine learning, and AI. Helped establish the Robotics Lab and Satellite Communication Lab.
+
+ITEM: Research Assistant · Independent University Bangladesh
+META: Sep 2016 – Dec 2018
+DETAIL: Dhaka, Bangladesh. Led a multidisciplinary team developing Mars rovers, deep learning models, and autonomous traversal systems. Helped establish the Robotics and Rover Development Lab.
+
+SECTION: Research Projects
+
+ITEM: Learning-Based Control and Imitation for Human-Centered Robotics
+BULLET: [IEEE IROS 2025] FABRIC: An AI toolkit for fully 3D-printable, 22-DOF expressive robots using learning from demonstration. Enabled visual programming and achieved 90.17% ASL word/phrase execution and approximately 85% ASL alphabet execution.
+BULLET: [Submitted to ISMAR 2026] Expressive signing avatars: Trained PPO + GAIL policies on 18,495 ASL videos with parametric emotion modeling to generate expressive head motion, improving user-rated experience and social realism (p < 0.05, N = 95).
+BULLET: Configurable SCARA robot: Developed DDPG-based trajectory learning via inverse kinematics in NVIDIA Isaac Sim, achieving 97.8% target-reaching accuracy with sim-to-real policy transfer. Open-sourced the system.
+
+ITEM: Autonomous Robotics in Unstructured Environments
+BULLET: [IEEE NICS 2022] Tokai: A low-cost autonomous waste-collection robot integrating object detection, off-board vision, and onboard control. Achieved 99.52% mAP and real-time perception above 30 FPS on a $98 hardware stack.
+BULLET: [IEEE AMS 2017] Mars rover: Developed a rover with a 6-DOF manipulator, inverse kinematics, and GPS-based autonomous navigation using Haversine path planning and PID control. Achieved 1 km terrain traversal with 0.20–4.10 m endpoint error; ranked 6th of 93 teams (top 6.5%) at URC 2018.
+
+ITEM: Demonstration-Based Robot Programming and Mechanism Design
+BULLET: [ACM CHI 2022] Mobiot: A human–AI collaborative system for designing 3D-printable robots from smartphone demonstrations. Achieved less than 1% motion error in target reaching and enabled visual programming for motion authoring.
+BULLET: [ACM IMWUT 2023] E3D: An AI-assisted design space for 3D-printable kinetic sensors from smartwatch demonstrations. Trained an LSTM-based IMU classifier to map interactions to parametric designs with 98.9% accuracy.
+
+ITEM: Multimodal Agentic AI for Generative 3D Mechanism Design
+BULLET: [ACM CHI 2026] EUREXA: A diagnose–discover–describe multimodal agentic framework for interpreting vague user context and generating 3D mechanism designs. Introduced a vagueness quantification metric and used RAG, few-shot learning, in-context learning, and ReAct to achieve a 60% gain over state-of-the-art methods in diagnosis and design generation.
+
+ITEM: Interaction Modeling and Behavioral Inference from Context-Aware Sensing
+BULLET: [Work in progress] Developed a multi-agent framework for long- and short-term interaction modeling and behavioral inference, integrating spatiotemporal learning, RAG, LLMs, and MCP. Introduced physical interactions as an input modality for distributed sensor interpretation without hard thresholds, achieving 83.3% interpretation accuracy and capturing lifecycle-aware affordances for adaptive interventions.
+BULLET: [ACM MobileHCI 2026] Developed an agentic VLM to detect object–interaction–induced vibrations and generate structured 3D sensor designs using LLaMA 3.2-Vision, prompt engineering, in-context learning, and MCP, achieving 91.4% accuracy.
+
+ITEM: Task-Specific AI for Efficient Prediction and Edge Deployment
+BULLET: [Automation in Construction 2026] Developed an edge-deployed electrotactile haptic framework for excavation safety using dual-IMU sensing and ML-based inverse mapping. Achieved 93.83% accuracy with sub-100 ms latency.
+BULLET: [M.Sc. thesis; submitted to IEEE Sensors 2026] Developed a lightweight hybrid residual network for railway fastener health detection and curated a real-world dataset of 9.2K images. Achieved 97.11% accuracy (F1 = 0.969), 97.5 FPS, and 10.25 ms latency, with 49.5% lower latency and 99.2% fewer parameters than ResNet-18.
+BULLET: [IEEE WIECON-ECE 2023] Developed a domain-adaptive deep neural network for precipitation prediction, achieving up to 43.51% MAPE reduction across unseen locations.
+
+SECTION: Skills
+
+ITEM: Programming
+DETAIL: Python, Java, C/C++, SQL, JavaScript, HTML, CSS, Git, Flask, Docker, OpenCV.
+
+ITEM: Robotics and Control
+DETAIL: Motion planning, SLAM, PID control, Model Predictive Control (MPC), inverse kinematics (IK), ROS 2.
+
+ITEM: Machine Learning and Data Science
+DETAIL: Model training, Vision Transformers (ViT), diffusion models for trajectory generation, TensorFlow, PyTorch, scikit-learn, pandas, NumPy, Matplotlib, Keras, Conda.
+
+ITEM: Large Language Models and Agentic AI
+DETAIL: Parameter-efficient fine-tuning (PEFT), supervised fine-tuning (SFT), continued pretraining (CPT), GaLore, multimodal RAG, prompt engineering, agentic frameworks, LangChain.
+
+ITEM: Design and Simulation
+DETAIL: SolidWorks, OpenSCAD, Blender, Unity, NVIDIA Isaac Sim, PyBullet.
 
 SECTION: Selected Publications
+HIDDEN: true
 
 ITEM: IEEE IROS 2025
 DETAIL: Abul Al Arabi and Jeeeun Kim, "FABRIC: Fabricating Bodily-Expressive Robots for Inclusive and Low-Cost Design," 2025 IEEE/RSJ International Conference on Intelligent Robots and Systems.
@@ -39,24 +99,6 @@ DETAIL: Abul Al Arabi and Jeeeun Kim, "Augmenting Everyday Objects into Personal
 
 ITEM: ACM CHI 2022
 DETAIL: Abul Al Arabi, Jiahao Li, Xiang'anthony Chen, and Jeeeun Kim, "Mobiot: Augmenting Everyday Objects into Moving IoT Devices Using 3D Printed Attachments Generated by Demonstration," Proceedings of the 2022 CHI Conference on Human Factors in Computing Systems.
-
-SECTION: Research Experience
-
-ITEM: Texas A&M University
-META: Graduate Assistant-Research • Sep 2021 - Current
-DETAIL: Action Planning of a Laboratory Gantry Robot using Large Language Model [WIP]: natural language-based task planning for a 5-DOF gantry robot that converts high-level instructions into task-level actions and low-level control parameters.
-DETAIL: FABRIC: an end-to-end learning-from-demonstration toolkit for low-cost fabrication and kinematic programming of bodily-expressive robots, enabling accessible sign language synthesis and embodied interaction.
-DETAIL: Emotions Amplified: an AI-driven system that generates emotionally expressive head gestures for sign language avatars using imitation learning and reinforcement learning.
-DETAIL: End-User Reconfiguration of Environment: an agentic AI framework for generative fabrication that interprets multimodal inputs and proposes explainable, fabrication-ready augmentations.
-DETAIL: Underground Metal Pipe Detection and Haptic Feedback: a wireless sensing and feedback system for excavation safety using IMU and magnetometer sensing.
-DETAIL: Ubiquitous Microvibration Harvesters: low-cost 3D-printed harvesters for self-powered, context-aware sensing.
-DETAIL: RLScara: reinforcement learning-based control of a SCARA manipulator with both simulated and 3D-printed physical validation.
-DETAIL: Interaction Energy Harvesting: a toolkit that lets non-experts fabricate mechanisms that convert everyday interactions into electrical energy.
-DETAIL: Robotizing Everyday Objects: an end-to-end system for turning ordinary objects into mobile robotic devices using 3D-printed attachments.
-
-ITEM: Independent University Bangladesh
-META: Research Assistant • Sep 2016 - Dec 2018
-DETAIL: Led design and fabrication of three Mars rover prototypes with a 6-DOF manipulator, autonomous traversal, long-range communication, and integrated perception systems. Helped establish the Robotics and Rover Development Lab.
 
 SECTION: Teaching Experience
 
@@ -111,6 +153,7 @@ BULLET: IEEE ICMERALDA 2023.
 BULLET: ACM UIST 2022.
 
 ITEM: Program Committee and Leadership
+BULLET: Program Committee Member, ACM TEI 2027.
 BULLET: Sub-committee Chair Assistant, ACM CHI 2024.
 BULLET: Conference Secretary, IEEE International Conference on Robotics, Automation, Artificial-intelligence and Internet-of-Things, 2019.
 BULLET: President (elected), Bangladesh Student Association for Graduate and Undergraduate Students, Texas A&M University, 2024-2025.

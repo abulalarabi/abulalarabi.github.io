@@ -1,3 +1,29 @@
+@article{chae2026feedback,
+  title={From feedback to foresight: End-to-end electrotactile and vibrotactile proximity warning framework for excavation operations},
+  author={Chae, Yeon and Al Arabi, Abul and Kim, Jeeeun and Ham, Youngjib},
+  journal={Automation in Construction},
+  volume={191},
+  pages={107188},
+  year={2026},
+  publisher={Elsevier}
+}
+
+@inproceedings{chae2026proximity,
+  title={Proximity-Driven Electrotactile Feedback System for Preemptive Excavation Hazard Warnings},
+  author={Chae, Yeon and Al Arabi, Abul and Kim, Jeeeun and Ham, Youngjib},
+  booktitle={Construction Research Congress 2026},
+  pages={412--420},
+  year={2026}
+}
+
+@inproceedings{zarin2026real,
+  title={Real-Time Identification of Environmental Hazards in Everyday Settings: An AI Tool for Maternal and Child Health Risk Awareness},
+  author={Zarin, Simlin and Al Arabi, Abul},
+  booktitle={APHA 2026 Annual Meeting and Expo},
+  year={2026},
+  organization={APHA}
+}
+
 @inproceedings{al2017autonomous,
   title={Autonomous rover navigation using gps based path planning},
   author={Al Arabi, Abul and Sakib, Hasib Ul and Sarkar, Pranabesh and Proma, Tanjina Piash and Anowar, Jahedul and Amin, M Ashraful},

@@ -50,7 +50,7 @@ particlesJS("particles-js", {
     },
     "move": {
       "enable": true,
-      "speed": 2,
+      "speed": 0.5,
       "direction": "none",
       "random": false,
       "straight": false,
@@ -64,7 +64,7 @@ particlesJS("particles-js", {
     }
   },
   "interactivity": {
-    "detect_on": "canvas",
+    "detect_on": "window",
     "events": {
       "onhover": {
         "enable": true,

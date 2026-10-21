@@ -656,204 +656,78 @@ main {
 .article-title { margin-bottom: 30px; }
 
 .cv-shell {
-  display: grid;
-  gap: 1.15rem;
+  max-width: 80ch;
+  margin-inline: auto;
+  color: var(--light-gray);
+  font-size: 0.9rem;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
 }
 
-.cv-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 1rem;
-  padding: 1rem 1.05rem;
-  border-radius: 22px;
-  background:
-    linear-gradient(135deg, rgba(255, 214, 102, 0.08), rgba(255, 255, 255, 0.03)),
-    rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.18);
-}
-
-.cv-kicker {
-  margin: 0 0 0.45rem;
-  color: var(--orange-yellow-crayola);
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  font-weight: 600;
-}
+.cv-profile { margin-bottom: 2rem; }
 
 .cv-name {
-  margin: 0 0 0.35rem;
-  font-size: clamp(1.35rem, 2.2vw, 1.9rem);
-  line-height: 1.1;
-}
-
-.cv-role,
-.cv-affiliation,
-.cv-summary {
-  color: var(--light-gray);
-}
-
-.cv-role {
-  margin: 0 0 0.3rem;
-  font-size: 0.92rem;
+  margin-bottom: 0.35rem;
   color: var(--white-2);
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  line-height: 1.25;
 }
 
-.cv-affiliation {
-  margin: 0 0 0.8rem;
-  font-size: 0.88rem;
-}
+.cv-role { color: var(--white-2); }
+.cv-affiliation, .cv-contact { font-size: 0.85rem; }
+.cv-summary { margin-top: 1rem; }
 
-.cv-summary {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.6;
-}
-
-.cv-hero-side {
-  display: grid;
-  gap: 0.75rem;
-  align-content: start;
-  justify-self: end;
-  width: min(100%, 260px);
-}
-
-.cv-contact-card {
-  padding: 0.75rem 0.85rem;
-  border-radius: 18px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-}
-
-.cv-contact-card p {
-  margin: 0;
-  color: var(--white-2);
-  font-size: 0.84rem;
-  line-height: 1.55;
-}
-
-.cv-contact-label {
-  margin-bottom: 0.22rem !important;
-  color: var(--orange-yellow-crayola) !important;
-  font-size: 0.7rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
-
-.cv-grid {
-  column-count: 2;
-  column-gap: 0.85rem;
-}
-
-.cv-section-card {
-  display: inline-flex;
-  flex-direction: column;
-  width: 100%;
-  min-width: 0;
-  margin: 0 0 0.85rem;
-  border-radius: 20px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.025)),
-    rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.16);
-  overflow: hidden;
-  break-inside: avoid;
-  -webkit-column-break-inside: avoid;
-  page-break-inside: avoid;
-}
+.cv-section { margin-top: 2rem; }
 
 .cv-section-head {
-  padding: 0.8rem 0.9rem 0.7rem;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  background: rgba(255, 255, 255, 0.025);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--jet);
 }
 
 .cv-section-title {
-  margin: 0;
+  color: var(--orange-yellow-crayola);
+  font-size: 1.05rem;
+  font-weight: 500;
 }
 
 .cv-section-body {
   display: grid;
-  gap: 0.65rem;
-  padding: 0.8rem 0.9rem 0.9rem;
-}
-
-.cv-entry {
-  display: block;
-  padding: 0.72rem 0.78rem;
-  border-radius: 14px;
-  background: rgba(255, 255, 255, 0.035);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  gap: 1.25rem;
 }
 
 .cv-entry-top {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-between;
   align-items: baseline;
-  gap: 0.45rem 0.75rem;
-  margin-bottom: 0.45rem;
+  gap: 0.15rem 1rem;
+  margin-bottom: 0.25rem;
 }
 
 .cv-entry-title {
-  margin: 0;
-  font-size: 0.9rem;
-  line-height: 1.35;
+  flex: 1 1 22rem;
   color: var(--white-2);
+  font-size: inherit;
+  font-weight: 500;
+  line-height: 1.6;
 }
 
 .cv-entry-meta {
-  color: var(--orange-yellow-crayola);
-  font-size: 0.76rem;
-  font-weight: 500;
-}
-
-.cv-entry-details {
-  display: grid;
-  gap: 0.34rem;
-}
-
-.cv-entry-detail {
-  margin: 0;
   color: var(--light-gray);
-  font-size: 0.82rem;
-  line-height: 1.5;
+  font-size: 0.8rem;
 }
 
-.cv-entry-detail + .cv-entry-detail {
-  margin-top: 0;
-}
+.cv-entry-detail { margin: 0; }
+.cv-entry-detail + .cv-entry-detail { margin-top: 0.25rem; }
 
 .cv-entry-list {
-  margin: 0.34rem 0 0;
-  padding-left: 0;
-  gap: 0.34rem;
-  list-style: none;
+  margin: 0.35rem 0 0;
+  padding-left: 1.2rem;
 }
 
-.cv-entry-text {
-  position: relative;
-  margin: 0;
-  padding-left: 1rem;
-  color: var(--light-gray);
-  font-size: 0.82rem;
-  line-height: 1.5;
-}
-
-.cv-entry-text::before {
-  content: "•";
-  position: absolute;
-  left: 0;
-  top: 0;
-  color: var(--orange-yellow-crayola);
-  font-size: 0.95em;
-  line-height: 1.5;
-}
-
-.cv-entry-text + .cv-entry-text {
-  margin-top: 0.34rem;
-}
+.cv-entry-text { list-style: disc; }
+.cv-entry-text + .cv-entry-text { margin-top: 0.6rem; }
 
 
 /**
@@ -1407,14 +1281,14 @@ main {
 /* Publications carousel */
 .publication-scroll {
   display: flex;
-  gap: 18px;
+  gap: 12px;
   overflow-x: auto;
   padding: 8px 2px 6px;
   scroll-snap-type: x proximity;
 }
 
 .publication-card {
-  flex: 0 0 320px;
+  flex: 0 0 270px;
   margin: 4px 0;
   background: linear-gradient(180deg, rgba(255, 255, 255, 0.05), rgba(255, 255, 255, 0.02)), var(--eerie-black-2);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1459,7 +1333,7 @@ main {
 
 .publication-card img {
   width: 100%;
-  height: 168px;
+  height: 120px;
   object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
@@ -1470,16 +1344,16 @@ main {
 }
 
 .publication-card .card-body {
-  padding: 16px 16px 18px;
+  padding: 12px;
   display: grid;
   align-content: start;
 }
 
 .publication-card h4 {
-  font-size: 15px;
+  font-size: 14px;
   line-height: 1.4;
   min-height: calc(1.4em * 2);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   color: var(--white-1);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -1545,7 +1419,7 @@ main {
   font-size: 13px;
   line-height: 1.55;
   display: -webkit-box;
-  -webkit-line-clamp: 3;
+  -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
@@ -1733,26 +1607,8 @@ main {
 }
 
 @media (max-width: 699px) {
-  .cv-grid {
-    column-count: 1;
-  }
-
-  .cv-hero {
-    padding: 1rem;
-  }
-
-  .cv-section-head,
-  .cv-section-body {
-    padding-left: 0.9rem;
-    padding-right: 0.9rem;
-  }
-
-  .cv-entry {
-    padding: 0.85rem;
-  }
-
   .publication-card {
-    flex-basis: 286px;
+    flex-basis: 250px;
   }
 
   .modal {

@@ -27,8 +27,10 @@
     try {
       const parsedUrl = new URL(url);
 
-      if (parsedUrl.hostname.includes('youtube.com')) {
-        const videoId = parsedUrl.searchParams.get('v');
+      if (['youtube.com', 'www.youtube.com', 'm.youtube.com', 'youtube-nocookie.com', 'www.youtube-nocookie.com'].includes(parsedUrl.hostname)) {
+        const segments = parsedUrl.pathname.split('/').filter(Boolean);
+        const videoId = parsedUrl.searchParams.get('v') ||
+          (['embed', 'shorts', 'live'].includes(segments[0]) ? segments[1] : '');
         return videoId ? `https://www.youtube.com/embed/${videoId}` : url;
       }
 
@@ -101,7 +103,10 @@
       if (typeof lightGallery === 'function') {
         lightGallery(galleryStrip, {
           selector: '.proj-thumb',
-          plugins: [lgThumbnail, lgZoom],
+          plugins: [
+            typeof lgThumbnail !== 'undefined' ? lgThumbnail : null,
+            typeof lgZoom !== 'undefined' ? lgZoom : null
+          ].filter(Boolean),
           thumbnail: true,
           zoom: true,
           download: false,
@@ -110,12 +115,8 @@
         });
       }
     } catch (error) {
-      galleryWrapper.appendChild(
-        createElement('div', {
-          className: 'proj-gallery-empty',
-          textContent: 'No image manifest found for this entry.'
-        })
-      );
+      console.warn('Project gallery unavailable:', error);
+      return 0;
     }
 
     card.appendChild(galleryWrapper);
@@ -155,12 +156,10 @@
     const mediaStack = createElement('div', { className: 'proj-media-stack' });
 
     if (project.descriptions) {
-      summary.appendChild(
-        createElement('p', {
-          className: 'proj-desc',
-          textContent: project.descriptions
-        })
-      );
+      summary.appendChild(createElement('p', {
+        className: 'proj-desc',
+        textContent: project.descriptions
+      }));
     }
 
     if (hasVideos) {
@@ -178,7 +177,7 @@
           className: 'proj-video-frame',
           attributes: {
             src: toYouTubeEmbedUrl(videoUrl),
-            title: 'Project video',
+            title: `${project['project-name'] || 'Project'} demo`,
             frameborder: '0',
             allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
             allowfullscreen: 'true',
