@@ -21,9 +21,7 @@
   margin-bottom: 1.2rem;
   padding: 1.2rem 1.25rem;
   border-radius: 20px;
-  background:
-    linear-gradient(135deg, rgba(255, 214, 102, 0.08), rgba(255, 255, 255, 0.02)),
-    rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 16px 38px rgba(0, 0, 0, 0.18);
 }
@@ -64,13 +62,11 @@
   margin: 0 0 1.15rem;
   padding: 0.7rem 0.75rem;
   border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(18, 18, 18, 0.92), rgba(18, 18, 18, 0.82)),
-    rgba(255, 255, 255, 0.03);
+  background: rgba(18, 18, 18, 0.88);
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--panel-blur, 4px));
+  -webkit-backdrop-filter: blur(var(--panel-blur, 4px));
 }
 
 .pubs-year-nav a {
@@ -94,9 +90,7 @@
   border-radius: 18px;
   margin: 0.95rem 0;
   scroll-margin-top: 5.8rem;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02)),
-    rgba(255, 255, 255, 0.02);
+  background: rgba(255, 255, 255, 0.03);
   box-shadow: 0 14px 34px rgba(0, 0, 0, 0.14);
   overflow: hidden;
 }
@@ -212,13 +206,6 @@
   color: var(--accent);
   font-size: 0.76rem;
   font-weight: 600;
-}
-
-.pub-citation {
-  margin: 0;
-  color: rgba(255, 255, 255, 0.55);
-  font-size: 0.82rem;
-  line-height: 1.6;
 }
 
 .pubs a { color: var(--accent); }

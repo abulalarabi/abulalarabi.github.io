@@ -1,5 +1,12 @@
 [
     {
+      "title": "[MobileHCI'26] VIB3D: Microvibration Harvesters for Context-Aware Sensing using FDM",
+      "image": "assets/publication-images/vib3d.png",
+      "pdf": "papers/VIB3D-Mobilehci26.pdf",
+      "video": "https://www.youtube.com/watch?v=dk5QPW2xS1M",
+      "summary": "The physical world quietly encodes human activity and object context through microvibrations produced by everyday interactions, from tapping and rubbing to swinging and striking. While such vibrations have been explored as a sustainable power source for ubiquitous sensing, interaction-driven harvesting remains underutilized due to limited awareness of vibration-based sensing opportunities, fabrication complexity, and uncertainty about whether harvested energy can support practical sensing.\n\nWe introduce VIB3D, a design and fabrication approach for harvesting everyday microvibrations as distinct profiles for context-aware sensing. VIB3D combines a scanner and parametric design framework that enables non-experts to customize low-cost FDM-printed harvesters from off-the-shelf materials, based on energy needs, spatial constraints, and target interactions. By tuning batteryless sensing to specific objects and contexts, VIB3D enables everyday objects to become sustainable sensing sites for mobile and ubiquitous computing."
+    },
+    {
       "title": "[CHI'26] EUREXA: End-User Reconfiguration of Environment with eXplainable Augmentation for Generative Fabrication",
       "image": "assets/publication-images/eurexa.jpg",
       "pdf": "https://dl.acm.org/doi/pdf/10.1145/3772318.3791934",
@@ -28,4 +35,3 @@
       "summary": "Recent advancements in personal fabrication have brought novices closer to a reality, where they can automate routine tasks with mobilized everyday objects. However, the overall process remains challenging- from capturing design requirements and motion planning to authoring them to creating 3D models of mechanical parts to programming electronics, as it demands expertise. We introduce Mobiot, an end-user toolkit to help non-experts capture the design and motion requirements of legacy objects by demonstration. It then automatically generates 3D printable attachments, programs to operate assembled modules, a list of off-the-shelf electronics, and assembly tutorials. The authoring feature further assists users to fine-tune as well as to reuse existing motion libraries and 3D printed mechanisms to adapt to other real-world objects with different motions. We validate Mobiot through application examples with 8 everyday objects with various motions applied, and through technical evaluation to measure the accuracy of motion reconstruction."
     }
   ]
-  

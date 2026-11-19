@@ -5,11 +5,13 @@ const RECENTS_URL = 'info/recents.txt';
 const CV_TEXT_URL = 'info/cv.txt';
 
 function setActivePage(targetPageName, pages, navigationLinks) {
+  if (!pages.some((page) => page.dataset.page === targetPageName)) return null;
   let activePage = null;
 
   pages.forEach((page) => {
     const isActive = page.dataset.page === targetPageName;
     page.classList.toggle('active', isActive);
+    page.hidden = !isActive;
 
     if (isActive) {
       activePage = page;
@@ -19,13 +21,11 @@ function setActivePage(targetPageName, pages, navigationLinks) {
   navigationLinks.forEach((link) => {
     const isActive = link.textContent.trim().toLowerCase() === targetPageName;
     link.classList.toggle('active', isActive);
+    if (isActive) link.setAttribute('aria-current', 'page');
+    else link.removeAttribute('aria-current');
   });
 
-  if (activePage) {
-    activePage.scrollTo({ top: 0, behavior: 'auto' });
-  }
-
-  window.scrollTo({ top: 0, behavior: 'auto' });
+  return activePage;
 }
 
 function escapeHtml(value = '') {
@@ -301,12 +301,90 @@ function initSidebarToggle() {
 
   sidebarButton.addEventListener('click', () => {
     sidebar.classList.toggle('active');
+    const expanded = sidebar.classList.contains('active');
+    sidebarButton.setAttribute('aria-expanded', String(expanded));
+    sidebarButton.setAttribute('aria-label', expanded ? 'Hide contact details' : 'Show contact details');
   });
 }
 
 function initNavigation() {
   const navigationLinks = Array.from(document.querySelectorAll('[data-nav-link]'));
   const pages = Array.from(document.querySelectorAll('[data-page]'));
+  const title = document.getElementById('page-title');
+  const navbar = document.querySelector('.navbar');
+  const yearNav = document.getElementById('publication-year-nav');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const positions = new Map();
+  let scroller;
+  let currentPage = pages.find((page) => page.classList.contains('active'));
+  let lastHash;
+
+  pages.forEach((page) => { page.id = page.dataset.page; });
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  function scrollPage(page, top, smooth = false) {
+    if (scroller) {
+      scroller.scrollTo(top, { immediate: !smooth || reducedMotion.matches, duration: 0.7, force: true });
+    } else {
+      page.scrollTo({ top, behavior: smooth && !reducedMotion.matches ? 'smooth' : 'instant' });
+    }
+  }
+
+  function route({ initial = false, force = false, restoreScroll = false, smooth = false } = {}) {
+    const hash = location.hash.slice(1);
+    if (hash === lastHash && !force) return;
+    lastHash = hash;
+    const targetName = hash.startsWith('y-') ? 'publications' : hash || 'about';
+    const target = pages.find((page) => page.dataset.page === targetName);
+    if (!target || navigationLinks.some((link) => link.textContent.trim().toLowerCase() === targetName && link.dataset.disabled === 'true')) return;
+
+    const changed = target !== currentPage;
+    if (changed && currentPage) positions.set(currentPage.dataset.page, currentPage.scrollTop);
+    setActivePage(targetName, pages, navigationLinks);
+    yearNav.hidden = targetName !== 'publications';
+    currentPage = target;
+    if (window.Lenis && (changed || !scroller)) {
+      scroller?.destroy();
+      scroller = new window.Lenis({
+        wrapper: target,
+        content: target,
+        autoRaf: true,
+        smoothWheel: true,
+        syncTouch: false,
+        lerp: 0.1,
+        allowNestedScroll: true,
+        naiveDimensions: true,
+        respectReducedMotion: true
+      });
+    }
+    title.textContent = target.dataset.title;
+    const activeLink = navigationLinks.find((link) => link.classList.contains('active'));
+    if (navbar.scrollWidth > navbar.clientWidth) {
+      const left = navbar.scrollLeft + activeLink.getBoundingClientRect().left
+        - navbar.getBoundingClientRect().left - (navbar.clientWidth - activeLink.offsetWidth) / 2;
+      navbar.scrollTo({ left: Math.max(0, left), behavior: 'instant' });
+    }
+
+    if (hash.startsWith('y-')) {
+      const year = document.getElementById(hash);
+      if (year) {
+        year.open = true;
+        const top = year.getBoundingClientRect().top - target.getBoundingClientRect().top + target.scrollTop - 12;
+        scrollPage(target, Math.max(0, top), smooth);
+      }
+    } else if (!initial && (changed || force)) {
+      const top = restoreScroll && positions.has(targetName)
+        ? positions.get(targetName)
+        : 0;
+      scrollPage(target, top);
+    }
+
+    if (changed && !initial) {
+      window.SiteMotion?.reveal(target);
+      window.SiteMotion?.reveal(title, 0);
+      title.focus({ preventScroll: true });
+    }
+  }
 
   navigationLinks.forEach((link) => {
     link.addEventListener('click', () => {
@@ -314,9 +392,30 @@ function initNavigation() {
         return;
       }
 
-      setActivePage(link.textContent.trim().toLowerCase(), pages, navigationLinks);
+      const hash = `#${link.textContent.trim().toLowerCase()}`;
+      if (location.hash !== hash) history.pushState(null, '', hash);
+      route({ force: true });
     });
   });
+
+  document.addEventListener('click', (event) => {
+    const anchor = event.target.closest('a[href^="#y-"]');
+    if (!anchor || event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    const hash = anchor.getAttribute('href');
+    if (location.hash !== hash) history.pushState(null, '', hash);
+    route({ force: true, smooth: true });
+  });
+  window.addEventListener('popstate', () => route({ restoreScroll: true }));
+  window.addEventListener('hashchange', () => route());
+  document.addEventListener('dialogchange', (event) => {
+    if (event.detail.open) scroller?.stop();
+    else scroller?.start();
+  });
+  document.addEventListener('publicationsready', () => {
+    if (location.hash.startsWith('#y-')) route({ force: true });
+  });
+  route({ initial: true });
 }
 
 document.addEventListener('DOMContentLoaded', () => {

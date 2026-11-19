@@ -129,7 +129,6 @@
 
     const header = createElement('div', { className: 'proj-card-header' });
     const heading = createElement('div', { className: 'proj-heading' });
-    const meta = createElement('div', { className: 'proj-meta' });
 
     heading.appendChild(
       createElement('h3', {
@@ -139,16 +138,6 @@
     );
     header.appendChild(heading);
 
-    if (hasVideos) {
-      meta.appendChild(
-        createElement('span', {
-          className: 'proj-chip',
-          textContent: `${project.videos.length} demo${project.videos.length > 1 ? 's' : ''}`
-        })
-      );
-    }
-
-    header.appendChild(meta);
     card.appendChild(header);
 
     const layout = createElement('div', { className: 'proj-card-layout' });
@@ -172,21 +161,45 @@
 
       const videosWrapper = createElement('div', { className: 'proj-videos' });
 
-      project.videos.forEach((videoUrl) => {
-        const frame = createElement('iframe', {
-          className: 'proj-video-frame',
-          attributes: {
-            src: toYouTubeEmbedUrl(videoUrl),
-            title: `${project['project-name'] || 'Project'} demo`,
-            frameborder: '0',
-            allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
-            allowfullscreen: 'true',
-            loading: 'lazy'
-          }
-        });
-
+      project.videos.forEach((videoUrl, videoIndex) => {
+        const embedUrl = toYouTubeEmbedUrl(videoUrl);
         const videoCard = createElement('div', { className: 'proj-video-card' });
-        videoCard.appendChild(frame);
+        const trigger = createElement('button', {
+          className: 'proj-video-trigger',
+          attributes: { type: 'button', 'aria-haspopup': 'dialog', 'aria-label': `Watch ${project['project-name'] || 'project'} demo ${videoIndex + 1}` }
+        });
+        if (embedUrl.startsWith('https://www.youtube.com/embed/')) {
+          const videoId = new URL(embedUrl).pathname.split('/').pop();
+          trigger.classList.add('has-thumbnail');
+          trigger.appendChild(createElement('img', {
+            className: 'proj-video-poster',
+            attributes: {
+              src: `assets/project-video-thumbnails/${videoId}.jpg`,
+              alt: '', width: '320', height: '180', loading: 'lazy', decoding: 'async'
+            }
+          }));
+        }
+        const label = createElement('span', { className: 'proj-video-label' });
+        label.innerHTML = `<span class="proj-play-icon" aria-hidden="true">▶</span><span>Demo${project.videos.length > 1 ? ` ${videoIndex + 1}` : ''}</span>`;
+        trigger.appendChild(label);
+        trigger.addEventListener('click', () => {
+          const frame = createElement('iframe', {
+            className: 'proj-video-frame',
+            attributes: {
+              src: embedUrl.includes('youtube.com/embed/') ? `${embedUrl}?autoplay=1` : embedUrl,
+              title: `${project['project-name'] || 'Project'} demo ${videoIndex + 1}`,
+              allow: 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share',
+              allowfullscreen: 'true'
+            }
+          });
+          const dialog = document.getElementById('project-video-modal');
+          const title = document.getElementById('project-video-title');
+          title.textContent = `${project['project-name'] || 'Project'} — Demo ${videoIndex + 1}`;
+          document.getElementById('project-video-embed').replaceChildren(frame);
+          trigger.focus({ preventScroll: true });
+          window.SiteMotion.openDialog(dialog, title);
+        });
+        videoCard.appendChild(trigger);
         videosWrapper.appendChild(videoCard);
       });
 
@@ -196,12 +209,9 @@
     const imageCount = await appendImageGallery(mediaStack, project, index);
 
     if (imageCount > 0) {
-      meta.appendChild(
-        createElement('span', {
-          className: 'proj-chip',
-          textContent: `${imageCount} image${imageCount > 1 ? 's' : ''}`
-        })
-      );
+      if (!hasVideos) card.classList.add('gallery-only');
+    } else if (hasVideos) {
+      card.classList.add('demo-only');
     }
 
     if (!mediaStack.childElementCount) {

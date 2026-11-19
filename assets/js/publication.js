@@ -104,27 +104,6 @@ function getPublicationParts(entry) {
   };
 }
 
-function formatCitation(entry) {
-  const publication = getPublicationParts(entry);
-  const parts = [];
-
-  if (publication.authors) {
-    parts.push(`${publication.authors}.`);
-  }
-
-  if (publication.title) {
-    parts.push(`“${publication.title}.”`);
-  }
-
-  if (publication.meta) {
-    parts.push(`${publication.meta},`);
-  }
-
-  parts.push(`(${publication.year}).`);
-
-  return parts.join(' ').replace(/\s+,/g, ',');
-}
-
 function extractYouTubeEmbedUrl(url) {
   return window.ContentCards ? window.ContentCards.toYouTubeEmbedUrl(url) : url;
 }
@@ -150,14 +129,32 @@ function showPublicationModal(publication) {
   const embedUrl = extractYouTubeEmbedUrl(publication.video);
   const isYouTubeEmbed = embedUrl.includes('youtube.com/embed/');
 
-  embedContainer.innerHTML = isYouTubeEmbed
-    ? `<iframe src="${embedUrl}" allowfullscreen loading="lazy"></iframe>`
-    : '';
+  embedContainer.replaceChildren();
+  if (isYouTubeEmbed) {
+    const play = document.createElement('button');
+    play.type = 'button';
+    play.className = 'modal-play';
+    play.textContent = '▶ Play video';
+    play.addEventListener('click', () => {
+      const frame = document.createElement('iframe');
+      frame.src = `${embedUrl}?autoplay=1`;
+      frame.title = `${publication.title} video`;
+      frame.allow = 'autoplay; encrypted-media; picture-in-picture';
+      frame.allowFullscreen = true;
+      embedContainer.replaceChildren(frame);
+      modalMedia.style.display = 'none';
+      modalContent.classList.add('video-mode');
+      window.SiteMotion.reveal(embedContainer);
+      frame.focus({ preventScroll: true });
+    });
+    embedContainer.appendChild(play);
+  }
   embedContainer.style.display = isYouTubeEmbed ? 'block' : 'none';
-  modalMedia.style.display = isYouTubeEmbed ? 'none' : '';
-  modalContent.classList.toggle('video-mode', isYouTubeEmbed);
+  modalMedia.style.display = '';
+  modalContent.classList.remove('video-mode');
+  modalVideo.textContent = isYouTubeEmbed ? 'Open on YouTube' : 'Watch Video';
 
-  modal.style.display = 'flex';
+  window.SiteMotion.openDialog(modal, modalTitle);
 }
 
 async function renderPublicationCards() {
@@ -178,23 +175,33 @@ async function renderPublicationCards() {
     }
 
     publications.forEach((publication) => {
-      const card = document.createElement('div');
+      const card = document.createElement('li');
       card.className = 'publication-card';
       card.innerHTML = `
-        <div class="publication-card-media">
-          <div class="card-buttons card-buttons-overlay">
-            <a href="${publication.pdf}" target="_blank" rel="noopener noreferrer">PDF</a>
-            <a href="${publication.video}" target="_blank" rel="noopener noreferrer">Demo</a>
-          </div>
-          <img src="${publication.image}" alt="${publication.title}">
-        </div>
-        <div class="card-body">
-          <h4>${publication.title}</h4>
-          <p class="card-summary">${publication.summary}</p>
-        </div>
+        <img src="${publication.image}" alt="${publication.title}">
+        <p class="card-buttons card-buttons-overlay">
+          <a href="${publication.pdf}" target="_blank" rel="noopener noreferrer">PDF</a>
+          <span class="card-buttons-divider" aria-hidden="true">|</span>
+          <a href="${publication.video}" target="_blank" rel="noopener noreferrer">Demo</a>
+        </p>
+        <h4><button type="button" class="publication-details" aria-haspopup="dialog">${publication.title}</button></h4>
+        <p class="card-summary">${publication.summary}</p>
       `;
 
-      card.addEventListener('click', () => showPublicationModal(publication));
+      let dragged = false;
+      let pointerStart;
+      card.addEventListener('pointerdown', (event) => {
+        pointerStart = { x: event.clientX, y: event.clientY };
+        dragged = false;
+      });
+      card.addEventListener('pointerup', (event) => {
+        if (pointerStart) dragged = Math.hypot(event.clientX - pointerStart.x, event.clientY - pointerStart.y) > 8;
+      });
+      card.addEventListener('click', (event) => {
+        if (event.detail !== 0 && dragged) return;
+        card.querySelector('.publication-details')?.focus({ preventScroll: true });
+        showPublicationModal(publication);
+      });
       card.querySelectorAll('a').forEach((link) => {
         link.addEventListener('click', (event) => {
           event.stopPropagation();
@@ -204,14 +211,15 @@ async function renderPublicationCards() {
     });
   } catch (error) {
     console.error(error);
-    container.innerHTML = '<p class="timeline-text">Publications could not be loaded.</p>';
+    container.innerHTML = '<li class="timeline-text">Publications could not be loaded.</li>';
   }
 }
 
 async function renderPublicationList() {
   const root = document.getElementById(PUBLICATION_SECTION_ID);
+  const yearNav = document.getElementById('publication-year-nav');
 
-  if (!root) {
+  if (!root || !yearNav) {
     return;
   }
 
@@ -240,10 +248,8 @@ async function renderPublicationList() {
     });
 
     root.classList.add('pubs');
+    yearNav.innerHTML = years.map((year) => `<a href="#y-${year}">${year}</a>`).join('');
     root.innerHTML = `
-      <nav class="pubs-year-nav" aria-label="Jump to publication year">
-        ${years.map((year) => `<a href="#y-${year}">${year}</a>`).join('')}
-      </nav>
       ${years
         .map((year) => {
           const yearEntries = groups.get(year) || [];
@@ -259,16 +265,13 @@ async function renderPublicationList() {
                     (entry) => {
                       const publication = getPublicationParts(entry);
                       return `
-                      <li class="pub">
-                        <div class="pub-card">
-                          <p class="pub-title">${publication.title || 'Untitled publication'}</p>
-                          <p class="pub-authors">${publication.authors || 'Authors unavailable'}</p>
-                          <div class="pub-meta-row">
-                            <span class="pub-meta">${publication.meta || 'Publication details unavailable'}</span>
-                            <span class="pub-year-pill">${publication.year}</span>
-                          </div>
-                          <p class="pub-citation">${formatCitation(entry)}</p>
-                        </div>
+                      <li class="pub pub-card">
+                        <p class="pub-title">${publication.title || 'Untitled publication'}</p>
+                        <p class="pub-authors">${publication.authors || 'Authors unavailable'}</p>
+                        <p class="pub-meta-row">
+                          <span class="pub-meta">${publication.meta || 'Publication details unavailable'}</span>
+                          <span class="pub-year-pill">${publication.year}</span>
+                        </p>
                       </li>
                     `
                     }
@@ -280,33 +283,14 @@ async function renderPublicationList() {
         })
         .join('')}
     `;
+    document.dispatchEvent(new CustomEvent('publicationsready'));
   } catch (error) {
     console.error(error);
     root.innerHTML = `<p class="timeline-text">Could not load publications from <code>${CITATIONS_URL}</code>.</p>`;
   }
 }
 
-function initPublicationModal() {
-  const modal = document.getElementById('publication-modal');
-  const closeButton = document.querySelector('.modal-close');
-
-  if (!modal || !closeButton) {
-    return;
-  }
-
-  closeButton.addEventListener('click', () => {
-    modal.style.display = 'none';
-  });
-
-  modal.addEventListener('click', (event) => {
-    if (event.target === modal) {
-      modal.style.display = 'none';
-    }
-  });
-}
-
 document.addEventListener('DOMContentLoaded', () => {
-  initPublicationModal();
   renderPublicationCards();
   renderPublicationList();
 });

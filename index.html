@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 
 <head>
-  <script src="vendor/particles.min.js"></script>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#000000">
+  <script src="./assets/js/theme.js"></script>
+  <script src="./vendor/particles.min.js" defer></script>
   <title>Abul Al Arabi - Personal Portfolio</title>
 
   <link rel="shortcut icon" href="./assets/images/logo.ico" type="image/x-icon">
@@ -13,10 +15,9 @@
   <link rel="stylesheet" href="./assets/css/style.css">
   <link rel="stylesheet" href="./assets/css/publications.css">
   <link rel="stylesheet" href="./assets/css/projects.css">
+  <link rel="stylesheet" href="./vendor/lenis/lenis.css">
+  <link rel="stylesheet" href="./assets/css/glass.css">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1.9.4/css/academicons.min.css"/>
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@2.8.3/css/lightgallery-bundle.min.css">
@@ -28,7 +29,7 @@
 
 <body>
   <noscript>Enable JavaScript to run this app.</noscript>
-    <div id="particles-js"></div>
+    <div id="particles-js" aria-hidden="true"></div>
 
 
   <main>
@@ -43,6 +44,10 @@
 
         <figure class="avatar-box">
           <img src="./assets/images/me.jpg" alt="Abul Al Arabi">
+          <button class="theme-toggle" type="button" data-theme-toggle hidden>
+            <span class="theme-icon" aria-hidden="true">☀</span>
+            <span class="theme-label" data-theme-label>Light mode</span>
+          </button>
         </figure>
 
         <div class="info-content">
@@ -58,7 +63,7 @@
           
         </div>
 
-        <button class="info_more-btn" data-sidebar-btn>
+        <button class="info_more-btn" data-sidebar-btn aria-expanded="false" aria-label="Show contact details">
           <span>Show Contacts</span>
 
           <ion-icon name="chevron-down"></ion-icon>
@@ -139,7 +144,9 @@
         - #NAVBAR
       -->
 
-      <nav class="navbar">
+      <header class="panel-header">
+        <h2 class="h2 article-title" id="page-title" tabindex="-1">About me</h2>
+        <nav class="navbar" aria-label="Main navigation">
 
         <ul class="navbar-list">
 
@@ -171,20 +178,14 @@
 
         </ul>
 
-      </nav>
-
-
-
-
-
+        </nav>
+      </header>
+      <nav id="publication-year-nav" class="pubs-year-nav" aria-label="Jump to publication year" hidden></nav>
       <!--
         - #ABOUT
       -->
 
-      <article class="about active page-panel" data-page="about">
-        <header>
-          <h2 class="h2 article-title">About me</h2>
-        </header>
+      <article class="about active page-panel" data-page="about" data-title="About me" aria-labelledby="page-title">
         <section class="about-hero">
           <div class="about-card about-text" id="about-text-content"></div>
 
@@ -196,9 +197,8 @@
           </aside>
         </section>
 
-        <section class="publications">
-          <div class="publication-scroll" id="publication-container"></div>
-        </section>
+        <h3 class="h3 section-title" id="selected-publications-title">Selected publications</h3>
+        <ul class="publication-scroll" id="publication-container" aria-labelledby="selected-publications-title"></ul>
 
         <p class="about-footnote">
           Open source:
@@ -209,44 +209,29 @@
       </article>
 
       <!-- projects -->
-      <article class="portfolio page-panel" data-page="projects">
-        <header>
-          <h2 class="h2 article-title">Projects</h2>
-        </header>
+      <article class="portfolio page-panel" data-page="projects" data-title="Projects" aria-labelledby="page-title">
         <section id="projects-section" ></section>
       </article>
 
 
       <!-- publications -->
-      <article class="portfolio page-panel" data-page="publications">
-        <header>
-          <h2 class="h2 article-title">Publications</h2>
-        </header>
+      <article class="portfolio page-panel" data-page="publications" data-title="Publications" aria-labelledby="page-title">
        <section id = "publication-section" ></section>
       </article>
 
       <!-- - #CV -->
-      <article class="resume page-panel" data-page="cv">
-        <header>
-          <h2 class="h2 article-title">CV</h2>
-        </header>
+      <article class="resume page-panel" data-page="cv" data-title="CV" aria-labelledby="page-title">
         <section id="cv-section"></section>
       </article>
 
 
       <!-- talks -->
-      <article class="portfolio page-panel" data-page="talks">
-        <header>
-          <h2 class="h2 article-title">Talks</h2>
-        </header>
+      <article class="portfolio page-panel" data-page="talks" data-title="Talks" aria-labelledby="page-title">
         <section id = "talk-section" ></section>
       </article>
 
       <!-- media -->
-      <article class="portfolio page-panel" data-page="awards/media">
-        <header>
-          <h2 class="h2 article-title">Awards/Media</h2>
-        </header>
+      <article class="portfolio page-panel" data-page="awards/media" data-title="Awards/Media" aria-labelledby="page-title">
         <section class="about-card service">
           <p class="timeline-text">This section is being updated and will be available soon.</p>
         </section>
@@ -260,36 +245,48 @@
 
 
 <!-- Modal -->
-<div id="publication-modal" class="modal">
+<dialog id="publication-modal" class="modal" aria-labelledby="modal-title">
   <div class="modal-content">
     <button class="modal-close" type="button" aria-label="Close publication details">&times;</button>
     <div class="modal-layout">
-      <div class="modal-media">
-        <img id="modal-img" alt="" />
-      </div>
-
       <div class="modal-details">
         <p class="modal-eyebrow">Selected publication</p>
-        <h4 id="modal-title"></h4>
+        <h4 id="modal-title" tabindex="-1"></h4>
 
         <div class="modal-buttons">
           <a id="modal-pdf" target="_blank" rel="noopener noreferrer">Read PDF</a>
           <a id="modal-video" target="_blank" rel="noopener noreferrer">Watch Video</a>
         </div>
 
-        <div id="modal-embed" class="modal-embed"></div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-preview">
+          <div class="modal-media">
+            <img id="modal-img" alt="" />
+          </div>
+          <div id="modal-embed" class="modal-embed" data-dialog-media></div>
+        </div>
         <p id="modal-summary"></p>
       </div>
     </div>
   </div>
-</div>
+</dialog>
 
+<dialog id="project-video-modal" class="modal" aria-labelledby="project-video-title">
+  <div class="modal-content project-video-content">
+    <button class="modal-close" type="button" aria-label="Close project video">&times;</button>
+    <h3 id="project-video-title" tabindex="-1"></h3>
+    <div id="project-video-embed" data-dialog-media></div>
+  </div>
+</dialog>
 
 
   <!--
     - custom js link
   -->
+  <script src="./assets/js/ui-motion.js"></script>
   <script src="./assets/js/content-cards.js"></script>
+  <script src="./vendor/lenis/lenis.min.js"></script>
   <script src="./assets/js/script.js"></script>
   <script src="./assets/js/projects.js"></script>
   <script src="./assets/js/talks.js"></script>
@@ -300,7 +297,7 @@
   <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
   <script src="./assets/js/publication.js"></script>
-  <script src="./assets/js/bg.js"></script>
+  <script src="./assets/js/bg.js" defer></script>
 
 </body>
 

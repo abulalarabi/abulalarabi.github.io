@@ -3,15 +3,14 @@
 /* Theme tokens (override if needed) */
 :root {
   --proj-card: #121212;
-  --proj-card-2: #0b0f14;
   --proj-text: #e9eef4;
   --proj-text-dim: #c3cbd5;
   --proj-border: rgba(255,255,255,0.08);
   --proj-border-strong: rgba(255,214,102,0.22);
   --proj-focus: 0 0 0 3px rgba(56,189,248,0.25), 0 0 0 1px rgba(56,189,248,0.7);
   --proj-accent: #ffd666;
-  --proj-scrollbar: linear-gradient(180deg, rgba(255,214,102,0.42), rgba(255,214,102,0.18));
-  --proj-scrollbar-hover: linear-gradient(180deg, rgba(255,214,102,0.58), rgba(255,214,102,0.28));
+  --proj-scrollbar: rgba(255,214,102,0.3);
+  --proj-scrollbar-hover: rgba(255,214,102,0.45);
   --proj-scrollbar-track: rgba(255,255,255,0.04);
   --proj-scrollbar-border: rgba(255,255,255,0.08);
 }
@@ -22,9 +21,7 @@
 /* Card */
 .proj-card {
   color: var(--proj-text);
-  background:
-    linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)),
-    linear-gradient(180deg, var(--proj-card) 0%, var(--proj-card-2) 100%);
+  background: var(--proj-card);
   border: 1px solid var(--proj-border);
   border-radius: 14px;
   padding: 0.85rem;
@@ -32,7 +29,7 @@
   width: 100%;
   max-width: 1100px;
   margin: 0 auto 0.8rem;
-  backdrop-filter: blur(8px) saturate(1.1);
+  backdrop-filter: blur(var(--panel-blur, 4px)) saturate(1.1);
   box-shadow: 0 18px 38px rgba(0, 0, 0, 0.22);
 }
 .proj-card:hover {
@@ -51,27 +48,6 @@
 
 .proj-heading {
   min-width: 0;
-}
-
-.proj-meta {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  gap: 0.45rem;
-}
-
-.proj-chip {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 0.38rem 0.7rem;
-  border-radius: 999px;
-  border: 1px solid rgba(255,214,102,0.18);
-  background: rgba(255,214,102,0.08);
-  color: var(--proj-accent);
-  font-size: 0.78rem;
-  letter-spacing: 0.02em;
-  white-space: nowrap;
 }
 
 .proj-card-layout {
@@ -150,7 +126,7 @@
   gap: 0.7rem;
   padding: 0.25rem;
   border-radius: 16px;
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+  background: rgba(255,255,255,0.025);
   outline: 1px solid var(--proj-border);
 }
 .proj-thumb {
@@ -221,10 +197,6 @@
     align-items: flex-start;
   }
 
-  .proj-meta {
-    justify-content: flex-start;
-  }
-
   .proj-title {
     font-size: 1rem;
   }
@@ -262,9 +234,7 @@
   gap: 0;
   overflow: hidden;
   border-radius: 24px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015)),
-    linear-gradient(180deg, #121212 0%, #0b0f14 100%);
+  background: #121212;
   border: 1px solid rgba(255, 255, 255, 0.08);
   box-shadow: 0 20px 44px rgba(0, 0, 0, 0.24);
 }
@@ -299,8 +269,8 @@
   align-items: center;
   padding: 0.38rem 0.72rem;
   border-radius: 999px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(var(--panel-blur, 4px));
+  -webkit-backdrop-filter: blur(var(--panel-blur, 4px));
 }
 
 .talks-media-badge {
@@ -329,9 +299,7 @@
   padding: 1.2rem;
   color: var(--proj-text-dim);
   text-align: center;
-  background:
-    radial-gradient(circle at top left, rgba(255, 214, 102, 0.08), transparent 30%),
-    linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.015));
+  background: rgba(255, 255, 255, 0.025);
 }
 
 .talks-body {
