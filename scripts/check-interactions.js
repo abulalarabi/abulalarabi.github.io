@@ -226,8 +226,9 @@ async function checkDialogAndCards() {
   for (const id of ['publication-modal', 'modal-img', 'modal-title', 'modal-pdf', 'modal-video', 'modal-summary', 'modal-embed', 'publication-container']) env.elements[id] = new Element();
   const modal = env.elements['publication-modal'];
   const content = new Element();
+  const scrollArea = new Element();
   const close = new Element();
-  modal.selectors = { '.modal-content': content, '.modal-media': new Element(), '.modal-close': close };
+  modal.selectors = { '.modal-content': content, '[data-dialog-scroll]': scrollArea, '.modal-media': new Element(), '.modal-close': close };
   modal.selectorLists = { '[data-dialog-media]': [env.elements['modal-embed']] };
   env.document.selectorLists = { 'dialog.modal': [modal] };
   run(env, 'ui-motion');
@@ -244,10 +245,11 @@ async function checkDialogAndCards() {
   cards[0].emit('pointerup', { clientX: 50, clientY: 20 });
   cards[0].emit('click', { detail: 1 });
   assert(!modal.open, 'Dragging the carousel does not open a dialog');
+  scrollArea.scrollTop = 200;
   cards[0].emit('click', { detail: 0 });
   assert(modal.open, 'Keyboard activation opens publication details');
   assert(env.root.classList.contains('dialog-open'), 'The background is scroll-locked');
-  assert.equal(content.scrollTop, 0);
+  assert.equal(scrollArea.scrollTop, 0, 'Opening the dialog resets its scrollable content');
   const play = env.elements['modal-embed'].children[0];
   assert.equal(play.className, 'modal-play', 'The dialog initially shows a preview and play control');
   play.emit('click');
@@ -256,6 +258,9 @@ async function checkDialogAndCards() {
   assert(!modal.open && !env.root.classList.contains('dialog-open'));
   assert.equal(env.elements['modal-embed'].innerHTML, '', 'Closing the dialog stops its video');
   assert.equal(env.elements['modal-embed'].children.length, 0);
+  cards[0].emit('click', { detail: 0 });
+  modal.emit('close');
+  assert.equal(env.elements['modal-embed'].children[0].className, 'modal-play', 'A delayed close event leaves the reopened dialog intact');
 }
 
 async function checkProjectDemos() {

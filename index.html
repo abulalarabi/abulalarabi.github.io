@@ -255,10 +255,12 @@
 <!-- Modal -->
 <dialog id="publication-modal" class="modal" aria-labelledby="modal-title">
   <div class="modal-content">
-    <button class="modal-close" type="button" aria-label="Close publication details">&times;</button>
-    <div class="modal-layout">
+    <div class="publication-modal-header">
+      <p class="modal-eyebrow">Selected publication</p>
+      <button class="modal-close" type="button" aria-label="Close publication details">&times;</button>
+    </div>
+    <div class="modal-layout" data-dialog-scroll>
       <div class="modal-details">
-        <p class="modal-eyebrow">Selected publication</p>
         <h4 id="modal-title" tabindex="-1"></h4>
 
         <div class="modal-buttons">

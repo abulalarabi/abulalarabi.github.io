@@ -19,10 +19,11 @@
 
   function openDialog(dialog, focusTarget) {
     const content = dialog.querySelector('.modal-content');
+    const scrollArea = dialog.querySelector('[data-dialog-scroll]') || content;
     document.documentElement.classList.add('dialog-open');
     dialog.showModal();
     document.dispatchEvent(new CustomEvent('dialogchange', { detail: { open: true } }));
-    content.scrollTop = 0;
+    scrollArea.scrollTop = 0;
     focusTarget.focus({ preventScroll: true });
     animate(dialog, [{ opacity: 0 }, { opacity: 1 }], 220);
     animate(content, [
@@ -65,6 +66,7 @@
       });
       dialog.addEventListener('close', () => {
         closing.delete(dialog);
+        if (dialog.open) return;
         [dialog, dialog.querySelector('.modal-content')].forEach((element) => {
           element.getAnimations?.().forEach((animation) => animation.cancel());
         });
