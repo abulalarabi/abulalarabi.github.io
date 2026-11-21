@@ -45,7 +45,10 @@ for (const record of [...projects, ...talks]) {
   for (const video of record.videos || []) {
     const url = new URL(video);
     const videoId = url.hostname === 'youtu.be' ? url.pathname.slice(1) : url.searchParams.get('v');
-    if (videoId) checkAsset(`assets/project-video-thumbnails/${videoId}.jpg`);
+    if (videoId) {
+      const posterName = videoId.startsWith('_') ? `video-${videoId}` : videoId;
+      checkAsset(`assets/project-video-thumbnails/${posterName}.jpg`);
+    }
   }
   if (!record.images) continue;
   const images = json(`${record.images}/index.json`);

@@ -270,7 +270,7 @@ async function checkProjectDemos() {
   run(env, 'ui-motion');
   env.document.emit('DOMContentLoaded');
   env.context.fetch = async () => ({ ok: true, json: async () => [{
-    'project-name': 'Demo project', videos: ['https://youtu.be/N9JJxs4UElc', 'https://youtu.be/ndf2YhFQPJ4']
+    'project-name': 'Demo project', videos: ['https://youtu.be/N9JJxs4UElc', 'https://youtu.be/_3PXfNXsOGQ']
   }] });
   run(env, 'content-cards');
   await env.window.ContentCards.renderCardCollection({ rootId: 'projects-section', dataUrl: 'test', emptyMessage: 'Unavailable' });
@@ -281,6 +281,7 @@ async function checkProjectDemos() {
   const posters = elements().filter((element) => element.className === 'proj-video-poster');
   assert.equal(posters.length, 2, 'Each project demo has a thumbnail before its player loads');
   assert.equal(posters[0].getAttribute('src'), 'assets/project-video-thumbnails/N9JJxs4UElc.jpg');
+  assert.equal(posters[1].getAttribute('src'), 'assets/project-video-thumbnails/video-_3PXfNXsOGQ.jpg', 'Thumbnail URLs avoid leading underscores on GitHub Pages');
   assert(!elements().some((element) => element.className === 'proj-chip' || element.className === 'proj-meta'), 'Project media counts are omitted');
   assert(!elements().some((element) => element.className === 'proj-video-frame'), 'Players do not load before selection');
   triggers[0].emit('click');
@@ -294,7 +295,7 @@ async function checkProjectDemos() {
   assert(!modal.open, 'Escape dismisses the video popup');
   assert.equal(env.elements['project-video-embed'].children.length, 0, 'Closing the popup stops its video');
   triggers[1].emit('click');
-  assert.equal(env.elements['project-video-embed'].children[0].getAttribute('src'), 'https://www.youtube.com/embed/ndf2YhFQPJ4?autoplay=1');
+  assert.equal(env.elements['project-video-embed'].children[0].getAttribute('src'), 'https://www.youtube.com/embed/_3PXfNXsOGQ?autoplay=1');
   close.emit('click');
   assert(!modal.open && !env.root.classList.contains('dialog-open'));
 }

@@ -170,11 +170,13 @@
         });
         if (embedUrl.startsWith('https://www.youtube.com/embed/')) {
           const videoId = new URL(embedUrl).pathname.split('/').pop();
+          // Jekyll skips static files whose names start with an underscore.
+          const posterName = videoId.startsWith('_') ? `video-${videoId}` : videoId;
           trigger.classList.add('has-thumbnail');
           trigger.appendChild(createElement('img', {
             className: 'proj-video-poster',
             attributes: {
-              src: `assets/project-video-thumbnails/${videoId}.jpg`,
+              src: `assets/project-video-thumbnails/${posterName}.jpg`,
               alt: '', width: '320', height: '180', loading: 'lazy', decoding: 'async'
             }
           }));

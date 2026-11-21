@@ -578,8 +578,7 @@ main {
   color: var(--light-gray-70);
   font-size: var(--fs-7);
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   align-items: center;
 }
 
