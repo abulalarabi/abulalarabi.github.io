@@ -6,6 +6,11 @@
   --glass-card: rgba(255, 255, 255, 0.025);
   --glass-raised: rgba(255, 255, 255, 0.06);
   --glass-nav: rgba(12, 14, 18, 0.32);
+  --glass-control-edge: rgba(218, 232, 255, 0.24);
+  --glass-control-rim: rgba(237, 245, 255, 0.27);
+  --glass-control-rim-active: rgba(237, 245, 255, 0.52);
+  --glass-control-shadow: rgba(0, 0, 0, 0.35);
+  --glass-panel-edge: rgba(255, 255, 255, 0.09);
   --glass-button: rgba(0, 0, 0, 0.48);
   --glass-dialog: rgba(4, 5, 8, 0.68);
   --glass-solid: #08090c;
@@ -25,7 +30,7 @@
   --media-button-text-shadow: 0 1px 2px rgba(0, 0, 0, 0.8);
   --media-button-border: rgba(255, 255, 255, 0.18);
   --media-button-hover: rgba(255, 255, 255, 0.1);
-  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(240, 245, 255, 0.12), inset 0 -1px 0 rgba(220, 230, 245, 0.025);
+  --glass-shadow: 0 12px 36px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(240, 245, 255, 0.05);
   --white-1: var(--glass-text);
   --white-2: var(--glass-text);
   --light-gray: var(--glass-muted);
@@ -64,6 +69,11 @@
   --glass-card: rgba(255, 255, 255, 0.1);
   --glass-raised: rgba(255, 255, 255, 0.24);
   --glass-nav: rgba(255, 255, 255, 0.32);
+  --glass-control-edge: rgba(65, 78, 98, 0.18);
+  --glass-control-rim: rgba(255, 255, 255, 0.8);
+  --glass-control-rim-active: #fff;
+  --glass-control-shadow: rgba(42, 55, 78, 0.15);
+  --glass-panel-edge: rgba(55, 68, 87, 0.1);
   --glass-button: rgba(255, 255, 255, 0.56);
   --glass-dialog: rgba(255, 255, 255, 0.68);
   --glass-solid: #fff;
@@ -72,7 +82,7 @@
   --glass-gloss: rgba(255, 255, 255, 0.95);
   --glass-selected: rgba(0, 102, 204, 0.1);
   --glass-overlay: rgba(40, 45, 55, 0.14);
-  --glass-shadow: 0 12px 40px rgba(20, 25, 35, 0.07), inset 0 1px 0 var(--glass-gloss);
+  --glass-shadow: 0 12px 40px rgba(20, 25, 35, 0.07), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 html { scroll-behavior: auto; scrollbar-gutter: stable; }
@@ -104,7 +114,7 @@ main {
 }
 .sidebar, .main-content {
   width: 100%;
-  border: 1px solid var(--glass-border);
+  border: 1px solid var(--glass-panel-edge);
   border-radius: 24px;
   background: var(--glass-surface);
   box-shadow: var(--glass-shadow);
@@ -158,6 +168,21 @@ article, article.active { animation: none; }
 .article-title::after { display: none; }
 .section-title { margin: 18px 0 10px; font-size: 1.125rem; letter-spacing: -0.025em; }
 
+/* Give floating controls a brighter edge than the reading surfaces. */
+.navbar, .pubs-year-nav, .theme-toggle {
+  border: 1px solid var(--glass-control-edge);
+  background: var(--glass-nav);
+  box-shadow: inset 0 1px 0 var(--glass-control-rim), 0 4px 12px var(--glass-control-shadow);
+  -webkit-backdrop-filter: blur(var(--panel-blur)) saturate(1.3);
+  backdrop-filter: blur(var(--panel-blur)) saturate(1.3);
+  transition: box-shadow 180ms ease;
+}
+.navbar:hover, .navbar:focus-within,
+.pubs-year-nav:hover, .pubs-year-nav:focus-within,
+.theme-toggle:hover, .theme-toggle:focus-visible {
+  box-shadow: inset 0 1px 0 var(--glass-control-rim-active), 0 6px 16px var(--glass-control-shadow);
+}
+
 /* Heading and navigation share a fixed row outside the tab's scroll area. */
 .navbar {
   position: static;
@@ -170,17 +195,24 @@ article, article.active { animation: none; }
   overscroll-behavior-x: contain;
   scrollbar-width: none;
   padding: 4px;
-  border: 1px solid var(--glass-border);
   border-radius: 18px;
-  background: var(--glass-nav);
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08), inset 0 1px 0 var(--glass-gloss);
-  -webkit-backdrop-filter: blur(var(--panel-blur, 4px)) saturate(1.5);
-  backdrop-filter: blur(var(--panel-blur, 4px)) saturate(1.5);
   z-index: 10;
 }
 .navbar::-webkit-scrollbar { display: none; }
-.navbar-list { display: flex; width: max-content; padding: 0; gap: 3px; flex-wrap: nowrap; }
-.navbar-item { flex-shrink: 0; }
+.navbar-list { position: relative; display: flex; width: max-content; padding: 0; gap: 3px; flex-wrap: nowrap; }
+.navbar-list.has-indicator::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: var(--tab-width);
+  transform: translateX(var(--tab-x));
+  border-radius: 999px;
+  background: var(--glass-selected);
+  box-shadow: inset 0 1px 0 var(--glass-control-rim), inset 0 0 0 1px var(--glass-control-edge);
+  pointer-events: none;
+  transition: transform 280ms cubic-bezier(0.22, 1, 0.36, 1), width 280ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+.navbar-item { position: relative; flex-shrink: 0; }
 .navbar-link {
   display: flex;
   align-items: center;
@@ -199,6 +231,8 @@ article, article.active { animation: none; }
   background: var(--glass-selected);
   box-shadow: inset 0 1px 0 var(--glass-gloss);
 }
+.has-indicator .navbar-link.active { background: transparent; box-shadow: none; }
+.navbar-link:focus-visible, .pubs-year-nav a:focus-visible { outline-offset: -3px; }
 .navbar-link.is-disabled, .navbar-link.is-disabled:hover, .navbar-link.is-disabled:focus { color: #727e91; opacity: 0.7; background: transparent; }
 
 /* Profile panel. */
@@ -226,12 +260,10 @@ article, article.active { animation: none; }
   height: 44px;
   border-radius: 50%;
   color: var(--glass-blue);
-  background: var(--glass-solid);
-  border: 1px solid var(--glass-border);
-  box-shadow: 0 0 0 4px var(--glass-surface), 0 5px 16px rgba(0, 0, 0, 0.18);
-  transition: transform 180ms ease, background 180ms ease;
+  background: var(--glass-dialog);
+  transition: transform 180ms ease, box-shadow 180ms ease;
 }
-.theme-toggle:hover { transform: rotate(15deg); background: var(--glass-selected); }
+.theme-toggle:active { transform: scale(0.93); }
 .theme-icon { font-size: 24px; line-height: 1; }
 .theme-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
 .info-content .name { font-size: 1.6rem; font-weight: 650; letter-spacing: -0.045em; }
@@ -316,10 +348,10 @@ article, article.active { animation: none; }
 
 /* Publications, projects, talks, and CV share the same palette. */
 .pubs { --text: var(--glass-text); --muted: var(--glass-muted); --accent: var(--glass-blue); --bg-pill: rgba(0, 102, 204, 0.06); --ring: var(--glass-line); }
-.pubs-year-nav { position: static; flex-shrink: 0; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; margin: 0 18px; background: var(--glass-card); border-color: var(--glass-border); box-shadow: none; scrollbar-width: thin; }
+.pubs-year-nav { position: static; flex-shrink: 0; flex-wrap: nowrap; overflow-x: auto; overscroll-behavior-x: contain; margin: 0 18px; scrollbar-width: thin; }
 .pubs-year-nav a { flex-shrink: 0; }
 .pubs-year-nav a, .pubs-total, .pub-year-pill, .pubs-year > summary .count { color: var(--glass-blue); background: rgba(0, 102, 204, 0.06); border-color: rgba(0, 102, 204, 0.12); }
-.pubs-year-nav a:hover { background: rgba(0, 102, 204, 0.12); border-color: rgba(0, 102, 204, 0.25); }
+.pubs-year-nav a:hover, .pubs-year-nav a:focus-visible { background: var(--glass-selected); border-color: var(--glass-control-edge); box-shadow: inset 0 1px 0 var(--glass-control-rim); }
 .pubs-year, .pubs-hero { background: var(--glass-card); border-color: var(--glass-border); box-shadow: none; }
 .pubs-year { scroll-margin-top: 12px; margin: 12px 0; border: 0; border-top: 1px solid var(--glass-line); border-radius: 0; background: none; overflow: visible; }
 .pubs-year > summary { padding: 12px 0; background: none; }
@@ -335,7 +367,7 @@ article, article.active { animation: none; }
 .pub-meta { color: var(--glass-muted); }
 .proj-card, .talks-frame { padding: 16px; border-radius: 20px; border: 1px solid var(--glass-border); background: var(--glass-card); box-shadow: 0 6px 24px rgba(45, 70, 110, 0.05); }
 .proj-card { margin-bottom: 12px; }
-.proj-card, .talks-frame, .pubs-year-nav, .pubs-year, .pub-card { -webkit-backdrop-filter: none; backdrop-filter: none; }
+.proj-card, .talks-frame, .pubs-year, .pub-card { -webkit-backdrop-filter: none; backdrop-filter: none; }
 .proj-card:hover { transform: none; box-shadow: 0 12px 32px rgba(45, 70, 110, 0.08); }
 .proj-title { font-size: 1.25rem; letter-spacing: -0.025em; }
 .proj-card-header { margin-bottom: 12px; }
@@ -461,13 +493,14 @@ article, article.active { animation: none; }
 @media (prefers-reduced-motion: reduce) {
   html, .page-panel { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
+  .theme-toggle:active { transform: none; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .sidebar, .main-content, .navbar, .modal-content { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .sidebar, .main-content, .navbar, .pubs-year-nav, .theme-toggle, .modal-content { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
   .about-card, .publication-card, .proj-card, .talks-frame { background: var(--glass-solid-card); }
 }
 @supports not ((backdrop-filter: blur(4px)) or (-webkit-backdrop-filter: blur(4px))) {
-  .sidebar, .main-content, .navbar { background: var(--glass-solid); }
+  .sidebar, .main-content, .navbar, .pubs-year-nav, .theme-toggle { background: var(--glass-solid); }
 }
 @media print {
   body, .main-content, article, article.active { background: #fff; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }

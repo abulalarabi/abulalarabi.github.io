@@ -312,6 +312,7 @@ function initNavigation() {
   const pages = Array.from(document.querySelectorAll('[data-page]'));
   const title = document.getElementById('page-title');
   const navbar = document.querySelector('.navbar');
+  const navbarList = navbar.querySelector('.navbar-list');
   const yearNav = document.getElementById('publication-year-nav');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const positions = new Map();
@@ -321,6 +322,17 @@ function initNavigation() {
 
   pages.forEach((page) => { page.id = page.dataset.page; });
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  function updateTabIndicator() {
+    const activeLink = navbarList?.querySelector('.navbar-link.active');
+    if (!activeLink) return;
+
+    const tab = activeLink.getBoundingClientRect();
+    const list = navbarList.getBoundingClientRect();
+    navbarList.style.setProperty('--tab-x', `${tab.left - list.left}px`);
+    navbarList.style.setProperty('--tab-width', `${tab.width}px`);
+    navbarList.classList.add('has-indicator');
+  }
 
   function scrollPage(page, top, smooth = false) {
     if (scroller) {
@@ -358,6 +370,7 @@ function initNavigation() {
       });
     }
     title.textContent = target.dataset.title;
+    updateTabIndicator();
     const activeLink = navigationLinks.find((link) => link.classList.contains('active'));
     if (navbar.scrollWidth > navbar.clientWidth) {
       const left = navbar.scrollLeft + activeLink.getBoundingClientRect().left
@@ -415,6 +428,10 @@ function initNavigation() {
   document.addEventListener('publicationsready', () => {
     if (location.hash.startsWith('#y-')) route({ force: true });
   });
+  if (navbarList && typeof ResizeObserver === 'function') {
+    const observer = new ResizeObserver(updateTabIndicator);
+    navigationLinks.forEach((link) => observer.observe(link));
+  }
   route({ initial: true });
 }
 
